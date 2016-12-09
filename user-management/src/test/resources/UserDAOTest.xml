@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    
+    <user id="999" login="jdoe"  password="pwdd" email="nobody@nowhere.com" name="johnny" surname="doe" bDate="1990-08-08" phone="111223334455"
+    	address="Test street 55" passport="TT1231" country="by" city="mn" isAdmin="0" />
+   	<user id="998" login="resk"  password="pwdd" email="nobody@nowhere.com" name="donny" surname="moe" bDate="1991-08-08" phone="111222324225"
+    	address="Test street 56" passport="TT1331" country="by" city="mn" isAdmin="0" />
+   	<user id="997" login="testLgn"  password="pwdd" email="no4body@nowhere.com" name="bonny" surname="toe" bDate="1992-08-08" phone="131243334465"
+    	address="Test street 57" passport="TT1234" country="by" city="gm" isAdmin="0" />
+    <user id="996" login="tytyty"  password="pywd" email="no3body@nowhere.com" name="bonny" surname="toe" bDate="1992-08-08" phone="131243334465"
+    	address="Test street 57" passport="TT1234" country="by" city="gm" isAdmin="0" />
+
+</dataset>
