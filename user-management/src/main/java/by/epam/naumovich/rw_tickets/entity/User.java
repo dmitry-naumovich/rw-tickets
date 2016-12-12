@@ -24,6 +24,8 @@ public class User {
 	private String city;
 	private boolean isAdmin;
 	
+	public User() {}
+	
 	public int getId() {
 		return id;
 	}
@@ -127,7 +129,96 @@ public class User {
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-	
-	public User() {}
-	
+
+	@Override
+	public int hashCode() {
+		int hash = 11;
+		hash = 7 * hash + id;
+		hash = 13 * hash + login.hashCode();
+		hash = 3 * hash + password.hashCode();
+		hash = 47 * hash + name.hashCode();
+		hash = 31 * hash + surname.hashCode();
+		hash = 61 * hash + email.hashCode();
+		hash = 37 * hash + birthDate.hashCode();
+		hash = 11 * hash + phone.hashCode();
+		hash = 5 * hash + address.hashCode();
+		hash = 19 * hash + passport.hashCode();
+		hash = 17 * hash + country.hashCode();
+		hash = 23 * hash + city.hashCode();
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) { return true; }
+		if (null == obj) { return false; }
+		if (obj.getClass() != getClass()) { return false; }
+		
+		User us = (User)obj;
+		if (id != us.id) { 
+			return false; 
+		}
+		if (isAdmin != us.isAdmin) {
+			return false; 
+		}
+		
+		if ((null == login) ? (us.login != null) : !login.equals(us.login)) {
+			return false;
+		}
+		if ((null == password) ? (us.password != null) : !password.equals(us.password)) {
+			return false;
+		}
+		if ((null == name) ? (us.name != null) : !name.equals(us.name)) {
+			return false;
+		}
+		if ((null == surname) ? (us.surname != null) : !surname.equals(us.surname)) {
+			return false;
+		}
+		if ((null == email) ? (us.email != null) : !email.equals(us.email)) {
+			return false;
+		}
+		if ((null == birthDate) ? (us.birthDate != null) : !birthDate.equals(us.birthDate)) {
+			return false;
+		}
+		if ((null == phone) ? (us.phone != null) : !phone.equals(us.phone)) {
+			return false;
+		}
+		if ((null == address) ? (us.address != null) : !address.equals(us.address)) {
+			return false;
+		}
+		if ((null == passport) ? (us.passport != null) : !passport.equals(us.passport)) {
+			return false;
+		}
+		if ((null == country) ? (us.country != null) : !country.equals(us.country)) {
+			return false;
+		}
+		if ((null == city) ? (us.city != null) : !city.equals(us.city)) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	@Override
+	public String toString() {		
+		StringBuilder result = new StringBuilder();
+
+	    result.append(this.getClass().getSimpleName() + " Object {");
+	    result.append(" ID: " + id);
+	    result.append(", login: " + login);
+	    result.append(", password: " + password);
+	    result.append(", name: " + name);
+	    result.append(", surname: " + surname);
+	    result.append(", email: " + email);
+	    if (phone != null) { result.append(", phone: " + phone); }
+	    if (country != null) { result.append(", country: " + country); }
+	    if (city != null) { result.append(", city: " + city); }
+	    if (address != null) { result.append(", address: " + address); }
+	    if (passport != null) { result.append(", passport: " + passport); }
+	    result.append(", isAdmin: " + isAdmin);
+	    result.append("}");
+
+		
+	    return result.toString();
+	}
 }

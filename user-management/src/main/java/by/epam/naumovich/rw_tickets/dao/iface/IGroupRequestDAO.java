@@ -1,5 +1,7 @@
 package by.epam.naumovich.rw_tickets.dao.iface;
 
+import java.util.List;
+
 import by.epam.naumovich.rw_tickets.dao.exception.DAOException;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 /**
@@ -45,4 +47,42 @@ public interface IGroupRequestDAO {
 	 * @throws DAOException
 	 */
 	GroupRequest getGroupRequestById(int num) throws DAOException;
+	
+
+	/**
+	 * Gets all user incoming group requests from the data source
+	 * 
+	 * @param userID ID of the user
+	 * @return list of user incoming group requests
+	 * @throws DAOException
+	 */
+	List<GroupRequest> getUserIncRequests(int userID) throws DAOException;
+	
+	/**
+	 * Gets all user incoming group requests from the data source sorted by date
+	 * 
+	 * @param userID ID of the user
+	 * @return list of user incoming group requests sorted by date
+	 * @throws DAOException
+	 */
+	List<GroupRequest> getUserIncRequestsSortByDate(int userID) throws DAOException;
+	
+	/**
+	 * Gets all user outcoming group requests from the data source
+	 * 
+	 * @param userID ID of the user
+	 * @return list of user outcoming group requests
+	 * @throws DAOException
+	 */
+	List<GroupRequest> getUserOutRequests(int userID) throws DAOException;
+	
+	/**
+	 * Gets all user outcoming group requests from the data source sorted by date
+	 * 
+	 * @param userID ID of the user
+	 * @return list of user outcoming group requests sorted by date
+	 * @throws DAOException
+	 */
+	List<GroupRequest> getUserOutRequestsSortByDate(int userID) throws DAOException;
+	
 }

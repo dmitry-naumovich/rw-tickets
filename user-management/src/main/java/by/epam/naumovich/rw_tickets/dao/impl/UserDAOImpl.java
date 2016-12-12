@@ -1,7 +1,7 @@
 package by.epam.naumovich.rw_tickets.dao.impl;
 
 import java.sql.Types;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -28,6 +28,7 @@ public class UserDAOImpl implements IUserDAO {
 		
 		return jdbcTemplate.update(INSERT_NEW_USER, params, types);*/
 		return 0;
+		// here method must get the ID of the newly added user and return it
 	}
 
 	public void updateUser(int id, User updUser) throws DAOException {
@@ -50,7 +51,82 @@ public class UserDAOImpl implements IUserDAO {
 		return null;
 	}
 
-	public Set<User> getAllUsers() throws DAOException {
+	public List<User> getAllUsers() throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllGroupUsers(int groupID) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getPasswordByLogin(String login) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getPasswordByEmail(String email) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getUsersByName(String name) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getUsersBySurname(String surname) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getUsersByCountry(String country) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getUsersByCity(String city) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllUsersSortByName() throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllUsersSortBySurname() throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllUsersSortByEmail() throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllUsersSortByCountry() throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllUsersSortByCity() throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllUsersSortByAddress() throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllUsersSortByLogin() throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getAllUsersSortByBirthdate() throws DAOException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,7 @@
 package by.epam.naumovich.rw_tickets.dao.iface;
 
+import java.util.List;
+
 import by.epam.naumovich.rw_tickets.dao.exception.DAOException;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
@@ -46,5 +48,34 @@ public interface IUserGroupDAO {
 	 * @throws DAOException
 	 */
 	UserGroup getUserGroupById(int id) throws DAOException;
+	
+	/**
+	 * Adds user to the user group
+	 * 
+	 * @param userID ID of the user
+	 * @param groupID ID of the user group
+	 * @return number of rows changed
+	 * @throws DAOException
+	 */
+	int addUserToGroup(int userID, int groupID) throws DAOException;
+	
+	/**
+	 * Deletes user from the user group
+	 * 
+	 * @param userID ID of the user
+	 * @param groupID ID of the user group
+	 * @throws DAOException
+	 */
+	void deleteUserFromGroup(int userID, int groupID) throws DAOException;
+	
+	/**
+	 * Gets list of user groups by his ID
+	 * 
+	 * @param userID ID of the user
+	 * @return list of user groups
+	 * @throws DAOException
+	 */
+	List<UserGroup> getUserGroupsByUser(int userID) throws DAOException;
+	
 
 }

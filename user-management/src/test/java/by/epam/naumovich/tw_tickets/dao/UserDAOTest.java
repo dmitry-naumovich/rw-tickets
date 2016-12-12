@@ -1,7 +1,7 @@
 package by.epam.naumovich.tw_tickets.dao;
 
 import java.util.Arrays;
-import java.util.Set;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.dbunit.annotation.DataSet;
+import org.unitils.dbunit.annotation.ExpectedDataSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.*;
@@ -23,11 +24,23 @@ public class UserDAOTest extends UnitilsJUnit4 {
 	
 	private DataSource dataSource;
 	private IUserDAO userDAO;
+	User testUser;
 	
 	@Before
 	public void init() {
 		userDAO = new UserDAOImpl();
+		testUser = new User();
+    	testUser.setLogin("testLogin");
+    	testUser.setName("testname");
+    	testUser.setPassword("pwd");
+    	testUser.setSurname("testSurname");
+    	testUser.setEmail("test@email.com");
+    	testUser.setPassport("TST19000");
+    	testUser.setAddress("test adress street 45");
+    	testUser.setAdmin(false);
+    	
 	}
+	
 	
 	@Test
     public void testGetById() throws DAOException {
@@ -48,19 +61,14 @@ public class UserDAOTest extends UnitilsJUnit4 {
 	
     @Test
     public void testGetAllUsers() throws DAOException {
-        Set<User> result = userDAO.getAllUsers();    
+        List<User> result = userDAO.getAllUsers();    
         assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk", "testLgn", "tytyty"), result);
     }
     
     @Test
+    @ExpectedDataSet ({"AddUserTest.xml"})
     public void testAddUser() throws DAOException {
-    	User testUser = new User();
-    	testUser.setId(9999);
-    	testUser.setLogin("testLogin");
-    	
     	userDAO.addUser(testUser);
-    	User result = userDAO.getUserById(9999);
-    	assertEquals(testUser.getLogin(), result.getLogin());
     }
 
 }

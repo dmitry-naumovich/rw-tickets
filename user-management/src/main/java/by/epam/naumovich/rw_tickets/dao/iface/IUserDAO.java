@@ -1,6 +1,6 @@
 package by.epam.naumovich.rw_tickets.dao.iface;
 
-import java.util.Set;
+import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.exception.DAOException;
 import by.epam.naumovich.rw_tickets.entity.User;
@@ -61,9 +61,137 @@ public interface IUserDAO {
 	/**
 	 * Gets all users from the data source
 	 * 
-	 * @return the set containing all users
+	 * @return the list containing all users
 	 * @throws DAOException
 	 */
-	Set<User> getAllUsers() throws DAOException;
+	List<User> getAllUsers() throws DAOException;
 	
+	/**
+	 * Gets all users from the concrete user group from the data source
+	 * 
+	 * @param groupID ID of the group
+	 * @return the list containing all users from the concrete group
+	 * @throws DAOException
+	 */
+	List<User> getAllGroupUsers(int groupID) throws DAOException;
+	
+	/**
+	 * Returns the password of the user by his login
+	 * 
+	 * @param login user login
+	 * @return string password or null if it was not found
+	 * @throws DAOException
+	 */
+	String getPasswordByLogin(String login) throws DAOException;
+	
+	/**
+	 * Gets user password by his email from the data source
+	 * 
+	 * @param email user email
+	 * @return string password or null if it was not found
+	 * @throws DAOException
+	 */
+	String getPasswordByEmail(String email) throws DAOException;
+	
+	/**
+	 * Gets users from the data source by specified name
+	 * 
+	 * @param name user name
+	 * @return the list containing users with the specified name
+	 * @throws DAOException
+	 */
+	List<User> getUsersByName(String name) throws DAOException;
+	
+	/**
+	 * Gets users from the data source by specified surname
+	 * 
+	 * @param surname user surname
+	 * @return the list containing users with the specified surname
+	 * @throws DAOException
+	 */
+	List<User> getUsersBySurname(String surname) throws DAOException;
+	
+	/**
+	 * Gets users from the data source by specified country
+	 * 
+	 * @param country country
+	 * @return the list containing users from the specified country
+	 * @throws DAOException
+	 */
+	List<User> getUsersByCountry(String country) throws DAOException;
+	
+	/**
+	 * Gets users from the data source by specified city
+	 * 
+	 * @param city city
+	 * @return the list containing users from the specified city
+	 * @throws DAOException
+	 */
+	List<User> getUsersByCity(String city) throws DAOException;
+	
+	/**
+	 * Gets all users from the data source sorted by name
+	 * 
+	 * @return the list containing all users sorted by name
+	 * @throws DAOException
+	 */
+	List<User> getAllUsersSortByName() throws DAOException;
+	
+	/**
+	 * Gets all users from the data source sorted by surname
+	 * 
+	 * @return the list containing all users sorted by surname
+	 * @throws DAOException
+	 */
+	List<User> getAllUsersSortBySurname() throws DAOException;
+	
+	/**
+	 * Gets all users from the data source sorted by email
+	 * 
+	 * @return the list containing all users sorted by email
+	 * @throws DAOException
+	 */
+	List<User> getAllUsersSortByEmail() throws DAOException;
+	
+	/**
+	 * Gets all users from the data source sorted by country
+	 * 
+	 * @return the list containing all users sorted by country
+	 * @throws DAOException
+	 */
+	List<User> getAllUsersSortByCountry() throws DAOException;
+	
+	/**
+	 * Gets all users from the data source sorted by city
+	 * 
+	 * @return the list containing all users sorted by city
+	 * @throws DAOException
+	 */
+	List<User> getAllUsersSortByCity() throws DAOException;
+
+	/**
+	 * Gets all users from the data source sorted by address
+	 * 
+	 * @return the list containing all users sorted by address
+	 * @throws DAOException
+	 */
+	List<User> getAllUsersSortByAddress() throws DAOException;
+	
+	/**
+	 * Gets all users from the data source sorted by login
+	 * 
+	 * @return the list containing all users sorted by login
+	 * @throws DAOException
+	 */
+	List<User> getAllUsersSortByLogin() throws DAOException;
+	
+	/**
+	 * Gets all users from the data source sorted by birth date
+	 * 
+	 * @return the list containing all users sorted by birth date
+	 * @throws DAOException
+	 */
+	List<User> getAllUsersSortByBirthdate() throws DAOException;
+
+
 }
