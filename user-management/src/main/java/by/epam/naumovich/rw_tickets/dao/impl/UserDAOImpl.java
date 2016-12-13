@@ -3,6 +3,8 @@ package by.epam.naumovich.rw_tickets.dao.impl;
 import java.sql.Types;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import by.epam.naumovich.rw_tickets.dao.exception.DAOException;
@@ -11,23 +13,25 @@ import by.epam.naumovich.rw_tickets.entity.User;
 
 public class UserDAOImpl implements IUserDAO {
 
-	public final static String INSERT_NEW_USER = "INSERT INTO rw_users (u_id, login, pwd, fname, sname, email, b_date, country, city, address, phone_num, passport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public final static String INSERT_NEW_USER = "INSERT INTO rw_users (u_id, login, pwd, fname, sname, email, b_date, country, city, address, phone, passport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
+	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 	
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
+	public UserDAOImpl(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
 	public int addUser(User user) throws DAOException {
-		/*Object[] params = new Object[] { user.getId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), 
+		Object[] params = new Object[] { user.getId(), user.getLogin(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(), 
 				user.getBirthDate(), user.getCountry(), user.getCity(), user.getAddress(), user.getPhone(), user.getPassport()};
 		
 		int[] types = new int[] { Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.DATE, Types.VARCHAR,
 				Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		
-		return jdbcTemplate.update(INSERT_NEW_USER, params, types);*/
-		return 0;
+		return jdbcTemplate.update(INSERT_NEW_USER, params, types);
+		//return 0;
 		// here method must get the ID of the newly added user and return it
 	}
 
