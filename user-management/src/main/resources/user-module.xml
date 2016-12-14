@@ -17,7 +17,7 @@
 		<property name="driverClassName">
 			<value>${database.driverClassName}</value>
 		</property>
-		<property name="username">
+		<property name="userName">
 			<value>${database.username}</value>
 		</property>
 		<property name="password">
@@ -25,13 +25,20 @@
 		</property>
 	</bean>
 	
-	<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource"><ref bean="dataSource"/></property>
-	</bean> -->
 	<bean id="userDao" class="by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl">
 		<constructor-arg>
 			<ref bean="dataSource"/>
 		</constructor-arg>
-		<!-- <property name="dataSource"><ref bean="dataSource"/></property> -->
 	</bean>
+	<bean id="userGroupDao" class="by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+	</bean>
+	<bean id="groupRequestDao" class="by.epam.naumovich.rw_tickets.dao.impl.GroupRequestDAOImpl">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+	</bean>
+	
 </beans>

@@ -6,6 +6,10 @@
     <version>0.0.1</version>
   </parent>
   <artifactId>user-management</artifactId>
+  <properties>
+   <maven.compiler.source>1.8</maven.compiler.source>
+   <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
 	<dependency>
@@ -52,9 +56,13 @@
     </dependency>
     <dependency>
 	  <groupId>com.github.springtestdbunit</groupId>
+	
 	  <artifactId>spring-test-dbunit</artifactId>
+	
 	  <version>1.0.0</version>
+	
 	  <scope>test</scope>
+	
 	</dependency>
     
     

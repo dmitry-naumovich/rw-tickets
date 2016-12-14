@@ -20,7 +20,7 @@ public interface IUserGroupDAO {
 	 * @return id of the newly added user group or 0 if it was not added
 	 * @throws DAOException
 	 */
-	int addUserGroup(UserGroup group) throws DAOException;
+	int addUserGroup(UserGroup group);
 	
 	/**
 	 * Updates the user group in the data source
@@ -29,7 +29,7 @@ public interface IUserGroupDAO {
 	 * @param updUserGroup updated user group entity
 	 * @throws DAOException
 	 */
-	void updateUserGroup(int id, UserGroup updGroup) throws DAOException;
+	void updateUserGroup(int id, UserGroup updGroup);
 	
 	/**
 	 * Deletes user group entity from the data source
@@ -38,7 +38,7 @@ public interface IUserGroupDAO {
 	 * 
 	 * @throws DAOException
 	 */
-	void deleteUserGroup(int id) throws DAOException;
+	void deleteUserGroup(int id);
 	
 	/**
 	 * Gets user group by its ID from the data source
@@ -47,7 +47,7 @@ public interface IUserGroupDAO {
 	 * @return found UserGroup entity
 	 * @throws DAOException
 	 */
-	UserGroup getUserGroupById(int id) throws DAOException;
+	UserGroup getUserGroupById(int id);
 	
 	/**
 	 * Adds user to the user group
@@ -57,7 +57,7 @@ public interface IUserGroupDAO {
 	 * @return number of rows changed
 	 * @throws DAOException
 	 */
-	int addUserToGroup(int userID, int groupID) throws DAOException;
+	int addUserToGroup(int userID, int groupID);
 	
 	/**
 	 * Deletes user from the user group
@@ -66,7 +66,7 @@ public interface IUserGroupDAO {
 	 * @param groupID ID of the user group
 	 * @throws DAOException
 	 */
-	void deleteUserFromGroup(int userID, int groupID) throws DAOException;
+	void deleteUserFromGroup(int userID, int groupID);
 	
 	/**
 	 * Gets list of user groups by his ID
@@ -75,7 +75,7 @@ public interface IUserGroupDAO {
 	 * @return list of user groups
 	 * @throws DAOException
 	 */
-	List<UserGroup> getUserGroupsByUser(int userID) throws DAOException;
+	List<UserGroup> getUserGroupsByUser(int userID);
 	
 
 }

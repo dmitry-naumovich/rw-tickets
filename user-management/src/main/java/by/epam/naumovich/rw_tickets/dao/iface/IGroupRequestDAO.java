@@ -19,7 +19,7 @@ public interface IGroupRequestDAO {
 	 * @return request num of the newly added group request or 0 if it was not added
 	 * @throws DAOException
 	 */
-	int addGroupRequest(GroupRequest request) throws DAOException;
+	int addGroupRequest(GroupRequest request);
 	
 	/**
 	 * Updates the group request in the data source
@@ -28,7 +28,7 @@ public interface IGroupRequestDAO {
 	 * @param updRequestRequest updated group request entity
 	 * @throws DAOException
 	 */
-	void updateGroupRequest(int num, GroupRequest updRequest) throws DAOException;
+	void updateGroupRequest(int num, GroupRequest updRequest);
 	
 	/**
 	 * Deletes group request entity from the data source
@@ -37,7 +37,7 @@ public interface IGroupRequestDAO {
 	 * 
 	 * @throws DAOException
 	 */
-	void deleteGroupRequest(int num) throws DAOException;
+	void deleteGroupRequest(int num);
 	
 	/**
 	 * Gets group request by its num from the data source
@@ -46,7 +46,7 @@ public interface IGroupRequestDAO {
 	 * @return found GroupRequest entity
 	 * @throws DAOException
 	 */
-	GroupRequest getGroupRequestById(int num) throws DAOException;
+	GroupRequest getGroupRequestById(int num);
 	
 
 	/**
@@ -56,7 +56,7 @@ public interface IGroupRequestDAO {
 	 * @return list of user incoming group requests
 	 * @throws DAOException
 	 */
-	List<GroupRequest> getUserIncRequests(int userID) throws DAOException;
+	List<GroupRequest> getUserIncRequests(int userID);
 	
 	/**
 	 * Gets all user incoming group requests from the data source sorted by date
@@ -65,7 +65,7 @@ public interface IGroupRequestDAO {
 	 * @return list of user incoming group requests sorted by date
 	 * @throws DAOException
 	 */
-	List<GroupRequest> getUserIncRequestsSortByDate(int userID) throws DAOException;
+	List<GroupRequest> getUserIncRequestsSortByDate(int userID);
 	
 	/**
 	 * Gets all user outcoming group requests from the data source
@@ -74,7 +74,7 @@ public interface IGroupRequestDAO {
 	 * @return list of user outcoming group requests
 	 * @throws DAOException
 	 */
-	List<GroupRequest> getUserOutRequests(int userID) throws DAOException;
+	List<GroupRequest> getUserOutRequests(int userID);
 	
 	/**
 	 * Gets all user outcoming group requests from the data source sorted by date
@@ -83,6 +83,6 @@ public interface IGroupRequestDAO {
 	 * @return list of user outcoming group requests sorted by date
 	 * @throws DAOException
 	 */
-	List<GroupRequest> getUserOutRequestsSortByDate(int userID) throws DAOException;
+	List<GroupRequest> getUserOutRequestsSortByDate(int userID);
 	
 }

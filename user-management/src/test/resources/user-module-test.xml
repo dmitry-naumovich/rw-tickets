@@ -7,7 +7,6 @@
 		<property name="locations">
 			<list>
 				<value>unitils.properties</value>
-				<value>unitils-local.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -19,18 +18,24 @@
 			<value>${database.driverClassName}</value>
 		</property>
 		<property name="username">
-			<value>${database.username}</value>
+			<value>${database.userName}</value>
 		</property>
 		<property name="password">
 			<value>${database.password}</value>
 		</property>
+		
 	</bean>
 	<bean id="userDao" class="by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl">
 		<constructor-arg>
 			<ref bean="dataSource"/>
 		</constructor-arg>
 	</bean>
-	<bean id="userDaoTest" class="by.epam.naumovich.rw_tickets.dao.impl.UserDAOTest">
+	<bean id="userGroupDao" class="by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+	</bean>
+	<bean id="groupRequestDao" class="by.epam.naumovich.rw_tickets.dao.impl.GroupRequestDAOImpl">
 		<constructor-arg>
 			<ref bean="dataSource"/>
 		</constructor-arg>

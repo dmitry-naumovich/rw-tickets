@@ -12,9 +12,9 @@ public class User {
 	
 	private int id;
 	private String login;
-	private String password;
-	private String name;
-	private String surname;
+	private String pwd;
+	private String fname;
+	private String sname;
 	private String email;
 	private Date birthDate;
 	private String phone;
@@ -42,28 +42,28 @@ public class User {
 		this.login = login;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPwd() {
+		return pwd;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPwd(String password) {
+		this.pwd = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getFname() {
+		return fname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFname(String name) {
+		this.fname = name;
 	}
 
-	public String getSurname() {
-		return surname;
+	public String getSname() {
+		return sname;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setSname(String surname) {
+		this.sname = surname;
 	}
 
 	public String getEmail() {
@@ -135,9 +135,9 @@ public class User {
 		int hash = 11;
 		hash = 7 * hash + id;
 		hash = 13 * hash + login.hashCode();
-		hash = 3 * hash + password.hashCode();
-		hash = 47 * hash + name.hashCode();
-		hash = 31 * hash + surname.hashCode();
+		hash = 3 * hash + pwd.hashCode();
+		hash = 47 * hash + fname.hashCode();
+		hash = 31 * hash + sname.hashCode();
 		hash = 61 * hash + email.hashCode();
 		hash = 37 * hash + birthDate.hashCode();
 		hash = 11 * hash + phone.hashCode();
@@ -165,13 +165,13 @@ public class User {
 		if ((null == login) ? (us.login != null) : !login.equals(us.login)) {
 			return false;
 		}
-		if ((null == password) ? (us.password != null) : !password.equals(us.password)) {
+		if ((null == pwd) ? (us.pwd != null) : !pwd.equals(us.pwd)) {
 			return false;
 		}
-		if ((null == name) ? (us.name != null) : !name.equals(us.name)) {
+		if ((null == fname) ? (us.fname != null) : !fname.equals(us.fname)) {
 			return false;
 		}
-		if ((null == surname) ? (us.surname != null) : !surname.equals(us.surname)) {
+		if ((null == sname) ? (us.sname != null) : !sname.equals(us.sname)) {
 			return false;
 		}
 		if ((null == email) ? (us.email != null) : !email.equals(us.email)) {
@@ -206,9 +206,9 @@ public class User {
 	    result.append(this.getClass().getSimpleName() + " Object {");
 	    result.append(" ID: " + id);
 	    result.append(", login: " + login);
-	    result.append(", password: " + password);
-	    result.append(", name: " + name);
-	    result.append(", surname: " + surname);
+	    result.append(", password: " + pwd);
+	    result.append(", name: " + fname);
+	    result.append(", surname: " + sname);
 	    result.append(", email: " + email);
 	    if (phone != null) { result.append(", phone: " + phone); }
 	    if (country != null) { result.append(", country: " + country); }

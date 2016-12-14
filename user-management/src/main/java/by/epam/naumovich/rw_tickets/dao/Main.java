@@ -14,9 +14,9 @@ public class Main {
 		System.out.println("MAIN IS IT?");
 		User testUser = new User();
     	testUser.setLogin("testLogin");
-    	testUser.setName("testname");
-    	testUser.setPassword("pwd");
-    	testUser.setSurname("testSurname");
+    	testUser.setFname("testname");
+    	testUser.setPwd("pwd");
+    	testUser.setSname("testSurname");
     	testUser.setEmail("test@email.com");
     	testUser.setPassport("TST19000");
     	testUser.setAddress("test adress street 45");
@@ -25,11 +25,8 @@ public class Main {
     	ApplicationContext context = new ClassPathXmlApplicationContext("user-module.xml");
 
 		IUserDAO dao = (IUserDAO) context.getBean("userDao");
-		try {
-			dao.addUser(testUser);
-		} catch (DAOException e) {
-			System.out.println("DAOException occured");
-		}
+		dao.addUser(testUser);
+		
 	}
 
 }
