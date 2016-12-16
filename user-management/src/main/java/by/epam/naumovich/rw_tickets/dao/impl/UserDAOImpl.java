@@ -14,28 +14,28 @@ import by.epam.naumovich.rw_tickets.entity.User;
 
 public class UserDAOImpl implements IUserDAO {
 
-	public final static String INSERT_NEW_USER = "INSERT INTO rw_users (login, pwd, fname, sname, email,  country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	public final static String UPDATE_USER = "UPDATE rw_users SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, b_date = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE rw_users.u_id = ?";
-	public final static String DELETE_USER = "DELETE FROM rw_users WHERE rw_users.u_id = ?";
-	public final static String SELECT_USER_BY_ID = "SELECT * FROM rw_users WHERE u_id = ?";
-	public final static String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_users WHERE login = ?";
-	public final static String SELECT_ALL_USERS = "SELECT * FROM rw_users";
-	public final static String SELECT_ID_BY_LOGIN = "SELECT u_id FROM rw_users WHERE login = ?";
-	public final static String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.user_id WHERE gr_id = ?";
-	public final static String SELECT_PWD_BY_LOGIN = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.login = ?";
-	public final static String SELECT_PWD_BY_EMAIL = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.email = ?";
-	public final static String SELECT_USERS_BY_FNAME = "SELECT * FROM rw_users WHERE fname = ?";
-	public final static String SELECT_USERS_BY_SNAME = "SELECT * FROM rw_users WHERE sname = ?";
-	public final static String SELECT_USERS_BY_COUNTRY = "SELECT * FROM rw_users WHERE country = ?";
-	public final static String SELECT_USERS_BY_CITY = "SELECT * FROM rw_users WHERE city = ?";
-	public final static String SELECT_ALL_USERS_SORT_BY_NAME = "SELECT * FROM rw_users ORDER BY fname ASC";
-	public final static String SELECT_ALL_USERS_SORT_BY_SURNAME = "SELECT * FROM rw_users ORDER BY sname ASC";
-	public final static String SELECT_ALL_USERS_SORT_BY_EMAIL = "SELECT * FROM rw_users ORDER BY email ASC";
-	public final static String SELECT_ALL_USERS_SORT_BY_COUNTRY = "SELECT * FROM rw_users ORDER BY country ASC";
-	public final static String SELECT_ALL_USERS_SORT_BY_CITY = "SELECT * FROM rw_users ORDER BY city ASC";
-	public final static String SELECT_ALL_USERS_SORT_BY_ADDRESS = "SELECT * FROM rw_users ORDER BY address ASC";
-	public final static String SELECT_ALL_USERS_SORT_BY_LOGIN = "SELECT * FROM rw_users ORDER BY login ASC";
-	public final static String SELECT_ALL_USERS_SORT_BY_BDATE = "SELECT * FROM rw_users ORDER BY b_date ASC";
+	public static final String INSERT_NEW_USER = "INSERT INTO rw_users (login, pwd, fname, sname, email,  country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public static final String UPDATE_USER = "UPDATE rw_users SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, b_date = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE u_id = ?";
+	public static final String DELETE_USER = "DELETE FROM rw_users WHERE u_id = ?";
+	public static final String SELECT_USER_BY_ID = "SELECT * FROM rw_users WHERE u_id = ?";
+	public static final String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_users WHERE login = ?";
+	public static final String SELECT_ALL_USERS = "SELECT * FROM rw_users";
+	public static final String SELECT_ID_BY_LOGIN = "SELECT u_id FROM rw_users WHERE login = ?";
+	public static final String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.user_id WHERE gr_id = ?";
+	public static final String SELECT_PWD_BY_LOGIN = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.login = ?";
+	public static final String SELECT_PWD_BY_EMAIL = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.email = ?";
+	public static final String SELECT_USERS_BY_FNAME = "SELECT * FROM rw_users WHERE fname = ?";
+	public static final String SELECT_USERS_BY_SNAME = "SELECT * FROM rw_users WHERE sname = ?";
+	public static final String SELECT_USERS_BY_COUNTRY = "SELECT * FROM rw_users WHERE country = ?";
+	public static final String SELECT_USERS_BY_CITY = "SELECT * FROM rw_users WHERE city = ?";
+	public static final String SELECT_ALL_USERS_SORT_BY_NAME = "SELECT * FROM rw_users ORDER BY fname ASC";
+	public static final String SELECT_ALL_USERS_SORT_BY_SURNAME = "SELECT * FROM rw_users ORDER BY sname ASC";
+	public static final String SELECT_ALL_USERS_SORT_BY_EMAIL = "SELECT * FROM rw_users ORDER BY email ASC";
+	public static final String SELECT_ALL_USERS_SORT_BY_COUNTRY = "SELECT * FROM rw_users ORDER BY country ASC";
+	public static final String SELECT_ALL_USERS_SORT_BY_CITY = "SELECT * FROM rw_users ORDER BY city ASC";
+	public static final String SELECT_ALL_USERS_SORT_BY_ADDRESS = "SELECT * FROM rw_users ORDER BY address ASC";
+	public static final String SELECT_ALL_USERS_SORT_BY_LOGIN = "SELECT * FROM rw_users ORDER BY login ASC";
+	public static final String SELECT_ALL_USERS_SORT_BY_BDATE = "SELECT * FROM rw_users ORDER BY b_date ASC";
 
 	private JdbcTemplate jdbcTemplate;
 	

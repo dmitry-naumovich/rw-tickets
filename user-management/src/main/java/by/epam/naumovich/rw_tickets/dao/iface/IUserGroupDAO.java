@@ -50,14 +50,23 @@ public interface IUserGroupDAO {
 	UserGroup getUserGroupById(int id);
 	
 	/**
+	 * Gets group ID by its name and owner from the data source
+	 * 
+	 * @param name group name
+	 * @param ownerID group owner's ID
+	 * @return id of the group
+	 * @throws DAOException
+	 */
+	int getGroupIdByNameAndOwner(String name, int ownerID);
+	
+	/**
 	 * Adds user to the user group
 	 * 
 	 * @param userID ID of the user
 	 * @param groupID ID of the user group
-	 * @return number of rows changed
 	 * @throws DAOException
 	 */
-	int addUserToGroup(int userID, int groupID);
+	void addUserToGroup(int userID, int groupID);
 	
 	/**
 	 * Deletes user from the user group

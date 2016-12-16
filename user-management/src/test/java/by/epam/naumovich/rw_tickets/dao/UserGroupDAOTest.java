@@ -14,6 +14,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.annotation.ExpectedDataSet;
+
+import static org.junit.Assert.assertEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.*;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
@@ -65,6 +67,12 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 		UserGroup result = usGroupDAO.getUserGroupById(1);
 		assertPropertyLenientEquals("gr_name", "TestGrName1", result);
 		assertPropertyLenientEquals("owner_id", "1", result);
+	}
+	
+	@Test
+	public void testGetGroupIdByNameAndOwner() {
+		int result = usGroupDAO.getGroupIdByNameAndOwner("TestGrName2", 2);
+    	assertEquals(2, result);
 	}
 	
 	@Test
