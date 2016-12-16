@@ -17,7 +17,7 @@
 		<property name="driverClassName">
 			<value>${database.driverClassName}</value>
 		</property>
-		<property name="userName">
+		<property name="username">
 			<value>${database.username}</value>
 		</property>
 		<property name="password">

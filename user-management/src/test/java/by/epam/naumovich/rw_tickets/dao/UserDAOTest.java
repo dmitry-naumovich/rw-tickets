@@ -1,6 +1,5 @@
 package by.epam.naumovich.rw_tickets.dao;
 
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +29,6 @@ public class UserDAOTest extends UnitilsJUnit4 {
 	@Before    
     public void init() {
 		context = new ClassPathXmlApplicationContext("user-module-test.xml");
-		System.out.println("context here");
 		userDAO = (IUserDAO) context.getBean("userDao");
     }
 	
@@ -44,12 +42,19 @@ public class UserDAOTest extends UnitilsJUnit4 {
     	testUser.setCountry("by");
     	testUser.setCity("mn");
     	testUser.setPhone("123456789012");
- 
     	testUser.setEmail("test@email.com");
     	testUser.setPassport("TST190009999");
     	testUser.setAddress("test street 45");
     	testUser.setAdmin(false);
 	}
+	
+    @Test
+    @ExpectedDataSet({"dbunit/AfterAddUser.xml"})
+    public void testAddUser() {
+    	initTestUser();
+    	int id = userDAO.addUser(testUser);
+    	testUser.setId(id);
+    }
 	
 	@Test
     public void testGetById() {
@@ -74,34 +79,30 @@ public class UserDAOTest extends UnitilsJUnit4 {
     }
 	
     @Test
-    @DataSet("dbunit/DAODataTest.xml")
     public void testGetAllUsers() {
         List<User> result = userDAO.getAllUsers();
-        assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk", "testLgn", "tytyty", "separ", "testLogin"), result);
+        assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk", "testLgn", "tytyty", "separ"), result);
     }
     
-    @Test
-    @ExpectedDataSet({"dbunit/AfterAddTest.xml"})
-    public void testAddUser() {
-    	initTestUser();
-    	int id = userDAO.addUser(testUser);
-    	System.out.println("id = " + id);
-    }
-    
-    /*@Test
-    @ExpectedDataSet({"dbunit/UpdUserTest.xml"})
+   /* @Test
+    @ExpectedDataSet({"dbunit/AfterUpdUser.xml"})
     public void testUpdateUser() {
-    	initTestUser();
-    	testUser.setLogin("noow");
-    	userDAO.updateUser(1000, testUser);
+    	User us = userDAO.getUserById(1);
+    	us.setLogin("noow");
+    	userDAO.updateUser(1, us);
     }*/
     
-    /*@Test(expected = EmptyResultDataAccessException.class)
+    /*@Test
+    @DataSet("dbunit/DAODataTest.xml")
    	public void testDeleteUser() {
-    	int id = userDAO.getIDByLogin("separ");
-    	userDAO.deleteUser(id);
-    	userDAO.getUserById(id);
+    	userDAO.deleteUser(testUser.getId());
    	}*/
+    
+    @Test
+    public void testGetGroupUsers() {
+    	List<User> result = userDAO.getAllGroupUsers(1);
+    	assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk"), result);
+    }
     
     @Test
     public void testGetIDByLogin() {

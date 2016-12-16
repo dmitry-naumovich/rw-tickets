@@ -25,7 +25,9 @@ public class Main {
     	ApplicationContext context = new ClassPathXmlApplicationContext("user-module.xml");
 
 		IUserDAO dao = (IUserDAO) context.getBean("userDao");
-		dao.addUser(testUser);
+		int id = dao.addUser(testUser);
+		System.out.println("new test user added; his id = " + id);
+		dao.deleteUser(id);
 		
 	}
 

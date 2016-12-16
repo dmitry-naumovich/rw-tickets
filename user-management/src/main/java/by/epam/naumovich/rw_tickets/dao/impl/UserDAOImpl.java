@@ -15,13 +15,13 @@ import by.epam.naumovich.rw_tickets.entity.User;
 public class UserDAOImpl implements IUserDAO {
 
 	public final static String INSERT_NEW_USER = "INSERT INTO rw_users (login, pwd, fname, sname, email,  country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	public final static String UPDATE_USER = "UPDATE rw_users SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, b_date = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE u_id = ?";
-	public final static String DELETE_USER = "DELETE FROM rw_users WHERE u_id = ?";
+	public final static String UPDATE_USER = "UPDATE rw_users SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, b_date = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE rw_users.u_id = ?";
+	public final static String DELETE_USER = "DELETE FROM rw_users WHERE rw_users.u_id = ?";
 	public final static String SELECT_USER_BY_ID = "SELECT * FROM rw_users WHERE u_id = ?";
 	public final static String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_users WHERE login = ?";
 	public final static String SELECT_ALL_USERS = "SELECT * FROM rw_users";
 	public final static String SELECT_ID_BY_LOGIN = "SELECT u_id FROM rw_users WHERE login = ?";
-	public final static String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.u_id WHERE gr_id = ?";
+	public final static String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.user_id WHERE gr_id = ?";
 	public final static String SELECT_PWD_BY_LOGIN = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.login = ?";
 	public final static String SELECT_PWD_BY_EMAIL = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.email = ?";
 	public final static String SELECT_USERS_BY_FNAME = "SELECT * FROM rw_users WHERE fname = ?";
@@ -51,7 +51,6 @@ public class UserDAOImpl implements IUserDAO {
 				Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		
 		jdbcTemplate.update(INSERT_NEW_USER, params, types);
-		System.out.println("AFTER UPDATE 1");
 		return getIDByLogin(user.getLogin());
 	}
 
@@ -89,16 +88,13 @@ public class UserDAOImpl implements IUserDAO {
 
 	public List<User> getAllGroupUsers(int groupID) {
 		Object[] params = new Object[] {groupID};
-		return jdbcTemplate.query(SELECT_USER_BY_LOGIN, params, new UserRowMapper());	
+		return jdbcTemplate.query(SELECT_GROUP_USERS, params, new UserRowMapper());	
 	}
 	
 	public int getIDByLogin(String login) {
-		System.out.println("AFTER UPDATE 1 login = " + login);
 		Object[] params = new Object[]{login};
 		int[] types = new int[] {Types.VARCHAR};
-		System.out.println("BEFORE HERE");
 		List<Integer> ints = jdbcTemplate.query(SELECT_ID_BY_LOGIN, params, types, new IntegerRowMapper());
-		System.out.println("AFTER QUERY");
 		return ints.get(0);
 	}
 	

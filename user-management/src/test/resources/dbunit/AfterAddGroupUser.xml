@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<rw_users u_id="3" login="testLgn"  pwd="pwdd" fname="bonny" sname="toe"  email="no4body@nowhere.com"  />
+   	<rw_groups gr_id="2" gr_name="TestGrName2" owner_id="2" />	
+    <gr_involve user_id="3" gr_id="2" />
+</dataset>
