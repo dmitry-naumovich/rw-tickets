@@ -1,9 +1,8 @@
 package by.epam.naumovich.rw_tickets.dao;
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,59 +10,60 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.unitils.UnitilsJUnit4;
-import org.unitils.database.annotations.TestDataSource;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.annotation.ExpectedDataSet;
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
-
+import static org.junit.Assert.assertEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.*;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
 import by.epam.naumovich.rw_tickets.entity.User;
 
 
-@DataSet("UserDAOTest.xml")
+@DataSet("dbunit/DAODataTest.xml")
 public class UserDAOTest extends UnitilsJUnit4 {
 	
-	/*@TestDataSource
-    private DataSource dataSource;*/
-	
+	ApplicationContext context;
 	private IUserDAO userDAO;
 	User testUser;
 
 	@Before    
     public void init() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("user-module-test.xml");
+		context = new ClassPathXmlApplicationContext("user-module-test.xml");
 		System.out.println("context here");
 		userDAO = (IUserDAO) context.getBean("userDao");
+    }
+	
+	public void initTestUser() {
 		testUser = new User();
-		testUser.setId(9999);
+		testUser.setId(6);
 		testUser.setLogin("testLogin");
     	testUser.setFname("testname");
     	testUser.setPwd("pwd");
     	testUser.setSname("testSurname");
+    	testUser.setCountry("by");
+    	testUser.setCity("mn");
+    	testUser.setPhone("123456789012");
+ 
     	testUser.setEmail("test@email.com");
-    	testUser.setPassport("TST19000");
-    	testUser.setAddress("test adress street 45");
+    	testUser.setPassport("TST190009999");
+    	testUser.setAddress("test street 45");
     	testUser.setAdmin(false);
-    }
-/*	
+	}
 	
 	@Test
     public void testGetById() {
-        User result = userDAO.getUserById(1000);
+        User result = userDAO.getUserById(1);
         assertPropertyLenientEquals("login", "jdoe", result);
         assertPropertyLenientEquals("pwd", "pwdd", result);
         assertPropertyLenientEquals("email", "nobody@nowhere.com", result);
         assertPropertyLenientEquals("fname", "johnny", result);
         assertPropertyLenientEquals("sname", "doe", result);
         assertPropertyLenientEquals("phone", "111223334455", result);
-    }*/
+    }
 	
 	@Test
     public void testGetByLogin() {
-		System.out.println("testGetById() method");
         User result = userDAO.getUserByLogin("jdoe");
         assertPropertyLenientEquals("login", "jdoe", result);
         assertPropertyLenientEquals("pwd", "pwdd", result);
@@ -74,44 +74,50 @@ public class UserDAOTest extends UnitilsJUnit4 {
     }
 	
     @Test
+    @DataSet("dbunit/DAODataTest.xml")
     public void testGetAllUsers() {
-        List<User> result = userDAO.getAllUsers();    
-        if (result.isEmpty()) {
-        	System.out.println("eee");
-        }
-        assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk", "testLgn", "tytyty", "separ"), result);
+        List<User> result = userDAO.getAllUsers();
+        assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk", "testLgn", "tytyty", "separ", "testLogin"), result);
     }
     
     @Test
-    @DatabaseSetup("UserDAOTest.xml")
-    @ExpectedDataSet({"dbunit/AddUserTest.xml"})
+    @ExpectedDataSet({"dbunit/AfterAddTest.xml"})
     public void testAddUser() {
-    	userDAO.addUser(testUser);
+    	initTestUser();
+    	int id = userDAO.addUser(testUser);
+    	System.out.println("id = " + id);
     }
     
     /*@Test
     @ExpectedDataSet({"dbunit/UpdUserTest.xml"})
     public void testUpdateUser() {
+    	initTestUser();
     	testUser.setLogin("noow");
     	userDAO.updateUser(1000, testUser);
     }*/
     
-   /* @Test(expected = EmptyResultDataAccessException.class)
+    /*@Test(expected = EmptyResultDataAccessException.class)
    	public void testDeleteUser() {
-    	userDAO.deleteUser(1300);
-    	userDAO.getUserById(3000);
-    }*/
+    	int id = userDAO.getIDByLogin("separ");
+    	userDAO.deleteUser(id);
+    	userDAO.getUserById(id);
+   	}*/
     
+    @Test
+    public void testGetIDByLogin() {
+    	int result = userDAO.getIDByLogin("jdoe");
+    	assertEquals(1, result);
+    }
     @Test
     public void testGetPwdByLogin() {
     	String result = userDAO.getPasswordByLogin("tytyty");
-    	assertPropertyLenientEquals("pwd", "pywd", result);
+    	assertEquals("pywd", result);
     }
     
     @Test
     public void testGetPwdByEmail() {
-    	String result = userDAO.getPasswordByLogin("no3body@nowhere.com");
-    	assertPropertyLenientEquals("pwd", "pywd", result);
+    	String result = userDAO.getPasswordByEmail("no3body@nowhere.com");
+    	assertEquals("pywd", result);
     }
 
     @Test

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-    <rw_users login="testLogin"  pwd="pwd" email="test@email.com" fname="testname" sname="testSurname" address="test adress street 45" 
-    	passport="TST19000"  is_admin="0" />
-</dataset>

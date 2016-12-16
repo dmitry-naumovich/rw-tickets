@@ -85,6 +85,15 @@ public interface IUserDAO {
 	String getPasswordByLogin(String login);
 	
 	/**
+	 * Returns the id of the user by his login
+	 * 
+	 * @param login user login
+	 * @return id user id or 0 if it was not found
+	 * @throws DAOException
+	 */
+	int getIDByLogin(String login);
+	
+	/**
 	 * Gets user password by his email from the data source
 	 * 
 	 * @param email user email

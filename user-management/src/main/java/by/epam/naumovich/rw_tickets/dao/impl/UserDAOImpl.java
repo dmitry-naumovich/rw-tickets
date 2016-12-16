@@ -1,59 +1,58 @@
 package by.epam.naumovich.rw_tickets.dao.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
-
-import by.epam.naumovich.rw_tickets.dao.exception.DAOException;
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
+import by.epam.naumovich.rw_tickets.dao.mapper.IntegerRowMapper;
+import by.epam.naumovich.rw_tickets.dao.mapper.StringRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.UserRowMapper;
 import by.epam.naumovich.rw_tickets.entity.User;
 
 public class UserDAOImpl implements IUserDAO {
 
-	public final static String INSERT_NEW_USER = "INSERT INTO rw_users (u_id, login, pwd, fname, sname, email, b_date, country, city, address, phone, passport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public final static String INSERT_NEW_USER = "INSERT INTO rw_users (login, pwd, fname, sname, email,  country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public final static String UPDATE_USER = "UPDATE rw_users SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, b_date = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE u_id = ?";
 	public final static String DELETE_USER = "DELETE FROM rw_users WHERE u_id = ?";
 	public final static String SELECT_USER_BY_ID = "SELECT * FROM rw_users WHERE u_id = ?";
 	public final static String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_users WHERE login = ?";
 	public final static String SELECT_ALL_USERS = "SELECT * FROM rw_users";
-	public final static String SELECT_ID_BY_LOGIN = "SELECT rw_users.u_id FROM rw_users WHERE rw_users.login = ?";
+	public final static String SELECT_ID_BY_LOGIN = "SELECT u_id FROM rw_users WHERE login = ?";
 	public final static String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.u_id WHERE gr_id = ?";
-	
-	private DataSource dataSource;
+	public final static String SELECT_PWD_BY_LOGIN = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.login = ?";
+	public final static String SELECT_PWD_BY_EMAIL = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.email = ?";
+	public final static String SELECT_USERS_BY_FNAME = "SELECT * FROM rw_users WHERE fname = ?";
+	public final static String SELECT_USERS_BY_SNAME = "SELECT * FROM rw_users WHERE sname = ?";
+	public final static String SELECT_USERS_BY_COUNTRY = "SELECT * FROM rw_users WHERE country = ?";
+	public final static String SELECT_USERS_BY_CITY = "SELECT * FROM rw_users WHERE city = ?";
+	public final static String SELECT_ALL_USERS_SORT_BY_NAME = "SELECT * FROM rw_users ORDER BY fname ASC";
+	public final static String SELECT_ALL_USERS_SORT_BY_SURNAME = "SELECT * FROM rw_users ORDER BY sname ASC";
+	public final static String SELECT_ALL_USERS_SORT_BY_EMAIL = "SELECT * FROM rw_users ORDER BY email ASC";
+	public final static String SELECT_ALL_USERS_SORT_BY_COUNTRY = "SELECT * FROM rw_users ORDER BY country ASC";
+	public final static String SELECT_ALL_USERS_SORT_BY_CITY = "SELECT * FROM rw_users ORDER BY city ASC";
+	public final static String SELECT_ALL_USERS_SORT_BY_ADDRESS = "SELECT * FROM rw_users ORDER BY address ASC";
+	public final static String SELECT_ALL_USERS_SORT_BY_LOGIN = "SELECT * FROM rw_users ORDER BY login ASC";
+	public final static String SELECT_ALL_USERS_SORT_BY_BDATE = "SELECT * FROM rw_users ORDER BY b_date ASC";
+
 	private JdbcTemplate jdbcTemplate;
 	
 	public UserDAOImpl(DataSource dataSource) {
-		this.dataSource = dataSource;
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
 	public int addUser(User user) {
+		Object[] params = new Object[] {user.getLogin(), user.getPwd(), user.getFname(), user.getSname(), user.getEmail(), 
+				 user.getCountry(), user.getCity(), user.getAddress(), user.getPhone(), user.getPassport()};
 		
-		Object[] params = new Object[] { user.getId(), user.getLogin(), user.getPwd(), user.getFname(), user.getSname(), user.getEmail(), 
-				user.getBirthDate(), user.getCountry(), user.getCity(), user.getAddress(), user.getPhone(), user.getPassport()};
-		
-		int[] types = new int[] { Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.DATE, Types.VARCHAR,
+		int[] types = new int[] {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
 				Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		
 		jdbcTemplate.update(INSERT_NEW_USER, params, types);
-		
-		/*Object[] params2 = new Object[]{user.getLogin()};
-		int[] types2 = new int[] {Types.VARCHAR};
-		jdbcTemplate.update(SELECT_ID_BY_LOGIN, params2, types2, new RowCallbackHandler() {
-			@Override
-			public void processRow(ResultSet arg0) throws SQLException {
-				user.setId(arg0.getInt(0));
-			}
-			
-		});*/
-		return user.getId();
+		System.out.println("AFTER UPDATE 1");
+		return getIDByLogin(user.getLogin());
 	}
 
 	public void updateUser(int id, User updUser) {
@@ -92,75 +91,81 @@ public class UserDAOImpl implements IUserDAO {
 		Object[] params = new Object[] {groupID};
 		return jdbcTemplate.query(SELECT_USER_BY_LOGIN, params, new UserRowMapper());	
 	}
-
+	
+	public int getIDByLogin(String login) {
+		System.out.println("AFTER UPDATE 1 login = " + login);
+		Object[] params = new Object[]{login};
+		int[] types = new int[] {Types.VARCHAR};
+		System.out.println("BEFORE HERE");
+		List<Integer> ints = jdbcTemplate.query(SELECT_ID_BY_LOGIN, params, types, new IntegerRowMapper());
+		System.out.println("AFTER QUERY");
+		return ints.get(0);
+	}
+	
 	public String getPasswordByLogin(String login) {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] params = new Object[]{login};
+		int[] types = new int[] {Types.VARCHAR};
+		List<String> strings = jdbcTemplate.query(SELECT_PWD_BY_LOGIN, params, types, new StringRowMapper());
+		return strings.get(0);
 	}
 
 	public String getPasswordByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] params = new Object[]{email};
+		int[] types = new int[] {Types.VARCHAR};
+		List<String> strings = jdbcTemplate.query(SELECT_PWD_BY_EMAIL, params, types, new StringRowMapper());
+		return strings.get(0);
 	}
 
 	public List<User> getUsersByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] params = new Object[] {name};
+		return jdbcTemplate.query(SELECT_USERS_BY_FNAME, params, new UserRowMapper());
 	}
 
 	public List<User> getUsersBySurname(String surname) {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] params = new Object[] {surname};
+		return jdbcTemplate.query(SELECT_USERS_BY_SNAME, params, new UserRowMapper());
 	}
 
 	public List<User> getUsersByCountry(String country) {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] params = new Object[] {country};
+		return jdbcTemplate.query(SELECT_USERS_BY_COUNTRY, params, new UserRowMapper());
 	}
 
 	public List<User> getUsersByCity(String city) {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] params = new Object[] {city};
+		return jdbcTemplate.query(SELECT_USERS_BY_CITY, params, new UserRowMapper());
 	}
 
 	public List<User> getAllUsersSortByName() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_NAME, new UserRowMapper());
 	}
 
 	public List<User> getAllUsersSortBySurname() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_SURNAME, new UserRowMapper());
 	}
 
 	public List<User> getAllUsersSortByEmail() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_EMAIL, new UserRowMapper());
 	}
 
 	public List<User> getAllUsersSortByCountry() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_COUNTRY, new UserRowMapper());
 	}
 
 	public List<User> getAllUsersSortByCity() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_CITY, new UserRowMapper());
 	}
 
 	public List<User> getAllUsersSortByAddress() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_ADDRESS, new UserRowMapper());
 	}
 
 	public List<User> getAllUsersSortByLogin() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_LOGIN, new UserRowMapper());
 	}
 
 	public List<User> getAllUsersSortByBirthdate() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_BDATE, new UserRowMapper());
 	}
 
 }
