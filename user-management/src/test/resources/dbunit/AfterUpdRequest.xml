@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <gr_requests rq_num="1" rq_type="i" from_user="1" to_user="2" gr_id="1" cr_datetime="2016-12-07 11:02:44" 
-    	cl_datetime="2016-12-07 11:02:44" status="o" rq_comment="test comment upd" />
-    <gr_requests rq_num="2" rq_type="p" from_user="3" to_user="1" gr_id="1" cr_datetime="2016-12-08 11:02:44" 
-    	cl_datetime="2016-12-11 11:02:44" status="o" rq_comment="test comment" /> 
-    <gr_requests rq_num="3" rq_type="i" from_user="1" to_user="2" gr_id="5" cr_datetime="2016-12-09 11:02:44" 
-    	cl_datetime="2016-12-14 11:02:44" status="c" rq_comment="test comment" />
+    <gr_requests rq_num="1" rq_type="i" from_user="1" to_user="2" gr_id="1" cr_datetime="2016/12/07 11:02:44" 
+    	 status="a" rq_comment="test comment upd" />
+    <gr_requests rq_num="2" rq_type="p" from_user="3" to_user="1" gr_id="1" cr_datetime="2016/12/08 11:02:44" 
+    	 status="a" rq_comment="test comment" /> 
+    <gr_requests rq_num="3" rq_type="i" from_user="1" to_user="2" gr_id="5" cr_datetime="2016/12/09 11:02:44" 
+    	 status="c" rq_comment="test comment" />
 </dataset>

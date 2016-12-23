@@ -8,11 +8,19 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupRequestDAO;
+import by.epam.naumovich.rw_tickets.dao.mapper.GroupRequestMapper;
+import by.epam.naumovich.rw_tickets.dao.mapper.IntegerRowMapper;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 
 public class GroupRequestDAOImpl implements IGroupRequestDAO {
 
-	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_requests (rq_type, from_user, to_user, gr_id, cr_datetime, cl_datetime, status, rq_comment) VALUES (?, ?, ?, ?, ?, ?, ?, ?";
+	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_requests (rq_type, from_user, to_user, gr_id, status, rq_comment) VALUES (?, ?, ?, ?, ?, ?)";
+	public static final String UPDATE_REQUEST = "UPDATE gr_requests SET status = ? WHERE rq_num = ?";
+	public static final String DELETE_REQUEST = "DELETE FROM gr_requests WHERE rq_num = ?";
+	public static final String SELECT_REQ_BY_NUM = "SELECT * FROM gr_requests WHERE rq_num = ?";
+	public static final String SELECT_REQ_NUM_BY_USER_AND_GROUP_IDS = "SELECT rq_num FROM gr_requests WHERE from_user = ? AND to_user = ? AND gr_id = ?";
+	public static final String SELECT_USER_INC_REQUESTS = "SELECT * FROM gr_requests WHERE to_user = ? ORDER BY cr_datetime DESC";
+	public static final String SELECT_USER_OUT_REQUESTS = "SELECT * FROM gr_requests WHERE from_user = ? ORDER BY cr_datetime DESC";
 	
 	private JdbcTemplate jdbcTemplate;
 	
@@ -22,53 +30,50 @@ public class GroupRequestDAOImpl implements IGroupRequestDAO {
 	
 	@Override
 	public int addGroupRequest(GroupRequest request) {
-		Object[] params = new Object[] {request.getType(), request.getFromUser(), request.getToUser(), request.getGroupId(),
-				request.getCreateDate(), request.getCreateTime(), request.getCloseDate(), request.getCloseTime(), request.getStatus(), request.getComment()};
-		int[] types = new int[] {Types.CHAR, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.DATE, Types.TIME, Types.DATE, Types.TIME, Types.CHAR, Types.VARCHAR};
+		Object[] params = new Object[] {request.getRq_type(), request.getFrom_user(), request.getTo_user(), request.getGr_id(),
+				request.getStatus(), request.getRq_comment()};
+		int[] types = new int[] {Types.CHAR, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.CHAR, Types.VARCHAR};
 		jdbcTemplate.update(INSERT_NEW_REQUEST, params, types);
-		return 0;
+		return getReqNumByUserAndGroupIDs(request.getFrom_user(), request.getTo_user(), request.getGr_id());
 	}
 
 	@Override
-	public void updateGroupRequest(int num, GroupRequest updRequest) {
-		// TODO Auto-generated method stub
-
+	public void updateGroupRequest(int num, char newStatus) {
+		Object[] params = new Object[] {newStatus, num};
+		int[] types = new int[] {Types.CHAR, Types.INTEGER};
+		jdbcTemplate.update(UPDATE_REQUEST, params, types);
 	}
 
 	@Override
 	public void deleteGroupRequest(int num) {
-		// TODO Auto-generated method stub
-
+		Object[] params = new Object[] {num};
+		jdbcTemplate.update(DELETE_REQUEST, params);
 	}
 
 	@Override
-	public GroupRequest getGroupRequestById(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public GroupRequest getGroupRequestByNum(int num) {
+		Object[] params = new Object[] {num};
+		List<GroupRequest> reqs = jdbcTemplate.query(SELECT_REQ_BY_NUM, params, new GroupRequestMapper());
+		return reqs.get(0);
+	}
+
+	@Override
+	public int getReqNumByUserAndGroupIDs(int fromUser, int toUser, int groupID) {
+		Object[] params = new Object[] {fromUser, toUser, groupID};
+		int[] types = new int[] {Types.INTEGER, Types.INTEGER, Types.INTEGER};
+		List<Integer> ints = jdbcTemplate.query(SELECT_REQ_NUM_BY_USER_AND_GROUP_IDS, params, types, new IntegerRowMapper());
+		return ints.get(0);
 	}
 
 	@Override
 	public List<GroupRequest> getUserIncRequests(int userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<GroupRequest> getUserIncRequestsSortByDate(int userID) {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] params = new Object[] {userID};
+		return jdbcTemplate.query(SELECT_USER_INC_REQUESTS, params, new GroupRequestMapper());
 	}
 
 	@Override
 	public List<GroupRequest> getUserOutRequests(int userID) {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] params = new Object[] {userID};
+		return jdbcTemplate.query(SELECT_USER_OUT_REQUESTS, params, new GroupRequestMapper());
 	}
-
-	@Override
-	public List<GroupRequest> getUserOutRequestsSortByDate(int userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

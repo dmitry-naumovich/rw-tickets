@@ -14,14 +14,14 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
 public class UserGroupDAOImpl implements IUserGroupDAO {
 
-	public static final String INSERT_NEW_GROUP = "INSERT INTO rw_groups (gr_name, cr_datetime, owner_id) VALUES (?, TO_DATE(SYSDATE, 'yyyy/mm/dd hh24:mi:ss'), ?)";
+	public static final String INSERT_NEW_GROUP = "INSERT INTO rw_groups (gr_name, owner_id) VALUES (?, ?)";
 	public static final String UPDATE_GROUP = "UPDATE rw_groups SET gr_name = ?, owner_id = ? WHERE gr_id = ?";
 	public static final String DELETE_GROUP = "DELETE FROM rw_groups WHERE gr_id = ?";
 	public static final String SELECT_GROUP_BY_ID = "SELECT * FROM rw_groups WHERE gr_id = ?";
-	public static final String INSERT_NEW_INVOLVE = "INSERT INTO gr_involve (user_id, gr_id, st_datetime) VALUES (?, TO_DATE(SYSDATE, 'yyyy/mm/dd hh24:mi:ss'), ?";
+	public static final String INSERT_NEW_INVOLVE = "INSERT INTO gr_involve (user_id, gr_id) VALUES (?, ?)";
 	public static final String DELETE_USER_FROM_GROUP = "DELETE FROM gr_involve WHERE user_id = ? AND gr_id = ?";
-	public static final String SELECT_USER_GROUPS_BY_ID = "SELECT rw_groups.* FROM rw_groups JOIN gr_involve ON rw_groups.gr_id = gr_involve.gr_id WHERE rw_groups.user_id = ?";
-	public static final String SELECT_GROUP_ID_BY_NAME_AND_OWNER = "SELECT gr_name FROM rw_groups WHERE gr_name = ? AND owner_id = ?";
+	public static final String SELECT_USER_GROUPS_BY_ID = "SELECT rw_groups.* FROM rw_groups JOIN gr_involve ON rw_groups.gr_id = gr_involve.gr_id WHERE gr_involve.user_id = ?";
+	public static final String SELECT_GROUP_ID_BY_NAME_AND_OWNER = "SELECT gr_id FROM rw_groups WHERE gr_name = ? AND owner_id = ?";
 	
 	private JdbcTemplate jdbcTemplate;
 	
@@ -31,20 +31,22 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 	
 	@Override
 	public int addUserGroup(UserGroup group) {
-		Object[] params = new Object[] {group.getName(), group.getOwner()};
+		Object[] params = new Object[] {group.getGr_name(), group.getOwner_id()};
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER};
 		jdbcTemplate.update(INSERT_NEW_GROUP, params, types);
-		return getGroupIdByNameAndOwner(group.getName(), group.getOwner());
+		
+		// insert new involve here
+		
+		return getGroupIdByNameAndOwner(group.getGr_name(), group.getOwner_id());
 	}
 
 	@Override
 	public void updateUserGroup(int id, UserGroup updGroup) {
-		Object[] params = new Object[] {updGroup.getName(), updGroup.getOwner(), id};
+		Object[] params = new Object[] {updGroup.getGr_name(), updGroup.getOwner_id(), id};
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER, Types.INTEGER};
 		jdbcTemplate.update(UPDATE_GROUP, params, types);
 	}
 
-	
 	@Override
 	public void deleteUserGroup(int id) {
 		Object[] params = new Object[] {id};

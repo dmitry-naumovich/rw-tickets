@@ -11,28 +11,28 @@ import java.sql.Time;
  */
 public class UserGroup {
 
-	private int id;
-	private String name;
+	private int gr_id;
+	private String gr_name;
 	private Date createDate;
 	private Time createTime;
-	private int owner;
+	private int owner_id;
 	
 	public UserGroup() {}
 	
-	public int getId() {
-		return id;
+	public int getGr_id() {
+		return gr_id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setGr_id(int id) {
+		this.gr_id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getGr_name() {
+		return gr_name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setGr_name(String name) {
+		this.gr_name = name;
 	}
 
 	public Date getCreateDate() {
@@ -51,22 +51,22 @@ public class UserGroup {
 		this.createTime = createTime;
 	}
 
-	public int getOwner() {
-		return owner;
+	public int getOwner_id() {
+		return owner_id;
 	}
 
-	public void setOwner(int owner) {
-		this.owner = owner;
+	public void setOwner_id(int owner) {
+		this.owner_id = owner;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 13;
-		hash = 17 * hash + id;
-		hash = 43 * hash + name.hashCode();
+		hash = 17 * hash + gr_id;
+		hash = 43 * hash + gr_name.hashCode();
 		hash = 53 * hash + createDate.hashCode();
 		hash = 47 * hash + createTime.hashCode();
-		hash = 3 * hash + owner;
+		hash = 3 * hash + owner_id;
 		
 		return hash;
 	}
@@ -78,14 +78,14 @@ public class UserGroup {
 		if (obj.getClass() != getClass()) { return false; }
 		
 		UserGroup grp = (UserGroup)obj;
-		if (id != grp.id) { 
+		if (gr_id != grp.gr_id) { 
 			return false; 
 		}
-		if (owner != grp.owner) {
+		if (owner_id != grp.owner_id) {
 			return false; 
 		}
 		
-		if ((null == name) ? (grp.name != null) : !name.equals(grp.name)) {
+		if ((null == gr_name) ? (grp.gr_name != null) : !gr_name.equals(grp.gr_name)) {
 			return false;
 		}
 		if ((null == createDate) ? (grp.createDate != null) : !createDate.equals(grp.createDate)) {
@@ -103,11 +103,11 @@ public class UserGroup {
 		StringBuilder result = new StringBuilder();
 
 	    result.append(this.getClass().getSimpleName() + " Object {");
-	    result.append(" ID: " + id);
-	    result.append(", name: " + name);
+	    result.append(" ID: " + gr_id);
+	    result.append(", name: " + gr_name);
 	    result.append(", createDate: " + createDate);
 	    result.append(", createTime: " + createTime);
-	    result.append(", owner: " + owner);
+	    result.append(", owner: " + owner_id);
 	    result.append("}");
 
 	    return result.toString();

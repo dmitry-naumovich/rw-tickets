@@ -1,11 +1,8 @@
 package by.epam.naumovich.rw_tickets.dao;
 
+import static org.junit.Assert.assertEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyLenientEquals;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,13 +32,12 @@ public class GroupRequestDAOTest extends UnitilsJUnit4 {
 	
 	public void initTestRequest() {
 		testRequest = new GroupRequest();
-		testRequest.setType('p');
-		testRequest.setFromUser(4);
-		testRequest.setToUser(1);
-		testRequest.setGroupId(1);
-		testRequest.setComment("test comment 5");
-		testRequest.setCreateDate(Date.valueOf(LocalDate.now()));
-		testRequest.setCreateTime(Time.valueOf(LocalTime.now()));
+		testRequest.setRq_type('p');
+		testRequest.setFrom_user(4);
+		testRequest.setTo_user(1);
+		testRequest.setGr_id(1);
+		testRequest.setStatus('o');
+		testRequest.setRq_comment("test comment 5");
 	}
 	
 	@Test
@@ -49,16 +45,14 @@ public class GroupRequestDAOTest extends UnitilsJUnit4 {
 	public void testAddRequest() {
 		initTestRequest();
 		int reqNum = requestDAO.addGroupRequest(testRequest);
-		testRequest.setNum(reqNum);
+		testRequest.setRq_num(reqNum);
 	}
 	
 	@Test
 	@ExpectedDataSet("dbunit/AfterUpdRequest.xml")
 	public void testUpdateRequest() {
-		GroupRequest req = requestDAO.getGroupRequestById(1);
-		req.setStatus('o');
-		req.setComment("test comment upd");
-		requestDAO.updateGroupRequest(1, req);
+		char newStatus = 'a';
+		requestDAO.updateGroupRequest(2, newStatus);
 	}
 	
 	/*@Test
@@ -67,29 +61,35 @@ public class GroupRequestDAOTest extends UnitilsJUnit4 {
 	}*/
 	
 	@Test
-	public void testGetReqById() {
-		GroupRequest result = requestDAO.getGroupRequestById(2);
-		assertPropertyLenientEquals("rq_type", "p", result);
-		assertPropertyLenientEquals("from_user", "3", result);
-		assertPropertyLenientEquals("to_user", "1", result);
-		assertPropertyLenientEquals("gr_id", "1", result);
-		assertPropertyLenientEquals("status", "o", result);
+	public void testGetReqByNum() {
+		GroupRequest result = requestDAO.getGroupRequestByNum(2);
+		assertPropertyLenientEquals("rq_type", 'p', result);
+		assertPropertyLenientEquals("from_user", 3, result);
+		assertPropertyLenientEquals("to_user", 1, result);
+		assertPropertyLenientEquals("gr_id", 1, result);
+		assertPropertyLenientEquals("status", 'o', result);
 		assertPropertyLenientEquals("rq_comment", "test comment", result);
+	}
+	
+	@Test
+	public void testGetNumByIDs() {
+		int result = requestDAO.getReqNumByUserAndGroupIDs(1, 2, 5);
+		assertEquals(3, result);
 	}
 	
 	@Test
 	public void testGetUserIncReq() {
 		List<GroupRequest> result = requestDAO.getUserIncRequests(1);
-		assertPropertyLenientEquals("rq_num", Arrays.asList("2"), result);
-		assertPropertyLenientEquals("gr_id", Arrays.asList("1"), result);
+		assertPropertyLenientEquals("rq_num", Arrays.asList(2), result);
+		assertPropertyLenientEquals("gr_id", Arrays.asList(1), result);
 		assertPropertyLenientEquals("rq_comment", Arrays.asList("test comment"), result);
 	}
 	
 	@Test
 	public void testGetUserOutReq() {
-		List<GroupRequest> result = requestDAO.getUserIncRequests(1);
-		assertPropertyLenientEquals("rq_num", Arrays.asList("1", "3"), result);
-		assertPropertyLenientEquals("gr_id", Arrays.asList("1", "5"), result);
+		List<GroupRequest> result = requestDAO.getUserOutRequests(1);
+		assertPropertyLenientEquals("rq_num", Arrays.asList(1, 3), result);
+		assertPropertyLenientEquals("gr_id", Arrays.asList(1, 5), result);
 		assertPropertyLenientEquals("rq_comment", Arrays.asList("test comment", "test comment"), result);
 	}
 }

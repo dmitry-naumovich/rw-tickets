@@ -55,7 +55,15 @@ public class UserDAOTest extends UnitilsJUnit4 {
     	int id = userDAO.addUser(testUser);
     	testUser.setId(id);
     }
-	
+    
+    @Test
+    @ExpectedDataSet({"dbunit/AfterUpdUser.xml"})
+    public void testUpdateUser() {
+    	User us = userDAO.getUserById(1);
+    	us.setLogin("nee");
+    	userDAO.updateUser(1, us);
+    }
+    
 	@Test
     public void testGetById() {
         User result = userDAO.getUserById(1);
@@ -83,14 +91,6 @@ public class UserDAOTest extends UnitilsJUnit4 {
         List<User> result = userDAO.getAllUsers();
         assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk", "testLgn", "tytyty", "separ"), result);
     }
-    
-   /* @Test
-    @ExpectedDataSet({"dbunit/AfterUpdUser.xml"})
-    public void testUpdateUser() {
-    	User us = userDAO.getUserById(1);
-    	us.setLogin("noow");
-    	userDAO.updateUser(1, us);
-    }*/
     
     /*@Test
     @DataSet("dbunit/DAODataTest.xml")

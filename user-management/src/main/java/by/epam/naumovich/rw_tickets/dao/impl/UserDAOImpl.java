@@ -14,8 +14,8 @@ import by.epam.naumovich.rw_tickets.entity.User;
 
 public class UserDAOImpl implements IUserDAO {
 
-	public static final String INSERT_NEW_USER = "INSERT INTO rw_users (login, pwd, fname, sname, email,  country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	public static final String UPDATE_USER = "UPDATE rw_users SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, b_date = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE u_id = ?";
+	public static final String INSERT_NEW_USER = "INSERT INTO rw_users (login, pwd, fname, sname, email, country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public static final String UPDATE_USER = "UPDATE rw_users SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE rw_users.u_id = ?";
 	public static final String DELETE_USER = "DELETE FROM rw_users WHERE u_id = ?";
 	public static final String SELECT_USER_BY_ID = "SELECT * FROM rw_users WHERE u_id = ?";
 	public static final String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_users WHERE login = ?";
@@ -56,9 +56,9 @@ public class UserDAOImpl implements IUserDAO {
 
 	public void updateUser(int id, User updUser) {
 		Object[] params = new Object[] {updUser.getLogin(), updUser.getPwd(), updUser.getFname(), updUser.getSname(), updUser.getEmail(), 
-				updUser.getBirthDate(), updUser.getCountry(), updUser.getCity(), updUser.getAddress(), updUser.getPhone(), updUser.getPassport(), id};
+				 updUser.getCountry(), updUser.getCity(), updUser.getAddress(), updUser.getPhone(), updUser.getPassport(), id};
 		
-		int[] types = new int[] {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.DATE, Types.VARCHAR,
+		int[] types = new int[] {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
 				Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER};
 		
 		jdbcTemplate.update(UPDATE_USER, params, types);

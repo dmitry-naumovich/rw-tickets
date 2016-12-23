@@ -11,12 +11,12 @@ import java.sql.Time;
  */
 public class GroupRequest {
 
-	private int num;
-	private char type;
-	private int fromUser;
-	private int toUser;
-	private int groupId;
-	private String comment;
+	private int rq_num;
+	private char rq_type;
+	private int from_user;
+	private int to_user;
+	private int gr_id;
+	private String rq_comment;
 	private char status;
 	private Date createDate;
 	private Time createTime;
@@ -26,52 +26,52 @@ public class GroupRequest {
 	
 	public GroupRequest() {}
 	
-	public int getNum() {
-		return num;
+	public int getRq_num() {
+		return rq_num;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setRq_num(int num) {
+		this.rq_num = num;
 	}
 
-	public char getType() {
-		return type;
+	public char getRq_type() {
+		return rq_type;
 	}
 
-	public void setType(char type) {
-		this.type = type;
+	public void setRq_type(char type) {
+		this.rq_type = type;
 	}
 
-	public int getFromUser() {
-		return fromUser;
+	public int getFrom_user() {
+		return from_user;
 	}
 
-	public void setFromUser(int fromUser) {
-		this.fromUser = fromUser;
+	public void setFrom_user(int fromUser) {
+		this.from_user = fromUser;
 	}
 
-	public int getToUser() {
-		return toUser;
+	public int getTo_user() {
+		return to_user;
 	}
 
-	public void setToUser(int toUser) {
-		this.toUser = toUser;
+	public void setTo_user(int toUser) {
+		this.to_user = toUser;
 	}
 
-	public int getGroupId() {
-		return groupId;
+	public int getGr_id() {
+		return gr_id;
 	}
 
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
+	public void setGr_id(int groupId) {
+		this.gr_id = groupId;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getRq_comment() {
+		return rq_comment;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setRq_comment(String comment) {
+		this.rq_comment = comment;
 	}
 
 	public char getStatus() {
@@ -117,12 +117,12 @@ public class GroupRequest {
 	@Override
 	public int hashCode() {
 		int hash = 3;
-		hash = 5 * hash + num;
-		hash = 7 * hash + type;
-		hash = 11 * hash + fromUser;
-		hash = 17 * hash + toUser;
-		hash = 13 * hash + groupId;
-		hash = 19 * hash + comment.hashCode();
+		hash = 5 * hash + rq_num;
+		hash = 7 * hash + rq_type;
+		hash = 11 * hash + from_user;
+		hash = 17 * hash + to_user;
+		hash = 13 * hash + gr_id;
+		hash = 19 * hash + rq_comment.hashCode();
 		hash = 23 * hash + status;
 		hash = 29 * hash + createDate.hashCode();
 		hash = 31 * hash + createTime.hashCode();
@@ -138,26 +138,26 @@ public class GroupRequest {
 		if (obj.getClass() != getClass()) { return false; }
 		
 		GroupRequest req = (GroupRequest)obj;
-		if (num != req.num) { 
+		if (rq_num != req.rq_num) { 
 			return false; 
 		}
-		if (type != req.type) {
+		if (rq_type != req.rq_type) {
 			return false; 
 		}
-		if (fromUser != req.fromUser) {
+		if (from_user != req.from_user) {
 			return false; 
 		}
-		if (toUser != req.toUser) {
+		if (to_user != req.to_user) {
 			return false; 
 		}
-		if (groupId != req.groupId) {
+		if (gr_id != req.gr_id) {
 			return false; 
 		}
 		if (status != req.status) {
 			return false; 
 		}
 		
-		if ((null == comment) ? (req.comment != null) : !comment.equals(req.comment)) {
+		if ((null == rq_comment) ? (req.rq_comment != null) : !rq_comment.equals(req.rq_comment)) {
 			return false;
 		}
 		if ((null == createDate) ? (req.createDate != null) : !createDate.equals(req.createDate)) {
@@ -181,12 +181,12 @@ public class GroupRequest {
 		StringBuilder result = new StringBuilder();
 
 	    result.append(this.getClass().getSimpleName() + " Object {");
-	    result.append(" num: " + num);
-	    result.append(", type: " + type);
-	    result.append(", fromUser: " + fromUser);
-	    result.append(", toUser: " + toUser);
-	    result.append(", groupId: " + groupId);
-	    if (comment != null) { result.append(", comment: " + comment); }
+	    result.append(" num: " + rq_num);
+	    result.append(", type: " + rq_type);
+	    result.append(", fromUser: " + from_user);
+	    result.append(", toUser: " + to_user);
+	    result.append(", groupId: " + gr_id);
+	    if (rq_comment != null) { result.append(", comment: " + rq_comment); }
 	    result.append(", status: " + status);
 	    result.append(", createDate: " + createDate);
 	    result.append(", createTime: " + createTime);
