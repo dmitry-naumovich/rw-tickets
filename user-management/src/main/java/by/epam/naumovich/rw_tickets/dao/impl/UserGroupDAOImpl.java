@@ -35,9 +35,9 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER};
 		jdbcTemplate.update(INSERT_NEW_GROUP, params, types);
 		
-		// insert new involve here
-		
-		return getGroupIdByNameAndOwner(group.getGr_name(), group.getOwner_id());
+		int newGroupID = getGroupIdByNameAndOwner(group.getGr_name(), group.getOwner_id());
+		addUserToGroup(group.getOwner_id(), newGroupID);
+		return newGroupID;
 	}
 
 	@Override

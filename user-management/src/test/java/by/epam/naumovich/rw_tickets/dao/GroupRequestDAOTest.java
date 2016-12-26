@@ -55,10 +55,11 @@ public class GroupRequestDAOTest extends UnitilsJUnit4 {
 		requestDAO.updateGroupRequest(2, newStatus);
 	}
 	
-	/*@Test
+	@Test(expected = IndexOutOfBoundsException.class)
 	public void testDeleteRequest() {
-		requestDAO.deleteGroupRequest(3);
-	}*/
+		requestDAO.deleteGroupRequest(4);
+		requestDAO.getGroupRequestByNum(4);
+	}
 	
 	@Test
 	public void testGetReqByNum() {

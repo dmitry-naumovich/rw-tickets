@@ -32,7 +32,7 @@ public class GroupRequestDAOImpl implements IGroupRequestDAO {
 	public int addGroupRequest(GroupRequest request) {
 		Object[] params = new Object[] {request.getRq_type(), request.getFrom_user(), request.getTo_user(), request.getGr_id(),
 				request.getStatus(), request.getRq_comment()};
-		int[] types = new int[] {Types.CHAR, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.CHAR, Types.VARCHAR};
+		int[] types = new int[] {Types.VARCHAR, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
 		jdbcTemplate.update(INSERT_NEW_REQUEST, params, types);
 		return getReqNumByUserAndGroupIDs(request.getFrom_user(), request.getTo_user(), request.getGr_id());
 	}
@@ -40,7 +40,7 @@ public class GroupRequestDAOImpl implements IGroupRequestDAO {
 	@Override
 	public void updateGroupRequest(int num, char newStatus) {
 		Object[] params = new Object[] {newStatus, num};
-		int[] types = new int[] {Types.CHAR, Types.INTEGER};
+		int[] types = new int[] {Types.VARCHAR, Types.INTEGER};
 		jdbcTemplate.update(UPDATE_REQUEST, params, types);
 	}
 

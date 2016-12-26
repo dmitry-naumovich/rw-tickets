@@ -1,9 +1,5 @@
 package by.epam.naumovich.rw_tickets.dao;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,25 +36,26 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 		testGroup.setOwner_id(2);
 	}
 	
-	/*@Test
+	@Test
 	@ExpectedDataSet("dbunit/AfterAddGroup.xml")
 	public void testAddGroup() {
 		initTestGroup();
 		usGroupDAO.addUserGroup(testGroup);
-	}*/
+	}
 	
-	/*@Test
+	@Test
 	@ExpectedDataSet("dbunit/AfterUpdGroup.xml")
 	public void testUpdateGroup() {
 		UserGroup group = usGroupDAO.getUserGroupById(2);
 		group.setGr_name("updName");
 		usGroupDAO.updateUserGroup(2, group);
-	}*/
+	}
 	
-	/*@Test
+	@Test(expected = IndexOutOfBoundsException.class)
 	public void testDeleteGroup() {
-		usGroupDAO.deleteUserGroup(5);
-	}*/
+		usGroupDAO.deleteUserGroup(6);
+		usGroupDAO.getUserGroupById(6);
+	}
 	
 	@Test
 	public void testGetGroupById() {
@@ -73,17 +70,18 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
     	assertEquals(2, result);
 	}
 	
-	/*@Test
+	@Test
 	@ExpectedDataSet("dbunit/AfterAddGroupUser.xml")
 	public void testAddUserToGroup() {
 		usGroupDAO.addUserToGroup(3, 2);
-	}*/
+	}
 	
-	/*@Test
-	@ExpectedDataSet("dbunit/AfterDelGroupUser.xml")
+	@Test
 	public void testDeleteUserFromGroup() {
 		usGroupDAO.deleteUserFromGroup(2, 1);
-	}*/
+		List<UserGroup> groups = usGroupDAO.getUserGroupsByUser(2);
+		assertEquals(groups.size(), 1);
+	}
 	
 	@Test
 	public void testGetUserGroups() {

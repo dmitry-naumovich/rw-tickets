@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <rw_users u_id="1" login="noow"  pwd="pwdd" fname="johnny" sname="doe" email="nobody@nowhere.com" address="Test street 55" 
+    <rw_users u_id="1" login="nee"  pwd="pwdd" fname="johnny" sname="doe" email="nobody@nowhere.com" address="Test street 55" 
     	phone="111223334455" passport="TT1231123456" country="by" city="mn" is_admin="0" />
    	<rw_users u_id="2" login="resk"  pwd="pwdd" fname="donny" sname="moe" email="nobody4@nowhere.com" address="Test street 56" 
    		phone="111222324225" passport="TT1331123456" country="by" city="mn" is_admin="0" />

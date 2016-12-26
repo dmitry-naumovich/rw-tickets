@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.annotation.ExpectedDataSet;
@@ -17,7 +16,6 @@ import static org.unitils.reflectionassert.ReflectionAssert.*;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
 import by.epam.naumovich.rw_tickets.entity.User;
-
 
 @DataSet("dbunit/DAODataTest.xml")
 public class UserDAOTest extends UnitilsJUnit4 {
@@ -89,14 +87,14 @@ public class UserDAOTest extends UnitilsJUnit4 {
     @Test
     public void testGetAllUsers() {
         List<User> result = userDAO.getAllUsers();
-        assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk", "testLgn", "tytyty", "separ"), result);
+        assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk", "testLgn", "tytyty", "separ", "toDelete"), result);
     }
     
-    /*@Test
-    @DataSet("dbunit/DAODataTest.xml")
+    @Test(expected=IndexOutOfBoundsException.class)
    	public void testDeleteUser() {
-    	userDAO.deleteUser(testUser.getId());
-   	}*/
+    	userDAO.deleteUser(6);
+    	userDAO.getUserById(6);
+   	}
     
     @Test
     public void testGetGroupUsers() {
