@@ -14,20 +14,22 @@ import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
  * @version 1.0
  */
 public interface IUserService {
-
+	
 	int addUser(User user);
 	void updateUser(int id, User updUser);
 	void deleteUser(int id);
+	
 	User getUserById(int id);
 	User getUserByLogin(String login);
 	List<User> getAllUsers();
 	List<User> getAllGroupUsers(int groupID);
 	String getPasswordByLogin(String login);
-	int getIDByLogin(String login);
 	String getPasswordByEmail(String email);
-	List<User> getUsersByName(String name);
-	List<User> getUsersBySurname(String surname);	
-	List<User> getUsersByCountry(String country);	
-	List<User> getUsersByCity(String city);	
+	
+	List<User> findUsersByName(String name);
+	List<User> findUsersBySurname(String surname);	
+	List<User> findUsersByCountry(String country);	
+	List<User> findUsersByCity(String city);	
+	
 	List<User> getAllUsersSorted(USER_SORT_TYPE type);	
 }

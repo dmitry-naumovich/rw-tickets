@@ -42,4 +42,20 @@
 		</constructor-arg>
 	</bean>
 	
+	<bean id="userService" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
+		<property name="userDAO"><ref bean="userDAO"/></property>
+	</bean>
+	<bean id="userGroupService" class="by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl">
+		<property name="userGroupDAO"><ref bean="userGroupDao"/></property>
+	</bean>
+	<bean id="groupRequestService" class="by.epam.naumovich.rw_tickets.service.impl.GroupRequestServiceImpl">
+		<property name="groupRequestDAO"><ref bean="groupRequestDao"/></property>
+	</bean>
+	
+	<bean id="serviceFacade" class="by.epam.naumovich.rw_tickets.service.ServiceFacade">
+		<property name="userService"><ref bean="userService"/></property>
+		<property name="userGroupService"><ref bean="userGroupService"/></property>
+		<property name="groupRequestService"><ref bean="groupRequestService"/></property>
+	</bean>
+	
 </beans>

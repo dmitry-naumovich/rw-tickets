@@ -75,7 +75,7 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 	}
 
 	@Override
-	public List<UserGroup> getUserGroupsByUser(int userID) {
+	public List<UserGroup> getGroupsByUser(int userID) {
 		Object[] params = new Object[] {userID};
 		return jdbcTemplate.query(SELECT_USER_GROUPS_BY_ID, params, new UserGroupRowMapper());
 	}

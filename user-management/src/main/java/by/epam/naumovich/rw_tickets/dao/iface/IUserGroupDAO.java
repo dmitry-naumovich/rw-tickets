@@ -84,7 +84,7 @@ public interface IUserGroupDAO {
 	 * @return list of user groups
 	 * @throws DAOException
 	 */
-	List<UserGroup> getUserGroupsByUser(int userID);
+	List<UserGroup> getGroupsByUser(int userID);
 	
 
 }

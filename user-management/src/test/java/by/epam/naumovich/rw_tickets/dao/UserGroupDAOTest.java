@@ -79,13 +79,13 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 	@Test
 	public void testDeleteUserFromGroup() {
 		usGroupDAO.deleteUserFromGroup(2, 1);
-		List<UserGroup> groups = usGroupDAO.getUserGroupsByUser(2);
+		List<UserGroup> groups = usGroupDAO.getGroupsByUser(2);
 		assertEquals(groups.size(), 1);
 	}
 	
 	@Test
 	public void testGetUserGroups() {
-		List<UserGroup> result = usGroupDAO.getUserGroupsByUser(1);
+		List<UserGroup> result = usGroupDAO.getGroupsByUser(1);
 		assertPropertyLenientEquals("gr_id", Arrays.asList(1, 5), result);
 		assertPropertyLenientEquals("gr_name", Arrays.asList("TestGrName1", "TestGrName5"), result);
 	}
