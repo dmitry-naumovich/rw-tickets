@@ -16,7 +16,7 @@ import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 public interface IUserService {
 	
 	int addUser(User user);
-	void updateUser(int id, User updUser);
+	void updateUser(User updUser);
 	void deleteUser(int id);
 	
 	User getUserById(int id);

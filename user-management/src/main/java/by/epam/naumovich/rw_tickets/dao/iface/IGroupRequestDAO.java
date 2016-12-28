@@ -2,7 +2,6 @@ package by.epam.naumovich.rw_tickets.dao.iface;
 
 import java.util.List;
 
-import by.epam.naumovich.rw_tickets.dao.exception.DAOException;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 /**
  * Defines methods for implementing in the DAO layer for the GroupRequest entity.

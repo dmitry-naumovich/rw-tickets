@@ -15,7 +15,7 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 public interface IGroupRequestService {
 
 	public int addRequest(GroupRequest request);
-	public void updateRequest(GroupRequest request);
+	public void updateRequest(int reqNum, char newStatus);
 	public void deleteRequest(GroupRequest request);
 	
 	GroupRequest getRequestByNum(int num);

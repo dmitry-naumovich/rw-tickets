@@ -42,14 +42,73 @@
 		</constructor-arg>
 	</bean>
 	
-	<bean id="userService" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
+	<bean id="userServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
 		<property name="userDAO"><ref bean="userDAO"/></property>
 	</bean>
-	<bean id="userGroupService" class="by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl">
+	<bean id="userGroupServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl">
 		<property name="userGroupDAO"><ref bean="userGroupDao"/></property>
 	</bean>
-	<bean id="groupRequestService" class="by.epam.naumovich.rw_tickets.service.impl.GroupRequestServiceImpl">
+	<bean id="groupRequestServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.GroupRequestServiceImpl">
 		<property name="groupRequestDAO"><ref bean="groupRequestDao"/></property>
+	</bean>
+	
+	
+	<bean id="transactionAttributeSource" class="org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource"></bean>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource">
+    		<ref bean="dataSource"/>
+    	</property>
+    </bean>
+    
+	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>by.epam.naumovich.rw_tickets.service.iface.IUserService</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="userServiceTarget"/>
+		</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+	</bean>
+	
+	<bean id="userGroupService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>by.epam.naumovich.rw_tickets.service.iface.IUserGroupService</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="userGroupServiceTarget"/>
+		</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+	</bean>
+	
+	<bean id="groupRequestService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>by.epam.naumovich.rw_tickets.service.iface.IGroupRequestService</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="groupRequestServiceTarget"/>
+		</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
 	</bean>
 	
 	<bean id="serviceFacade" class="by.epam.naumovich.rw_tickets.service.ServiceFacade">

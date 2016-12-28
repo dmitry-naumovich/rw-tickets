@@ -27,7 +27,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void updateUser(int id, User updUser) {
+	public void updateUser(User updUser) {
 		// TODO Auto-generated method stub
 
 	}

@@ -32,7 +32,6 @@ public class GroupRequestDAOTest extends UnitilsJUnit4 {
 	
 	public void initTestRequest() {
 		testRequest = new GroupRequest();
-		testRequest.setRq_type('p');
 		testRequest.setFrom_user(4);
 		testRequest.setTo_user(1);
 		testRequest.setGr_id(1);
@@ -64,7 +63,6 @@ public class GroupRequestDAOTest extends UnitilsJUnit4 {
 	@Test
 	public void testGetReqByNum() {
 		GroupRequest result = requestDAO.getGroupRequestByNum(2);
-		assertPropertyLenientEquals("rq_type", 'p', result);
 		assertPropertyLenientEquals("from_user", 3, result);
 		assertPropertyLenientEquals("to_user", 1, result);
 		assertPropertyLenientEquals("gr_id", 1, result);

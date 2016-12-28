@@ -14,12 +14,12 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 
 public class GroupRequestDAOImpl implements IGroupRequestDAO {
 
-	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_requests (rq_type, from_user, to_user, gr_id, status, rq_comment) VALUES (?, ?, ?, ?, ?, ?)";
+	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_requests (from_user, to_user, gr_id, status, rq_comment) VALUES (?, ?, ?, ?, ?)";
 	public static final String UPDATE_REQUEST = "UPDATE gr_requests SET status = ? WHERE rq_num = ?";
 	public static final String DELETE_REQUEST = "DELETE FROM gr_requests WHERE rq_num = ?";
 	public static final String SELECT_REQ_BY_NUM = "SELECT * FROM gr_requests WHERE rq_num = ?";
 	public static final String SELECT_REQ_NUM_BY_USER_AND_GROUP_IDS = "SELECT rq_num FROM gr_requests WHERE from_user = ? AND to_user = ? AND gr_id = ?";
-	public static final String SELECT_USER_INC_REQUESTS = "SELECT * FROM gr_requests WHERE to_user = ? ORDER BY cr_datetime DESC";
+	public static final String SELECT_USER_INC_REQUESTS = "SELECT * FROM gr_requests WHERE to_user = ? AND status != 'c' ORDER BY cr_datetime DESC";
 	public static final String SELECT_USER_OUT_REQUESTS = "SELECT * FROM gr_requests WHERE from_user = ? ORDER BY cr_datetime DESC";
 	
 	private JdbcTemplate jdbcTemplate;
@@ -29,10 +29,10 @@ public class GroupRequestDAOImpl implements IGroupRequestDAO {
 	}
 	
 	@Override
-	public int addGroupRequest(GroupRequest request) {
-		Object[] params = new Object[] {request.getRq_type(), request.getFrom_user(), request.getTo_user(), request.getGr_id(),
+	public int addGroupRequest(GroupRequest request)  {
+		Object[] params = new Object[] {request.getFrom_user(), request.getTo_user(), request.getGr_id(),
 				request.getStatus(), request.getRq_comment()};
-		int[] types = new int[] {Types.VARCHAR, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
+		int[] types = new int[] {Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
 		jdbcTemplate.update(INSERT_NEW_REQUEST, params, types);
 		return getReqNumByUserAndGroupIDs(request.getFrom_user(), request.getTo_user(), request.getGr_id());
 	}

@@ -12,7 +12,6 @@ import java.sql.Time;
 public class GroupRequest {
 
 	private int rq_num;
-	private char rq_type;
 	private int from_user;
 	private int to_user;
 	private int gr_id;
@@ -32,14 +31,6 @@ public class GroupRequest {
 
 	public void setRq_num(int num) {
 		this.rq_num = num;
-	}
-
-	public char getRq_type() {
-		return rq_type;
-	}
-
-	public void setRq_type(char type) {
-		this.rq_type = type;
 	}
 
 	public int getFrom_user() {
@@ -118,7 +109,6 @@ public class GroupRequest {
 	public int hashCode() {
 		int hash = 3;
 		hash = 5 * hash + rq_num;
-		hash = 7 * hash + rq_type;
 		hash = 11 * hash + from_user;
 		hash = 17 * hash + to_user;
 		hash = 13 * hash + gr_id;
@@ -139,9 +129,6 @@ public class GroupRequest {
 		
 		GroupRequest req = (GroupRequest)obj;
 		if (rq_num != req.rq_num) { 
-			return false; 
-		}
-		if (rq_type != req.rq_type) {
 			return false; 
 		}
 		if (from_user != req.from_user) {
@@ -182,7 +169,6 @@ public class GroupRequest {
 
 	    result.append(this.getClass().getSimpleName() + " Object {");
 	    result.append(" num: " + rq_num);
-	    result.append(", type: " + rq_type);
 	    result.append(", fromUser: " + from_user);
 	    result.append(", toUser: " + to_user);
 	    result.append(", groupId: " + gr_id);
