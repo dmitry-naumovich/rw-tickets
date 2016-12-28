@@ -43,13 +43,13 @@
 	</bean>
 	
 	<bean id="userServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
-		<property name="userDAO"><ref bean="userDAO"/></property>
+		<property name="userDAO"><ref bean="userDao"/></property>
 	</bean>
 	<bean id="userGroupServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl">
-		<property name="userGroupDAO"><ref bean="userGroupDao"/></property>
+		<property name="groupDAO"><ref bean="userGroupDao"/></property>
 	</bean>
 	<bean id="groupRequestServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.GroupRequestServiceImpl">
-		<property name="groupRequestDAO"><ref bean="groupRequestDao"/></property>
+		<property name="requestDAO"><ref bean="groupRequestDao"/></property>
 	</bean>
 	
 	

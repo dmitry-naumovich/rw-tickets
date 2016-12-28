@@ -21,88 +21,95 @@ public class UserServiceImpl implements IUserService {
 		try {
 			id = userDAO.addUser(user);
 		} catch (Exception e) {
-			// proceed exceptions from dao
+			// handle exceptions from dao
 		}
 		return id;
 	}
 
 	@Override
 	public void updateUser(User updUser) {
-		// TODO Auto-generated method stub
-
+		userDAO.updateUser(updUser.getId(), updUser);
 	}
 
 	@Override
 	public void deleteUser(int id) {
-		// TODO Auto-generated method stub
+		userDAO.deleteUser(id);
 
 	}
 
 	@Override
 	public User getUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getUserById(id);
 	}
 
 	@Override
 	public User getUserByLogin(String login) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getUserByLogin(login);
 	}
 
 	@Override
 	public List<User> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getAllUsers();
 	}
 
 	@Override
 	public List<User> getAllGroupUsers(int groupID) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getAllGroupUsers(groupID);
 	}
 
 	@Override
 	public String getPasswordByLogin(String login) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getPasswordByLogin(login);
 	}
 
 	
 	@Override
 	public String getPasswordByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getPasswordByEmail(email);
 	}
 
 	@Override
 	public List<User> getAllUsersSorted(USER_SORT_TYPE type) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (type) {
+		case NAME:
+			return userDAO.getAllUsersSortByName();
+		case SURNAME:
+			return userDAO.getAllUsersSortBySurname();
+		case LOGIN:
+			return userDAO.getAllUsersSortByLogin();
+		case EMAIL:
+			return userDAO.getAllUsersSortByEmail();
+		case COUNTRY:
+			return userDAO.getAllUsersSortByCountry();
+		case CITY:
+			return userDAO.getAllUsersSortByCity();
+		case BIRTHDATE:
+			return userDAO.getAllUsersSortByBirthdate();
+		case ADDRESS:
+			return userDAO.getAllUsersSortByAddress();
+		default:
+			return userDAO.getAllUsers();
+		}
 	}
 
 	@Override
 	public List<User> findUsersByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getUsersByName(name);
 	}
 
 	@Override
 	public List<User> findUsersBySurname(String surname) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getUsersBySurname(surname);
 	}
 
 	@Override
 	public List<User> findUsersByCountry(String country) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getUsersByCountry(country);
 	}
 
 	@Override
 	public List<User> findUsersByCity(String city) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDAO.getUsersByCity(city);
 	}
 
 }
