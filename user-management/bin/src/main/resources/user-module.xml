@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="url">
+			<value>${database.url}</value>
+		</property>
+		<property name="driverClassName">
+			<value>${database.driverClassName}</value>
+		</property>
+		<property name="username">
+			<value>${database.username}</value>
+		</property>
+		<property name="password">
+			<value>${database.password}</value>
+		</property>
+	</bean>
+	
+	<bean id="userDao" class="by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+	</bean>
+	<bean id="userGroupDao" class="by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+	</bean>
+	<bean id="groupRequestDao" class="by.epam.naumovich.rw_tickets.dao.impl.GroupRequestDAOImpl">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="userServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
+		<property name="userDAO"><ref bean="userDao"/></property>
+	</bean>
+	<bean id="userGroupServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl">
+		<property name="groupDAO"><ref bean="userGroupDao"/></property>
+	</bean>
+	<bean id="groupRequestServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.GroupRequestServiceImpl">
+		<property name="requestDAO"><ref bean="groupRequestDao"/></property>
+	</bean>
+	
+	
+	<bean id="transactionAttributeSource" class="org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource"></bean>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource">
+    		<ref bean="dataSource"/>
+    	</property>
+    </bean>
+    
+	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>by.epam.naumovich.rw_tickets.service.iface.IUserService</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="userServiceTarget"/>
+		</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+	</bean>
+	
+	<bean id="userGroupService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>by.epam.naumovich.rw_tickets.service.iface.IUserGroupService</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="userGroupServiceTarget"/>
+		</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+	</bean>
+	
+	<bean id="groupRequestService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>by.epam.naumovich.rw_tickets.service.iface.IGroupRequestService</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="groupRequestServiceTarget"/>
+		</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+	</bean>
+	
+	<bean id="serviceFacade" class="by.epam.naumovich.rw_tickets.service.ServiceFacade">
+		<property name="userService"><ref bean="userService"/></property>
+		<property name="userGroupService"><ref bean="userGroupService"/></property>
+		<property name="groupRequestService"><ref bean="groupRequestService"/></property>
+	</bean>
+	
+</beans>
