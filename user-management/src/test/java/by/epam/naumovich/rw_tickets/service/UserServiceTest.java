@@ -8,6 +8,9 @@ import org.mockito.stubbing.Answer;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl;
@@ -17,40 +20,54 @@ import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
 
 public class UserServiceTest {
 
-	//ApplicationContext context;
-	
 	private IUserDAO dao;
 	IUserService service = new UserServiceImpl();
 	
 	private User expectedUser;
+	private List<User> userCollection;
 	
 	@Before
 	public void init() {
-		//context = new ClassPathXmlApplicationContext("user-module-test.xml");
-		//dao = (IUserDAO) context.getBean("userDao");
 		dao = mock(UserDAOImpl.class);
 		((UserServiceImpl)service).setUserDAO(dao);
-		//service = new Service/*(IUserService) context.getBean("userServiceTarget");*/
 		expectedUser = new User();
+		expectedUser.setId(2);
 		expectedUser.setLogin("vasya");
 		expectedUser.setFname("nama");
 	}
 	
+	@Before
+	public void initCollection() {
+		userCollection = new ArrayList<User>();
+		
+		User sec = new User();
+		sec.setId(3);
+		sec.setLogin("second");
+		sec.setFname("secName");
+		
+		User third = new User();
+		third.setId(4);
+		third.setLogin("loggy");
+		third.setFname("thirName");
+		
+		userCollection.add(expectedUser);
+		userCollection.add(sec);
+		userCollection.add(third);	
+	}
+	
 	@Test
-	public void testAddUser() {
-		when(dao.addUser(expectedUser)).thenReturn(12);
-		
-		/*when(dao.addUser(testUser)).thenAnswer(new Answer<String>() {
-
+	public void testAddUser() {		
+		when(dao.addUser(expectedUser)).thenAnswer(new Answer<Integer>() {
 			@Override
-			public String answer(InvocationOnMock invocation) throws Throwable {
+			public Integer answer(InvocationOnMock invocation) throws Throwable {
 				User user = (User) invocation.getArguments()[0];
-				return user.getLogin();
+				return user.getId();
 			}
-		});*/
+		});
 		
-		assertEquals(12, service.addUser(expectedUser));
+		assertEquals(expectedUser.getId(), service.addUser(expectedUser));
 		verify(dao).addUser(expectedUser);
+		verifyNoMoreInteractions(dao);
 	    //assertTrue(service.addUser(testUser) > 0);
 	    //assertNotNull(service.addUser(testUser));
 	}
@@ -80,6 +97,7 @@ public class UserServiceTest {
 		
 		service.getUserById(-1);
 		verify(dao).getUserById(-1);
+		verifyNoMoreInteractions(dao);
 	}
 	
 	@Test(expected=RuntimeException.class)
@@ -94,6 +112,7 @@ public class UserServiceTest {
 		
 		service.getUserByLogin(null);
 		verify(dao).getUserByLogin(null);
+		verifyNoMoreInteractions(dao);
 	}
 	
 	@Test
@@ -119,7 +138,4 @@ public class UserServiceTest {
 		service.getPasswordByEmail("email@mail.com");
 		verify(dao).getPasswordByEmail("email@mail.com");
 	}
-	
-	
-	
 }

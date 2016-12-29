@@ -27,7 +27,7 @@ public class UserGroupServiceImpl implements IUserGroupService {
 	}
 
 	@Override
-	public void deleteGroup(UserGroup group) {
+	public void deleteGroup(int groupID) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -16,7 +16,7 @@ public interface IGroupRequestService {
 
 	public int addRequest(GroupRequest request);
 	public void updateRequest(int reqNum, char newStatus);
-	public void deleteRequest(GroupRequest request);
+	public void deleteRequest(int reqNum);
 	
 	GroupRequest getRequestByNum(int num);
 	

@@ -44,6 +44,7 @@ public class UserDAOImpl implements IUserDAO {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
+	@Override
 	public int addUser(User user) {
 		Object[] params = new Object[] {user.getLogin(), user.getPwd(), user.getFname(), user.getSname(), user.getEmail(), 
 				 user.getCountry(), user.getCity(), user.getAddress(), user.getPhone(), user.getPassport()};
@@ -55,6 +56,7 @@ public class UserDAOImpl implements IUserDAO {
 		return getIDByLogin(user.getLogin());
 	}
 
+	@Override
 	public void updateUser(int id, User updUser) {
 		Object[] params = new Object[] {updUser.getLogin(), updUser.getPwd(), updUser.getFname(), updUser.getSname(), updUser.getEmail(), 
 				 updUser.getCountry(), updUser.getCity(), updUser.getAddress(), updUser.getPhone(), updUser.getPassport(), id};
@@ -65,33 +67,39 @@ public class UserDAOImpl implements IUserDAO {
 		jdbcTemplate.update(UPDATE_USER, params, types);
 	}
 
+	@Override
 	public void deleteUser(int id) {
 		Object[] params = new Object[] {id};
 		int[] types = new int[] {Types.INTEGER};
 		jdbcTemplate.update(DELETE_USER, params, types);
 	}
 
+	@Override
 	public User getUserById(int id) {
 		Object[] params = new Object[] {id};
 		List<User> users = jdbcTemplate.query(SELECT_USER_BY_ID, params, new UserRowMapper());
 		return users.get(0);
 	}
 
+	@Override
 	public User getUserByLogin(String login) {
 		Object[] params = new Object[] {login};
 		List<User> users = jdbcTemplate.query(SELECT_USER_BY_LOGIN, params, new UserRowMapper());
 		return users.get(0);
 	}
 
+	@Override
 	public List<User> getAllUsers() {
 		return jdbcTemplate.query(SELECT_ALL_USERS, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllGroupUsers(int groupID) {
 		Object[] params = new Object[] {groupID};
 		return jdbcTemplate.query(SELECT_GROUP_USERS, params, new UserRowMapper());	
 	}
 	
+	@Override
 	public int getIDByLogin(String login) {
 		Object[] params = new Object[]{login};
 		int[] types = new int[] {Types.VARCHAR};
@@ -99,6 +107,7 @@ public class UserDAOImpl implements IUserDAO {
 		return ints.get(0);
 	}
 	
+	@Override
 	public String getPasswordByLogin(String login) {
 		Object[] params = new Object[]{login};
 		int[] types = new int[] {Types.VARCHAR};
@@ -106,6 +115,7 @@ public class UserDAOImpl implements IUserDAO {
 		return strings.get(0);
 	}
 
+	@Override
 	public String getPasswordByEmail(String email) {
 		Object[] params = new Object[]{email};
 		int[] types = new int[] {Types.VARCHAR};
@@ -113,54 +123,66 @@ public class UserDAOImpl implements IUserDAO {
 		return strings.get(0);
 	}
 
+	@Override
 	public List<User> getUsersByName(String name) {
 		Object[] params = new Object[] {name};
 		return jdbcTemplate.query(SELECT_USERS_BY_FNAME, params, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getUsersBySurname(String surname) {
 		Object[] params = new Object[] {surname};
 		return jdbcTemplate.query(SELECT_USERS_BY_SNAME, params, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getUsersByCountry(String country) {
 		Object[] params = new Object[] {country};
 		return jdbcTemplate.query(SELECT_USERS_BY_COUNTRY, params, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getUsersByCity(String city) {
 		Object[] params = new Object[] {city};
 		return jdbcTemplate.query(SELECT_USERS_BY_CITY, params, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllUsersSortByName() {
 		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_NAME, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllUsersSortBySurname() {
 		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_SURNAME, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllUsersSortByEmail() {
 		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_EMAIL, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllUsersSortByCountry() {
 		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_COUNTRY, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllUsersSortByCity() {
 		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_CITY, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllUsersSortByAddress() {
 		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_ADDRESS, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllUsersSortByLogin() {
 		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_LOGIN, new UserRowMapper());
 	}
 
+	@Override
 	public List<User> getAllUsersSortByBirthdate() {
 		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_BDATE, new UserRowMapper());
 	}

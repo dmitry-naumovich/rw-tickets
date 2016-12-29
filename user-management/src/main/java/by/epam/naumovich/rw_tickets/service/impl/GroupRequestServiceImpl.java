@@ -27,7 +27,7 @@ public class GroupRequestServiceImpl implements IGroupRequestService {
 	}
 
 	@Override
-	public void deleteRequest(GroupRequest request) {
+	public void deleteRequest(int reqNum) {
 		// TODO Auto-generated method stub
 
 	}

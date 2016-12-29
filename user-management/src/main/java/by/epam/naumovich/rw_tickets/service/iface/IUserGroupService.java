@@ -16,7 +16,7 @@ public interface IUserGroupService {
 
 	public int addGroup(UserGroup group);
 	public void updateGroup(UserGroup group);
-	public void deleteGroup(UserGroup group);
+	public void deleteGroup(int groupID);
 	
 	UserGroup getGroupByID(int id);
 	
