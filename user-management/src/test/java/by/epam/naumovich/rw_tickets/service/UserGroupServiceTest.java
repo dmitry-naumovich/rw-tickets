@@ -7,6 +7,7 @@ import org.mockito.stubbing.Answer;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+<<<<<<< HEAD
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
@@ -14,6 +15,12 @@ import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl;
+=======
+
+import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
+import by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl;
+import by.epam.naumovich.rw_tickets.entity.User;
+>>>>>>> serviceimpl
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.iface.IUserGroupService;
 import by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl;
@@ -24,6 +31,7 @@ public class UserGroupServiceTest {
 	IUserGroupService service = new UserGroupServiceImpl();
 	
 	private UserGroup expectedGroup;
+
 	private List<UserGroup> groups;
 	
 	@Before

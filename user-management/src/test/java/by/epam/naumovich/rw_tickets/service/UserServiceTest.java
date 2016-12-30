@@ -44,12 +44,14 @@ public class UserServiceTest {
 		sec.setId(3);
 		sec.setLogin("second");
 		sec.setFname("secName");
-		
+
 		User third = new User();
 		third.setId(4);
 		third.setLogin("loggy");
 		third.setFname("thirName");
-		
+
+		userCollection = new ArrayList<User>();
+
 		userCollection.add(expectedUser);
 		userCollection.add(sec);
 		userCollection.add(third);	

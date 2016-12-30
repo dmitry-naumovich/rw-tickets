@@ -2,4 +2,7 @@
 /.settings
 /.project
 /.classpath
+<<<<<<< HEAD
 /bin/
+=======
+>>>>>>> serviceimpl
