@@ -16,7 +16,6 @@ import static org.hamcrest.CoreMatchers.*;
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupRequestDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.GroupRequestDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
-import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupRequestService;
 import by.epam.naumovich.rw_tickets.service.impl.GroupRequestServiceImpl;
 

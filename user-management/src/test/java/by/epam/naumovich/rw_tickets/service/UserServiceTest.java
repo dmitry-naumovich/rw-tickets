@@ -9,11 +9,12 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl;
+import by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
 import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
@@ -21,6 +22,8 @@ import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
 public class UserServiceTest {
 
 	private IUserDAO dao;
+	private IUserGroupDAO groupDAO;
+	
 	IUserService service = new UserServiceImpl();
 	
 	private User expectedUser;
@@ -29,7 +32,10 @@ public class UserServiceTest {
 	@Before
 	public void init() {
 		dao = mock(UserDAOImpl.class);
+		groupDAO = mock(UserGroupDAOImpl.class);
 		((UserServiceImpl)service).setUserDAO(dao);
+		((UserServiceImpl)service).setGroupDAO(groupDAO);
+		
 		expectedUser = new User();
 		expectedUser.setId(2);
 		expectedUser.setLogin("vasya");

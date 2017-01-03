@@ -17,7 +17,6 @@ public interface IUserGroupDAO {
 	 * 
 	 * @param group new user group entity
 	 * @return id of the newly added user group or 0 if it was not added
-	 * @throws DAOException
 	 */
 	int addUserGroup(UserGroup group);
 	
@@ -26,7 +25,6 @@ public interface IUserGroupDAO {
 	 * 
 	 * @param id user group's id
 	 * @param updUserGroup updated user group entity
-	 * @throws DAOException
 	 */
 	void updateUserGroup(int id, UserGroup updGroup);
 	
@@ -34,17 +32,14 @@ public interface IUserGroupDAO {
 	 * Deletes user group entity from the data source
 	 * 
 	 * @param id user group's id
-	 * 
-	 * @throws DAOException
 	 */
-	void deleteUserGroup(int id);
+	void deleteGroup(int id);
 	
 	/**
 	 * Gets user group by its ID from the data source
 	 * 
 	 * @param id user group's ID
 	 * @return found UserGroup entity
-	 * @throws DAOException
 	 */
 	UserGroup getUserGroupById(int id);
 	
@@ -54,7 +49,6 @@ public interface IUserGroupDAO {
 	 * @param name group name
 	 * @param ownerID group owner's ID
 	 * @return id of the group
-	 * @throws DAOException
 	 */
 	int getGroupIdByNameAndOwner(String name, int ownerID);
 	
@@ -63,7 +57,6 @@ public interface IUserGroupDAO {
 	 * 
 	 * @param userID ID of the user
 	 * @param groupID ID of the user group
-	 * @throws DAOException
 	 */
 	void addUserToGroup(int userID, int groupID);
 	
@@ -72,18 +65,43 @@ public interface IUserGroupDAO {
 	 * 
 	 * @param userID ID of the user
 	 * @param groupID ID of the user group
-	 * @throws DAOException
 	 */
 	void deleteUserFromGroup(int userID, int groupID);
+	
+	/**
+	 * Deletes all users from the specified group
+	 * 
+	 * @param groupID - ID of the group
+	 */
+	void deleteAllUsersFromGroup(int groupID);
+	
+	/**
+	 * Deletes all groups which are owned by the user with the specified ID
+	 * 
+	 * @param ownerID ID of the owner
+	 */
+	void deleteAllGroupsByOwner(int ownerID);
+	
+	/**
+	 * Deletes user from all groups which he involves in
+	 * 
+	 * @param userID ID of the user
+	 */
+	void deleteUserFromAllGroups(int userID);
 	
 	/**
 	 * Gets list of user groups by his ID
 	 * 
 	 * @param userID ID of the user
 	 * @return list of user groups
-	 * @throws DAOException
 	 */
 	List<UserGroup> getGroupsByUser(int userID);
 	
-
+	/**
+	 * Gets list of groups by their owner's ID
+	 * 
+	 * @param ownerID ID of the owner
+	 * @return list of user groups
+	 */
+	List<UserGroup> getGroupsByOwner(int ownerID);
 }

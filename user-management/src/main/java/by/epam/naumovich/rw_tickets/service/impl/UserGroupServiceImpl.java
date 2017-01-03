@@ -16,50 +16,50 @@ public class UserGroupServiceImpl implements IUserGroupService {
 	
 	@Override
 	public int addGroup(UserGroup group) {
-		// TODO Auto-generated method stub
-		return 0;
+		int id = groupDAO.addUserGroup(group);
+		groupDAO.addUserToGroup(group.getOwner_id(), id);
+		return id;
 	}
 
 	@Override
 	public void updateGroup(UserGroup group) {
-		// TODO Auto-generated method stub
+		groupDAO.updateUserGroup(group.getGr_id(), group);
 		
 	}
 
 	@Override
 	public void deleteGroup(int groupID) {
-		// TODO Auto-generated method stub
-		
+		groupDAO.deleteAllUsersFromGroup(groupID);
+		groupDAO.deleteGroup(groupID);
 	}
 
 	@Override
 	public UserGroup getGroupByID(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<UserGroup> getAllGroups() {
-		// TODO Auto-generated method stub
-		return null;
+		return groupDAO.getUserGroupById(id);
 	}
 
 	@Override
 	public List<UserGroup> getGroupsByUser(int userID) {
-		// TODO Auto-generated method stub
-		return null;
+		return groupDAO.getGroupsByUser(userID);
 	}
 
 	@Override
 	public void addUserToGroup(int userID, int groupID) {
-		// TODO Auto-generated method stub
-		
+		groupDAO.addUserToGroup(userID, groupID);
 	}
 
 	@Override
 	public void deleteUserFromGroup(int userID, int groupID) {
-		// TODO Auto-generated method stub
-		
+		groupDAO.deleteUserFromGroup(userID, groupID);
+	}
+
+	@Override
+	public void deleteAllGroupsByOwner(int ownerID) {
+		List<UserGroup> groups = groupDAO.getGroupsByOwner(ownerID);
+		for (UserGroup group : groups) {
+			groupDAO.deleteAllUsersFromGroup(group.getGr_id());
+			groupDAO.deleteGroup(group.getGr_id());
+		}	
 	}
 
 }

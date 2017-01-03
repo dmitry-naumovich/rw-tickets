@@ -20,7 +20,11 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 	public static final String SELECT_GROUP_BY_ID = "SELECT * FROM rw_groups WHERE gr_id = ?";
 	public static final String INSERT_NEW_INVOLVE = "INSERT INTO gr_involve (user_id, gr_id) VALUES (?, ?)";
 	public static final String DELETE_USER_FROM_GROUP = "DELETE FROM gr_involve WHERE user_id = ? AND gr_id = ?";
+	public static final String DELETE_ALL_GROUP_USERS = "DELETE FROM gr_involve WHERE gr_id = ?";
+	public static final String DELETE_GROUPS_BY_OWNER = "DELETE FROM rw_groups WHERE owner_id = ?";
+	public static final String DELETE_USER_FROM_ALL_GROUPS = "DELETE FROM gr_involve WHERE user_id = ?";
 	public static final String SELECT_USER_GROUPS_BY_ID = "SELECT rw_groups.* FROM rw_groups JOIN gr_involve ON rw_groups.gr_id = gr_involve.gr_id WHERE gr_involve.user_id = ?";
+	public static final String SELECT_GROUPS_BY_OWNER = "SELECT * FROM rw_groups WHERE owner_id = ?";
 	public static final String SELECT_GROUP_ID_BY_NAME_AND_OWNER = "SELECT gr_id FROM rw_groups WHERE gr_name = ? AND owner_id = ?";
 	
 	private JdbcTemplate jdbcTemplate;
@@ -48,7 +52,7 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 	}
 
 	@Override
-	public void deleteUserGroup(int id) {
+	public void deleteGroup(int id) {
 		Object[] params = new Object[] {id};
 		jdbcTemplate.update(DELETE_GROUP, params);
 	}
@@ -79,6 +83,12 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 		Object[] params = new Object[] {userID};
 		return jdbcTemplate.query(SELECT_USER_GROUPS_BY_ID, params, new UserGroupRowMapper());
 	}
+	
+	@Override
+	public List<UserGroup> getGroupsByOwner(int ownerID) {
+		Object[] params = new Object[] {ownerID};
+		return jdbcTemplate.query(SELECT_GROUPS_BY_OWNER, params, new UserGroupRowMapper());	
+	}
 
 	@Override
 	public int getGroupIdByNameAndOwner(String name, int ownerID) {
@@ -87,5 +97,24 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 		List<Integer> ints = jdbcTemplate.query(SELECT_GROUP_ID_BY_NAME_AND_OWNER, params, types, new IntegerRowMapper());
 		return ints.get(0);
 	}
+
+	@Override
+	public void deleteAllUsersFromGroup(int groupID) {
+		Object[] params = new Object[] {groupID};
+		jdbcTemplate.update(DELETE_ALL_GROUP_USERS, params);
+	}
+
+	@Override
+	public void deleteAllGroupsByOwner(int ownerID) {
+		Object[] params = new Object[] {ownerID};
+		jdbcTemplate.update(DELETE_GROUPS_BY_OWNER, params);
+	}
+
+	@Override
+	public void deleteUserFromAllGroups(int userID) {
+		Object[] params = new Object[] {userID};
+		jdbcTemplate.update(DELETE_USER_FROM_ALL_GROUPS, params);
+	}
+
 
 }

@@ -7,7 +7,6 @@ import org.mockito.stubbing.Answer;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-<<<<<<< HEAD
 import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
@@ -15,12 +14,7 @@ import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl;
-=======
 
-import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
-import by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl;
-import by.epam.naumovich.rw_tickets.entity.User;
->>>>>>> serviceimpl
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.iface.IUserGroupService;
 import by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl;
@@ -77,6 +71,7 @@ public class GroupServiceTest {
 		
 		assertEquals(90, service.addGroup(expectedGroup));
 		verify(dao).addUserGroup(expectedGroup);
+		verify(dao).addUserToGroup(expectedGroup.getOwner_id(), expectedGroup.getGr_id());
 		verifyNoMoreInteractions(dao);
 	}
 	
@@ -90,8 +85,8 @@ public class GroupServiceTest {
 	@Test
 	public void testDeleteGroup() {
 		service.deleteGroup(10);
-		verify(dao).deleteUserGroup(10);
-		//verify all DELETE USER FROM GROUP method also caleld
+		verify(dao).deleteGroup(10);
+		verify(dao).deleteAllUsersFromGroup(10);
 	}
 	
 	@Test(expected=RuntimeException.class)
@@ -127,5 +122,11 @@ public class GroupServiceTest {
 		List<UserGroup> actual = service.getGroupsByUser(2);
 		assertThat(actual, is(groups));
 		verify(dao).getGroupsByUser(2);
+	}
+	
+	@Test
+	public void deleteAllGroupsByOwner() {
+		service.deleteAllGroupsByOwner(2);
+		verify(dao).getGroupsByOwner(2);
 	}
 }

@@ -19,12 +19,10 @@ public interface IUserGroupService {
 	public void deleteGroup(int groupID);
 	
 	UserGroup getGroupByID(int id);
-	
-	List<UserGroup> getAllGroups();
 	List<UserGroup> getGroupsByUser(int userID);
 	
     void addUserToGroup(int userID, int groupID);
-	
 	void deleteUserFromGroup(int userID, int groupID);
 	
+	void deleteAllGroupsByOwner(int ownerID);	
 }

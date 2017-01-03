@@ -53,7 +53,7 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 	
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void testDeleteGroup() {
-		usGroupDAO.deleteUserGroup(6);
+		usGroupDAO.deleteGroup(6);
 		usGroupDAO.getUserGroupById(6);
 	}
 	
@@ -88,5 +88,24 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 		List<UserGroup> result = usGroupDAO.getGroupsByUser(1);
 		assertPropertyLenientEquals("gr_id", Arrays.asList(1, 5), result);
 		assertPropertyLenientEquals("gr_name", Arrays.asList("TestGrName1", "TestGrName5"), result);
+	}
+	
+	@Test
+	public void testGetGroupsByOwner() {
+		List<UserGroup> result = usGroupDAO.getGroupsByOwner(1);
+		assertPropertyLenientEquals("gr_id", Arrays.asList(1,5), result);
+		assertPropertyLenientEquals("gr_name", Arrays.asList("TestGrName1", "TestGrName5"), result);
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void testDeleteAllGroupsByOwner() {
+		usGroupDAO.deleteAllGroupsByOwner(5);
+		usGroupDAO.getUserGroupById(7);
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void testDeleteUserFromAllGroups() {
+		usGroupDAO.deleteUserFromAllGroups(5);
+		usGroupDAO.getGroupsByUser(5).get(0);
 	}
 }

@@ -16,44 +16,32 @@ public class GroupRequestServiceImpl implements IGroupRequestService {
 
 	@Override
 	public int addRequest(GroupRequest request) {
-		// TODO Auto-generated method stub
-		return 0;
+		return requestDAO.addGroupRequest(request);
 	}
 
 	@Override
 	public void updateRequest(int reqNum, char newStatus) {
-		// TODO Auto-generated method stub
-
+		requestDAO.updateGroupRequest(reqNum, newStatus);
 	}
 
 	@Override
 	public void deleteRequest(int reqNum) {
-		// TODO Auto-generated method stub
-
+		requestDAO.deleteGroupRequest(reqNum);
 	}
 
 	@Override
 	public GroupRequest getRequestByNum(int num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<GroupRequest> getAllRequests() {
-		// TODO Auto-generated method stub
-		return null;
+		return requestDAO.getGroupRequestByNum(num);
 	}
 
 	@Override
 	public List<GroupRequest> getUserIncRequests(int userID) {
-		// TODO Auto-generated method stub
-		return null;
+		return requestDAO.getUserIncRequests(userID);
 	}
 
 	@Override
 	public List<GroupRequest> getUserOutRequests(int userID) {
-		// TODO Auto-generated method stub
-		return null;
+		return requestDAO.getUserOutRequests(userID);
 	}
 
 }

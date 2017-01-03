@@ -3,16 +3,23 @@ package by.epam.naumovich.rw_tickets.service.impl;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.User;
+import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
 import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 
 public class UserServiceImpl implements IUserService {
 
 	private IUserDAO userDAO;
+	private IUserGroupDAO groupDAO;
 	
 	public void setUserDAO(IUserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+	
+	public void setGroupDAO(IUserGroupDAO groupDAO) {
+		this.groupDAO = groupDAO;
 	}
 
 	@Override
@@ -33,6 +40,12 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void deleteUser(int id) {
+		groupDAO.deleteUserFromAllGroups(id);
+		List<UserGroup> groups = groupDAO.getGroupsByOwner(id);
+		for (UserGroup group : groups) {
+			groupDAO.deleteAllUsersFromGroup(group.getGr_id());
+			groupDAO.deleteGroup(group.getGr_id());
+		}
 		userDAO.deleteUser(id);
 
 	}

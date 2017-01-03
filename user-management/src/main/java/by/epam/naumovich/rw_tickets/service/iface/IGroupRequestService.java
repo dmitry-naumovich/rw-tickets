@@ -20,7 +20,6 @@ public interface IGroupRequestService {
 	
 	GroupRequest getRequestByNum(int num);
 	
-	List<GroupRequest> getAllRequests();
 	List<GroupRequest> getUserIncRequests(int userID);
 	List<GroupRequest> getUserOutRequests(int userID);
 }

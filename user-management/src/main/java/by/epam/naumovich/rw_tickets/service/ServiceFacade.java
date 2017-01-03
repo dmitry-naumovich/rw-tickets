@@ -12,8 +12,12 @@ import by.epam.naumovich.rw_tickets.service.iface.*;
 import by.epam.naumovich.rw_tickets.service.mapper.DTOMapper;
 
 /**
- * ServiceFacade class contains all necessary methods which might be called by the client. It hides the complexity of the business logic tier,
- * hence all of its methods are as simple as possible. It does so by storing links to all service interfaces and calling their methods when needed.
+ * ServiceFacade class contains all necessary methods which may be called by the client. 
+ * It hides the complexity of the business logic tier, hence all of its methods are as simple as possible. 
+ * It does so by storing links to all service interfaces and calling their methods when needed.
+ * This tier also deals with data transfer objects (DTOs). 
+ * It works with DTOMapper class which converts simple Plain Old Java Objects (POJOs) into DTOs.
+ * ServiceFacade return those DTOs to the client.
  * 
  * @author Dzmitry_Naumovich
  * @version 1.0
@@ -21,15 +25,15 @@ import by.epam.naumovich.rw_tickets.service.mapper.DTOMapper;
 public class ServiceFacade {
 
 	private IUserService userService;
-	private IUserGroupService userGroupService;
+	private IUserGroupService groupService;
 	private IGroupRequestService requestService;
 	
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
 	
-	public void setUserGroupService(IUserGroupService userGroupService) {
-		this.userGroupService = userGroupService;
+	public void setGroupService(IUserGroupService userGroupService) {
+		this.groupService = userGroupService;
 	}
 	public void setRequestService(IGroupRequestService requestService) {
 		this.requestService = requestService;
@@ -38,18 +42,16 @@ public class ServiceFacade {
 	public UserDTO addUser(User user) {
 		int userID = userService.addUser(user);
 		user.setId(userID);
-		List<UserGroup> userGroups = userGroupService.getGroupsByUser(userID);
-		UserDTO userDTO = DTOMapper.constructUserDTO(user, userGroups);
-		return userDTO;
+		List<UserGroup> userGroups = groupService.getGroupsByUser(userID);
+		return DTOMapper.constructUserDTO(user, userGroups);
 	}
 	
 	public UserGroupDTO addUserGroup(UserGroup group) {
-		int groupID = userGroupService.addGroup(group);
+		int groupID = groupService.addGroup(group);
 		group.setGr_id(groupID);
 		List<User> users = userService.getAllGroupUsers(groupID);
 		User owner = userService.getUserById(group.getOwner_id());
-		UserGroupDTO groupDTO = DTOMapper.constructUserGroupDTO(group, users, owner);
-		return groupDTO;
+		return DTOMapper.constructUserGroupDTO(group, users, owner);
 	}
 	
 	public GroupRequestDTO addGroupRequest(GroupRequest request) {
@@ -57,30 +59,27 @@ public class ServiceFacade {
 		request.setRq_num(requestNum);
 		User sender = userService.getUserById(request.getFrom_user());
 		User receiver = userService.getUserById(request.getTo_user());
-		UserGroup group = userGroupService.getGroupByID(request.getGr_id());
-		GroupRequestDTO requestDTO = DTOMapper.constructGroupRequestDTO(request, sender, receiver, group);
-		return requestDTO;
+		UserGroup group = groupService.getGroupByID(request.getGr_id());
+		return DTOMapper.constructGroupRequestDTO(request, sender, receiver, group);
 	}
 	
 	public UserDTO updateUser(User updUser) {
 		userService.updateUser(updUser);
-		List<UserGroup> userGroups = userGroupService.getGroupsByUser(updUser.getId());
-		UserDTO userDTO = DTOMapper.constructUserDTO(updUser, userGroups);
-		return userDTO;
+		List<UserGroup> userGroups = groupService.getGroupsByUser(updUser.getId());
+		return DTOMapper.constructUserDTO(updUser, userGroups);
 	}
 	
 	public UserGroupDTO updateUserGroup(UserGroup updGroup) {
-		userGroupService.updateGroup(updGroup);
+		groupService.updateGroup(updGroup);
 		List<User> users = userService.getAllGroupUsers(updGroup.getGr_id());
 		User owner = userService.getUserById(updGroup.getOwner_id());
-		UserGroupDTO groupDTO = DTOMapper.constructUserGroupDTO(updGroup, users, owner);
-		return groupDTO;
+		return DTOMapper.constructUserGroupDTO(updGroup, users, owner);
 	}
 	
 	public void acceptRequest(int reqNum) {
 		requestService.updateRequest(reqNum, 'a');
 		GroupRequest req = requestService.getRequestByNum(reqNum);
-		userGroupService.addUserToGroup(req.getTo_user(), req.getGr_id());
+		groupService.addUserToGroup(req.getTo_user(), req.getGr_id());
 	}
 	
 	public void cancelRequest(int reqNum) {
@@ -90,4 +89,19 @@ public class ServiceFacade {
 	public void rejectRequest(int reqNum) {
 		requestService.updateRequest(reqNum, 'r');
 	}
+	
+	public void deleteUser(int userID) {
+		userService.deleteUser(userID);
+	}
+	
+	public void deleteGroup(int groupID) {
+		groupService.deleteGroup(groupID);
+	}
+	
+	public void deleteRequest(int reqNum) {
+		requestService.deleteRequest(reqNum);
+	}
+	
+	
+	
 }

@@ -44,6 +44,7 @@
 	
 	<bean id="userServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
 		<property name="userDAO"><ref bean="userDao"/></property>
+		<property name="groupDAO"><ref bean="userGroupDao"/></property>
 	</bean>
 	<bean id="userGroupServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl">
 		<property name="groupDAO"><ref bean="userGroupDao"/></property>
@@ -113,8 +114,8 @@
 	
 	<bean id="serviceFacade" class="by.epam.naumovich.rw_tickets.service.ServiceFacade">
 		<property name="userService"><ref bean="userService"/></property>
-		<property name="userGroupService"><ref bean="userGroupService"/></property>
-		<property name="groupRequestService"><ref bean="groupRequestService"/></property>
+		<property name="groupService"><ref bean="userGroupService"/></property>
+		<property name="requestService"><ref bean="groupRequestService"/></property>
 	</bean>
 	
 </beans>
