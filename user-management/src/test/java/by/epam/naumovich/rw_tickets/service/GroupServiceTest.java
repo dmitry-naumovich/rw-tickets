@@ -25,7 +25,7 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.iface.IUserGroupService;
 import by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl;
 
-public class UserGroupServiceTest {
+public class GroupServiceTest {
 
 	private IUserGroupDAO dao;
 	IUserGroupService service = new UserGroupServiceImpl();
