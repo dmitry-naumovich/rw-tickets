@@ -3,7 +3,7 @@ package by.epam.naumovich.rw_tickets.service.impl;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
-import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
@@ -12,13 +12,13 @@ import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 public class UserServiceImpl implements IUserService {
 
 	private IUserDAO userDAO;
-	private IUserGroupDAO groupDAO;
+	private IGroupDAO groupDAO;
 	
 	public void setUserDAO(IUserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
 	
-	public void setGroupDAO(IUserGroupDAO groupDAO) {
+	public void setGroupDAO(IGroupDAO groupDAO) {
 		this.groupDAO = groupDAO;
 	}
 
@@ -59,6 +59,7 @@ public class UserServiceImpl implements IUserService {
 	public User getUserByLogin(String login) {
 		return userDAO.getUserByLogin(login);
 	}
+	
 
 	@Override
 	public List<User> getAllUsers() {
@@ -79,6 +80,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public String getPasswordByEmail(String email) {
 		return userDAO.getPasswordByEmail(email);
+	}
+	
+	@Override
+	public String getLoginById(int id) {
+		return userDAO.getLoginById(id);
 	}
 
 	@Override
@@ -124,5 +130,4 @@ public class UserServiceImpl implements IUserService {
 	public List<User> findUsersByCity(String city) {
 		return userDAO.getUsersByCity(city);
 	}
-
 }

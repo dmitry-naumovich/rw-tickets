@@ -104,7 +104,7 @@ public class UserDAOTest extends UnitilsJUnit4 {
     
     @Test
     public void testGetIDByLogin() {
-    	int result = userDAO.getIDByLogin("jdoe");
+    	int result = userDAO.getIdByLogin("jdoe");
     	assertEquals(1, result);
     }
     @Test
@@ -118,6 +118,13 @@ public class UserDAOTest extends UnitilsJUnit4 {
     	String result = userDAO.getPasswordByEmail("no3body@nowhere.com");
     	assertEquals("pywd", result);
     }
+    
+    @Test
+    public void testGetLoginById() {
+    	String result = userDAO.getLoginById(3);
+    	assertEquals("testLgn", result);
+    }
+    
 
     @Test
     public void testGetUsersByName() {

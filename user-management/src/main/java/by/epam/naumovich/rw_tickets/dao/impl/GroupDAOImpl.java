@@ -7,17 +7,19 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.mapper.IntegerRowMapper;
+import by.epam.naumovich.rw_tickets.dao.mapper.StringRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.UserGroupRowMapper;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
-public class UserGroupDAOImpl implements IUserGroupDAO {
+public class GroupDAOImpl implements IGroupDAO {
 
 	public static final String INSERT_NEW_GROUP = "INSERT INTO rw_groups (gr_name, owner_id) VALUES (?, ?)";
 	public static final String UPDATE_GROUP = "UPDATE rw_groups SET gr_name = ?, owner_id = ? WHERE gr_id = ?";
 	public static final String DELETE_GROUP = "DELETE FROM rw_groups WHERE gr_id = ?";
 	public static final String SELECT_GROUP_BY_ID = "SELECT * FROM rw_groups WHERE gr_id = ?";
+	public static final String SELECT_GROUP_NAME_BY_ID = "SELECT gr_name FROM rw_groups WHERE gr_id = ?";
 	public static final String INSERT_NEW_INVOLVE = "INSERT INTO gr_involve (user_id, gr_id) VALUES (?, ?)";
 	public static final String DELETE_USER_FROM_GROUP = "DELETE FROM gr_involve WHERE user_id = ? AND gr_id = ?";
 	public static final String DELETE_ALL_GROUP_USERS = "DELETE FROM gr_involve WHERE gr_id = ?";
@@ -29,7 +31,7 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 	
 	private JdbcTemplate jdbcTemplate;
 	
-	public UserGroupDAOImpl(DataSource dataSource) {
+	public GroupDAOImpl(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
@@ -62,6 +64,13 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 		Object[] params = new Object[] {id};
 		List<UserGroup> groups = jdbcTemplate.query(SELECT_GROUP_BY_ID, params, new UserGroupRowMapper());
 		return groups.get(0);
+	}
+
+	@Override
+	public String getGroupNameById(int id) {
+		Object[] params = new Object[] {id};
+		List<String> strings = jdbcTemplate.query(SELECT_GROUP_NAME_BY_ID, params, new StringRowMapper());
+		return strings.get(0);
 	}
 
 	@Override
@@ -115,6 +124,4 @@ public class UserGroupDAOImpl implements IUserGroupDAO {
 		Object[] params = new Object[] {userID};
 		jdbcTemplate.update(DELETE_USER_FROM_ALL_GROUPS, params);
 	}
-
-
 }

@@ -13,24 +13,24 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import by.epam.naumovich.rw_tickets.dao.iface.IGroupRequestDAO;
-import by.epam.naumovich.rw_tickets.dao.impl.GroupRequestDAOImpl;
+import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
+import by.epam.naumovich.rw_tickets.dao.impl.RequestDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
-import by.epam.naumovich.rw_tickets.service.iface.IGroupRequestService;
-import by.epam.naumovich.rw_tickets.service.impl.GroupRequestServiceImpl;
+import by.epam.naumovich.rw_tickets.service.iface.IRequestService;
+import by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl;
 
 public class GroupRequestServiceTest {
 	
-	private IGroupRequestDAO dao;
-	private IGroupRequestService service = new GroupRequestServiceImpl();
+	private IRequestDAO dao;
+	private IRequestService service = new RequestServiceImpl();
 	
 	private GroupRequest expectedRequest;
 	private List<GroupRequest> expectedReqList;
 	
 	@Before
 	public void init() {
-		dao = mock(GroupRequestDAOImpl.class);
-		((GroupRequestServiceImpl)service).setRequestDAO(dao);
+		dao = mock(RequestDAOImpl.class);
+		((RequestServiceImpl)service).setRequestDAO(dao);
 		expectedRequest = new GroupRequest();
 		expectedRequest.setRq_num(1);
 		expectedRequest.setFrom_user(2);

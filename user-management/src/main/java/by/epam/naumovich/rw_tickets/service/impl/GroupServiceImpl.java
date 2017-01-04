@@ -2,15 +2,15 @@ package by.epam.naumovich.rw_tickets.service.impl;
 
 import java.util.List;
 
-import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
-import by.epam.naumovich.rw_tickets.service.iface.IUserGroupService;
+import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
 
-public class UserGroupServiceImpl implements IUserGroupService {
+public class GroupServiceImpl implements IGroupService {
 
-	private IUserGroupDAO groupDAO;
+	private IGroupDAO groupDAO;
 	
-	public void setGroupDAO(IUserGroupDAO groupDAO) {
+	public void setGroupDAO(IGroupDAO groupDAO) {
 		this.groupDAO = groupDAO;
 	}
 	
@@ -36,6 +36,11 @@ public class UserGroupServiceImpl implements IUserGroupService {
 	@Override
 	public UserGroup getGroupByID(int id) {
 		return groupDAO.getUserGroupById(id);
+	}
+
+	@Override
+	public String getGroupNameByID(int id) {
+		return groupDAO.getGroupNameById(id);
 	}
 
 	@Override

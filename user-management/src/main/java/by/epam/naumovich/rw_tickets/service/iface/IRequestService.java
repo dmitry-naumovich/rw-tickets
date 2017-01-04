@@ -12,7 +12,7 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 * @author Dmitry Naumovich
 * @version 1.0
 */
-public interface IGroupRequestService {
+public interface IRequestService {
 
 	public int addRequest(GroupRequest request);
 	public void updateRequest(int reqNum, char newStatus);

@@ -14,20 +14,20 @@ import org.unitils.UnitilsJUnit4;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.annotation.ExpectedDataSet;
 
-import by.epam.naumovich.rw_tickets.dao.iface.IGroupRequestDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 
 @DataSet("dbunit/DAODataTest.xml")
 public class GroupRequestDAOTest extends UnitilsJUnit4 {
 
 	ApplicationContext context;
-	private IGroupRequestDAO requestDAO;;
+	private IRequestDAO requestDAO;;
 	GroupRequest testRequest;
 
 	@Before    
     public void init() {
 		context = new ClassPathXmlApplicationContext("user-module-test.xml");
-		requestDAO = (IGroupRequestDAO) context.getBean("groupRequestDao");
+		requestDAO = (IRequestDAO) context.getBean("requestDao");
     }
 	
 	public void initTestRequest() {

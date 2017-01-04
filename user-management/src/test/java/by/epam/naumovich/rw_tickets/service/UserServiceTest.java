@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
-import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl;
-import by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl;
+import by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
 import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
@@ -22,7 +22,7 @@ import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
 public class UserServiceTest {
 
 	private IUserDAO dao;
-	private IUserGroupDAO groupDAO;
+	private IGroupDAO groupDAO;
 	
 	IUserService service = new UserServiceImpl();
 	
@@ -32,7 +32,7 @@ public class UserServiceTest {
 	@Before
 	public void init() {
 		dao = mock(UserDAOImpl.class);
-		groupDAO = mock(UserGroupDAOImpl.class);
+		groupDAO = mock(GroupDAOImpl.class);
 		((UserServiceImpl)service).setUserDAO(dao);
 		((UserServiceImpl)service).setGroupDAO(groupDAO);
 		
@@ -145,5 +145,13 @@ public class UserServiceTest {
 	public void getPasswordByEmail() {
 		service.getPasswordByEmail("email@mail.com");
 		verify(dao).getPasswordByEmail("email@mail.com");
+	}
+	
+	@Test
+	public void testGetLoginById() {
+		String expected = "testLg";
+		when(dao.getLoginById(8)).thenReturn(expected);
+		String actual = service.getLoginById(8);
+		assertEquals(expected, actual);
 	}
 }

@@ -75,6 +75,23 @@ public interface IUserDAO {
 	List<User> getAllGroupUsers(int groupID);
 	
 	/**
+	 * Returns the id of the user by his login
+	 * 
+	 * @param login user login
+	 * @return id user id or 0 if it was not found
+	 * @throws DAOException
+	 */
+	int getIdByLogin(String login);
+	
+	/**
+	 * Returns user login by his ID
+	 * 
+	 * @param id user ID
+	 * @return user login
+	 */
+	String getLoginById(int id);
+	
+	/**
 	 * Returns the password of the user by his login
 	 * 
 	 * @param login user login
@@ -82,15 +99,6 @@ public interface IUserDAO {
 	 * @throws DAOException
 	 */
 	String getPasswordByLogin(String login);
-	
-	/**
-	 * Returns the id of the user by his login
-	 * 
-	 * @param login user login
-	 * @return id user id or 0 if it was not found
-	 * @throws DAOException
-	 */
-	int getIDByLogin(String login);
 	
 	/**
 	 * Gets user password by his email from the data source

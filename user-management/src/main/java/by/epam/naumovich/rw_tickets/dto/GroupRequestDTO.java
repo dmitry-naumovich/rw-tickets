@@ -1,15 +1,12 @@
 package by.epam.naumovich.rw_tickets.dto;
 
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
-import by.epam.naumovich.rw_tickets.entity.User;
-import by.epam.naumovich.rw_tickets.entity.UserGroup;
-
 public class GroupRequestDTO {
 
 	private GroupRequest request;
-	private User sender;
-	private User receiver;
-	private UserGroup group;
+	private String sender;
+	private String receiver;
+	private String group;
 	
 	public GroupRequest getRequest() {
 		return request;
@@ -17,22 +14,23 @@ public class GroupRequestDTO {
 	public void setRequest(GroupRequest request) {
 		this.request = request;
 	}
-	public User getSender() {
+	public String getSender() {
 		return sender;
 	}
-	public void setSender(User sender) {
+	public void setSender(String sender) {
 		this.sender = sender;
 	}
-	public User getReceiver() {
+	public String getReceiver() {
 		return receiver;
 	}
-	public void setReceiver(User receiver) {
+	public void setReceiver(String receiver) {
 		this.receiver = receiver;
 	}
-	public UserGroup getGroup() {
+	public String getGroup() {
 		return group;
 	}
-	public void setGroup(UserGroup group) {
+	public void setGroup(String group) {
 		this.group = group;
 	}
+	
 }

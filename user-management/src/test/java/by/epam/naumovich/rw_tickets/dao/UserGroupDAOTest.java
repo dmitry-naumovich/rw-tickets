@@ -14,20 +14,20 @@ import org.unitils.dbunit.annotation.ExpectedDataSet;
 import static org.junit.Assert.assertEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.*;
 
-import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
 @DataSet("dbunit/DAODataTest.xml")
 public class UserGroupDAOTest extends UnitilsJUnit4 {
 
 	ApplicationContext context;
-	private IUserGroupDAO usGroupDAO;
+	private IGroupDAO usGroupDAO;
 	UserGroup testGroup;
 
 	@Before    
     public void init() {
 		context = new ClassPathXmlApplicationContext("user-module-test.xml");
-		usGroupDAO = (IUserGroupDAO) context.getBean("userGroupDao");
+		usGroupDAO = (IGroupDAO) context.getBean("groupDao");
     }
 	
 	public void initTestGroup() {
@@ -68,6 +68,12 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 	public void testGetGroupIdByNameAndOwner() {
 		int result = usGroupDAO.getGroupIdByNameAndOwner("TestGrName2", 2);
     	assertEquals(2, result);
+	}
+	
+	@Test
+	public void testGetGroupNameByID() {
+		String result = usGroupDAO.getGroupNameById(4);
+		assertEquals("TestGrName4", result);
 	}
 	
 	@Test

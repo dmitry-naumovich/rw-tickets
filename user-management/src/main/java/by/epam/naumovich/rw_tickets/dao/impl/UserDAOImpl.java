@@ -22,6 +22,7 @@ public class UserDAOImpl implements IUserDAO {
 	public static final String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_users WHERE login = ?";
 	public static final String SELECT_ALL_USERS = "SELECT * FROM rw_users";
 	public static final String SELECT_ID_BY_LOGIN = "SELECT u_id FROM rw_users WHERE login = ?";
+	public static final String SELECT_LOGIN_BY_ID = "SELECT login FROM rw_users WHERE u_id = ?";
 	public static final String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.user_id WHERE gr_id = ?";
 	public static final String SELECT_PWD_BY_LOGIN = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.login = ?";
 	public static final String SELECT_PWD_BY_EMAIL = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.email = ?";
@@ -53,7 +54,7 @@ public class UserDAOImpl implements IUserDAO {
 				Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
 		
 		jdbcTemplate.update(INSERT_NEW_USER, params, types);
-		return getIDByLogin(user.getLogin());
+		return getIdByLogin(user.getLogin());
 	}
 
 	@Override
@@ -100,11 +101,18 @@ public class UserDAOImpl implements IUserDAO {
 	}
 	
 	@Override
-	public int getIDByLogin(String login) {
+	public int getIdByLogin(String login) {
 		Object[] params = new Object[]{login};
 		int[] types = new int[] {Types.VARCHAR};
 		List<Integer> ints = jdbcTemplate.query(SELECT_ID_BY_LOGIN, params, types, new IntegerRowMapper());
 		return ints.get(0);
+	}
+
+	@Override
+	public String getLoginById(int id) {
+		Object[] params = new Object[]{id};
+		List<String> strings = jdbcTemplate.query(SELECT_LOGIN_BY_ID, params, new StringRowMapper());
+		return strings.get(0);
 	}
 	
 	@Override

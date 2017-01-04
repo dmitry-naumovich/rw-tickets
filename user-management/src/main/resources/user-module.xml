@@ -31,12 +31,12 @@
 			<ref bean="dataSource"/>
 		</constructor-arg>
 	</bean>
-	<bean id="userGroupDao" class="by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl">
+	<bean id="groupDao" class="by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl">
 		<constructor-arg>
 			<ref bean="dataSource"/>
 		</constructor-arg>
 	</bean>
-	<bean id="groupRequestDao" class="by.epam.naumovich.rw_tickets.dao.impl.GroupRequestDAOImpl">
+	<bean id="requestDao" class="by.epam.naumovich.rw_tickets.dao.impl.RequestDAOImpl">
 		<constructor-arg>
 			<ref bean="dataSource"/>
 		</constructor-arg>
@@ -44,13 +44,13 @@
 	
 	<bean id="userServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
 		<property name="userDAO"><ref bean="userDao"/></property>
-		<property name="groupDAO"><ref bean="userGroupDao"/></property>
+		<property name="groupDAO"><ref bean="groupDao"/></property>
 	</bean>
-	<bean id="userGroupServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl">
-		<property name="groupDAO"><ref bean="userGroupDao"/></property>
+	<bean id="groupServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl">
+		<property name="groupDAO"><ref bean="groupDao"/></property>
 	</bean>
-	<bean id="groupRequestServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.GroupRequestServiceImpl">
-		<property name="requestDAO"><ref bean="groupRequestDao"/></property>
+	<bean id="requestServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl">
+		<property name="requestDAO"><ref bean="requestDao"/></property>
 	</bean>
 	
 	
@@ -78,14 +78,14 @@
 		</property>
 	</bean>
 	
-	<bean id="userGroupService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<bean id="groupService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<list>
-				<value>by.epam.naumovich.rw_tickets.service.iface.IUserGroupService</value>
+				<value>by.epam.naumovich.rw_tickets.service.iface.IGroupService</value>
 			</list>
 		</property>
 		<property name="target">
-			<ref bean="userGroupServiceTarget"/>
+			<ref bean="groupServiceTarget"/>
 		</property>
 		<property name="transactionManager">
 			<ref bean="transactionManager"/>
@@ -95,14 +95,14 @@
 		</property>
 	</bean>
 	
-	<bean id="groupRequestService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+	<bean id="requestService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<list>
-				<value>by.epam.naumovich.rw_tickets.service.iface.IGroupRequestService</value>
+				<value>by.epam.naumovich.rw_tickets.service.iface.IRequestService</value>
 			</list>
 		</property>
 		<property name="target">
-			<ref bean="groupRequestServiceTarget"/>
+			<ref bean="requestServiceTarget"/>
 		</property>
 		<property name="transactionManager">
 			<ref bean="transactionManager"/>
@@ -114,8 +114,8 @@
 	
 	<bean id="serviceFacade" class="by.epam.naumovich.rw_tickets.service.ServiceFacade">
 		<property name="userService"><ref bean="userService"/></property>
-		<property name="groupService"><ref bean="userGroupService"/></property>
-		<property name="requestService"><ref bean="groupRequestService"/></property>
+		<property name="groupService"><ref bean="groupService"/></property>
+		<property name="requestService"><ref bean="requestService"/></property>
 	</bean>
 	
 </beans>

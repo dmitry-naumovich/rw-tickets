@@ -12,13 +12,14 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
 * @author Dmitry Naumovich
 * @version 1.0
 */
-public interface IUserGroupService {
+public interface IGroupService {
 
 	public int addGroup(UserGroup group);
 	public void updateGroup(UserGroup group);
 	public void deleteGroup(int groupID);
 	
 	UserGroup getGroupByID(int id);
+	String getGroupNameByID(int id);
 	List<UserGroup> getGroupsByUser(int userID);
 	
     void addUserToGroup(int userID, int groupID);

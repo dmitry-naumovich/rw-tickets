@@ -9,7 +9,7 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
  * @author Dzmitry Naumovich
  * @version 1.0
  */
-public interface IGroupRequestDAO {
+public interface IRequestDAO {
 
 	/**
 	 * Adds new group request to the data source

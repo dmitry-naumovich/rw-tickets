@@ -25,6 +25,7 @@ public interface IUserService {
 	List<User> getAllGroupUsers(int groupID);
 	String getPasswordByLogin(String login);
 	String getPasswordByEmail(String email);
+	String getLoginById(int id);
 	
 	List<User> findUsersByName(String name);
 	List<User> findUsersBySurname(String surname);	

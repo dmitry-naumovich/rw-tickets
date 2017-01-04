@@ -1,15 +1,14 @@
 package by.epam.naumovich.rw_tickets.dto;
 
-import java.util.List;
+import java.util.Map;
 
-import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
 public class UserGroupDTO {
 
 	private UserGroup group;
-	private List<User> users;
-	private User owner;
+	private Map<Integer, String> members;
+	private String ownerLogin;
 	
 	public UserGroup getGroup() {
 		return group;
@@ -17,17 +16,17 @@ public class UserGroupDTO {
 	public void setGroup(UserGroup group) {
 		this.group = group;
 	}
-	public List<User> getUsers() {
-		return users;
+	public Map<Integer, String> getMembers() {
+		return members;
 	}
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setMembers(Map<Integer, String> members) {
+		this.members = members;
 	}
-	public User getOwner() {
-		return owner;
+	public String getOwnerLogin() {
+		return ownerLogin;
 	}
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setOwnerLogin(String ownerLogin) {
+		this.ownerLogin = ownerLogin;
 	}
 	
 }

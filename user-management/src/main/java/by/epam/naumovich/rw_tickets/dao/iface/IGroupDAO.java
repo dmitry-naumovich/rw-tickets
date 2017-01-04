@@ -10,7 +10,7 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
  * @author Dzmitry Naumovich
  * @version 1.0
  */
-public interface IUserGroupDAO {
+public interface IGroupDAO {
 	
 	/**
 	 * Adds new user group to the data source
@@ -51,6 +51,14 @@ public interface IUserGroupDAO {
 	 * @return id of the group
 	 */
 	int getGroupIdByNameAndOwner(String name, int ownerID);
+	
+	/**
+	 * Gets group's name by its ID
+	 * 
+	 * @param id group's ID
+	 * @return group's name
+	 */
+	String getGroupNameById(int id);
 	
 	/**
 	 * Adds user to the user group

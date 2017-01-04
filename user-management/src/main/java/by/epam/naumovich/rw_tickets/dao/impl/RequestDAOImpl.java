@@ -7,12 +7,12 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import by.epam.naumovich.rw_tickets.dao.iface.IGroupRequestDAO;
+import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
 import by.epam.naumovich.rw_tickets.dao.mapper.GroupRequestMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.IntegerRowMapper;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 
-public class GroupRequestDAOImpl implements IGroupRequestDAO {
+public class RequestDAOImpl implements IRequestDAO {
 
 	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_requests (from_user, to_user, gr_id, status, rq_comment) VALUES (?, ?, ?, ?, ?)";
 	public static final String UPDATE_REQUEST = "UPDATE gr_requests SET status = ? WHERE rq_num = ?";
@@ -24,7 +24,7 @@ public class GroupRequestDAOImpl implements IGroupRequestDAO {
 	
 	private JdbcTemplate jdbcTemplate;
 	
-	public GroupRequestDAOImpl(DataSource dataSource) {
+	public RequestDAOImpl(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	

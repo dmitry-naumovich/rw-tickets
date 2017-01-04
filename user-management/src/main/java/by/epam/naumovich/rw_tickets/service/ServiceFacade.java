@@ -25,17 +25,17 @@ import by.epam.naumovich.rw_tickets.service.mapper.DTOMapper;
 public class ServiceFacade {
 
 	private IUserService userService;
-	private IUserGroupService groupService;
-	private IGroupRequestService requestService;
+	private IGroupService groupService;
+	private IRequestService requestService;
 	
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
 	
-	public void setGroupService(IUserGroupService userGroupService) {
+	public void setGroupService(IGroupService userGroupService) {
 		this.groupService = userGroupService;
 	}
-	public void setRequestService(IGroupRequestService requestService) {
+	public void setRequestService(IRequestService requestService) {
 		this.requestService = requestService;
 	}
 	
@@ -49,17 +49,17 @@ public class ServiceFacade {
 	public UserGroupDTO addUserGroup(UserGroup group) {
 		int groupID = groupService.addGroup(group);
 		group.setGr_id(groupID);
-		List<User> users = userService.getAllGroupUsers(groupID);
-		User owner = userService.getUserById(group.getOwner_id());
-		return DTOMapper.constructUserGroupDTO(group, users, owner);
+		List<User> members = userService.getAllGroupUsers(groupID);
+		String ownerLogin = userService.getLoginById(group.getOwner_id());
+		return DTOMapper.constructUserGroupDTO(group, members, ownerLogin);
 	}
 	
 	public GroupRequestDTO addGroupRequest(GroupRequest request) {
 		int requestNum = requestService.addRequest(request);
 		request.setRq_num(requestNum);
-		User sender = userService.getUserById(request.getFrom_user());
-		User receiver = userService.getUserById(request.getTo_user());
-		UserGroup group = groupService.getGroupByID(request.getGr_id());
+		String sender = userService.getLoginById(request.getFrom_user());
+		String receiver = userService.getLoginById(request.getTo_user());
+		String group = groupService.getGroupNameByID(request.getGr_id());
 		return DTOMapper.constructGroupRequestDTO(request, sender, receiver, group);
 	}
 	
@@ -71,9 +71,9 @@ public class ServiceFacade {
 	
 	public UserGroupDTO updateUserGroup(UserGroup updGroup) {
 		groupService.updateGroup(updGroup);
-		List<User> users = userService.getAllGroupUsers(updGroup.getGr_id());
-		User owner = userService.getUserById(updGroup.getOwner_id());
-		return DTOMapper.constructUserGroupDTO(updGroup, users, owner);
+		List<User> members = userService.getAllGroupUsers(updGroup.getGr_id());
+		String ownerLogin = userService.getLoginById(updGroup.getOwner_id());
+		return DTOMapper.constructUserGroupDTO(updGroup, members, ownerLogin);
 	}
 	
 	public void acceptRequest(int reqNum) {
@@ -102,6 +102,26 @@ public class ServiceFacade {
 		requestService.deleteRequest(reqNum);
 	}
 	
+	public UserDTO getUserById(int userID) {
+		User user = userService.getUserById(userID);
+		List<UserGroup> userGroups = groupService.getGroupsByUser(userID);
+		return DTOMapper.constructUserDTO(user, userGroups);
+	}
+	
+	public UserGroupDTO getGroupById(int groupID) {
+		UserGroup group = groupService.getGroupByID(groupID);
+		List<User> members = userService.getAllGroupUsers(groupID);
+		String ownerLogin = userService.getLoginById(group.getOwner_id());
+		return DTOMapper.constructUserGroupDTO(group, members, ownerLogin);
+	}
+	
+	public GroupRequestDTO getRequestByNum(int reqNum) {
+		GroupRequest request = requestService.getRequestByNum(reqNum);
+		String sender = userService.getLoginById(request.getFrom_user());
+		String receiver = userService.getLoginById(request.getTo_user());
+		String group = groupService.getGroupNameByID(request.getGr_id());
+		return DTOMapper.constructGroupRequestDTO(request, sender, receiver, group);
+	}
 	
 	
 }

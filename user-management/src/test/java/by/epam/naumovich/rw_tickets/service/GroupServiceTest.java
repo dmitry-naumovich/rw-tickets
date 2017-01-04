@@ -12,17 +12,17 @@ import static org.hamcrest.CoreMatchers.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.epam.naumovich.rw_tickets.dao.iface.IUserGroupDAO;
-import by.epam.naumovich.rw_tickets.dao.impl.UserGroupDAOImpl;
+import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
+import by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl;
 
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
-import by.epam.naumovich.rw_tickets.service.iface.IUserGroupService;
-import by.epam.naumovich.rw_tickets.service.impl.UserGroupServiceImpl;
+import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
+import by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl;
 
 public class GroupServiceTest {
 
-	private IUserGroupDAO dao;
-	IUserGroupService service = new UserGroupServiceImpl();
+	private IGroupDAO dao;
+	IGroupService service = new GroupServiceImpl();
 	
 	private UserGroup expectedGroup;
 
@@ -30,8 +30,8 @@ public class GroupServiceTest {
 	
 	@Before
 	public void init() {
-		dao = mock(UserGroupDAOImpl.class);
-		((UserGroupServiceImpl)service).setGroupDAO(dao);
+		dao = mock(GroupDAOImpl.class);
+		((GroupServiceImpl)service).setGroupDAO(dao);
 		expectedGroup = new UserGroup();
 		expectedGroup.setGr_id(90);
 		expectedGroup.setGr_name("testGroup");
