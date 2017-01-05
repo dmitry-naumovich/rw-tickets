@@ -24,8 +24,8 @@ public class UserDAOImpl implements IUserDAO {
 	public static final String SELECT_ID_BY_LOGIN = "SELECT u_id FROM rw_users WHERE login = ?";
 	public static final String SELECT_LOGIN_BY_ID = "SELECT login FROM rw_users WHERE u_id = ?";
 	public static final String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.user_id WHERE gr_id = ?";
-	public static final String SELECT_PWD_BY_LOGIN = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.login = ?";
-	public static final String SELECT_PWD_BY_EMAIL = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.email = ?";
+	public static final String SELECT_PASS_BY_LOGIN = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.login = ?";
+	public static final String SELECT_PASS_BY_EMAIL = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.email = ?";
 	public static final String SELECT_USERS_BY_FNAME = "SELECT * FROM rw_users WHERE fname = ?";
 	public static final String SELECT_USERS_BY_SNAME = "SELECT * FROM rw_users WHERE sname = ?";
 	public static final String SELECT_USERS_BY_COUNTRY = "SELECT * FROM rw_users WHERE country = ?";
@@ -119,7 +119,7 @@ public class UserDAOImpl implements IUserDAO {
 	public String getPasswordByLogin(String login) {
 		Object[] params = new Object[]{login};
 		int[] types = new int[] {Types.VARCHAR};
-		List<String> strings = jdbcTemplate.query(SELECT_PWD_BY_LOGIN, params, types, new StringRowMapper());
+		List<String> strings = jdbcTemplate.query(SELECT_PASS_BY_LOGIN, params, types, new StringRowMapper());
 		return strings.get(0);
 	}
 
@@ -127,7 +127,7 @@ public class UserDAOImpl implements IUserDAO {
 	public String getPasswordByEmail(String email) {
 		Object[] params = new Object[]{email};
 		int[] types = new int[] {Types.VARCHAR};
-		List<String> strings = jdbcTemplate.query(SELECT_PWD_BY_EMAIL, params, types, new StringRowMapper());
+		List<String> strings = jdbcTemplate.query(SELECT_PASS_BY_EMAIL, params, types, new StringRowMapper());
 		return strings.get(0);
 	}
 
