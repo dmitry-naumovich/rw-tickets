@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>  	
+    <rw_groups gr_id="1" gr_name="TestGrName1" cr_datetime="2016-12-07 11:02:44" owner_id="1" />
+    <rw_groups gr_id="2" gr_name="updName" owner_id="2" />
+    <rw_groups gr_id="3" gr_name="TestGrName3" cr_datetime="2016-12-09 13:02:44" owner_id="3" />
+    <rw_groups gr_id="5" gr_name="TestGrName5" cr_datetime="2016-12-11 15:02:44" owner_id="1" />
+</dataset>
