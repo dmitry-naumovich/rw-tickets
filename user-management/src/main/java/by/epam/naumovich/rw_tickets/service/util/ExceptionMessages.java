@@ -8,8 +8,6 @@ package by.epam.naumovich.rw_tickets.service.util;
  */
 public final class ExceptionMessages {
 
-	private ExceptionMessages() {}
-	
 	public static final String ALREADY_TAKEN_LOGIN = "This login is already taken! Please, choose another one.";
 	public static final String BIRTHDATE_RIGHT_FORMAT = "BirthDate must follow \"YYYY-MM-DD\" format";
 	public static final String CORRUPTED_DISCOUNT_ID = "Corrupted discount ID! Please, try again.";
@@ -71,4 +69,5 @@ public final class ExceptionMessages {
 	public static final String WRONG_PASSWORD = "Wrong password! Please, try again.";
 	public static final String YOU_ARE_BANNED = "You are banned until %s. The reason is: \"%s\"";
 	
+	private ExceptionMessages() {}
 }
