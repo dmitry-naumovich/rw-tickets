@@ -24,6 +24,10 @@ public class User {
 	private String city;
 	private boolean isAdmin;
 	
+	/**
+	 * Explicit empty constructor
+	 * 
+	 */
 	public User() {}
 	
 	public int getId() {
@@ -150,9 +154,15 @@ public class User {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) { return true; }
-		if (null == obj) { return false; }
-		if (obj.getClass() != getClass()) { return false; }
+		if (this == obj) { 
+			return true; 
+		}
+		if (null == obj) { 
+			return false; 
+		}
+		if (obj.getClass() != getClass()) { 
+			return false; 
+		}
 		
 		User us = (User)obj;
 		if (id != us.id) { 
@@ -210,11 +220,21 @@ public class User {
 	    result.append(", name: " + fname);
 	    result.append(", surname: " + sname);
 	    result.append(", email: " + email);
-	    if (phone != null) { result.append(", phone: " + phone); }
-	    if (country != null) { result.append(", country: " + country); }
-	    if (city != null) { result.append(", city: " + city); }
-	    if (address != null) { result.append(", address: " + address); }
-	    if (passport != null) { result.append(", passport: " + passport); }
+	    if (phone != null) { 
+	    	result.append(", phone: " + phone); 
+	    }
+	    if (country != null) { 
+	    	result.append(", country: " + country); 
+	    }
+	    if (city != null) { 
+	    	result.append(", city: " + city); 
+	    }
+	    if (address != null) { 
+	    	result.append(", address: " + address); 
+	    }
+	    if (passport != null) { 
+	    	result.append(", passport: " + passport); 
+	    }
 	    result.append(", isAdmin: " + isAdmin);
 	    result.append("}");
 
