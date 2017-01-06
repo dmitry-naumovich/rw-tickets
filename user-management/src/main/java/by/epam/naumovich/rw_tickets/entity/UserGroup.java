@@ -17,12 +17,6 @@ public class UserGroup {
 	private Time createTime;
 	private int owner_id;
 	
-	/**
-	 * Explicit empty constructor
-	 * 
-	 */
-	public UserGroup() {}
-	
 	public int getGr_id() {
 		return gr_id;
 	}

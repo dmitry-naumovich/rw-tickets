@@ -22,12 +22,6 @@ public class GroupRequest {
 	private Date closeDate;
 	private Time closeTime;
 	
-	/**
-	 * Explicit empty constructor
-	 * 
-	 */
-	public GroupRequest() {}
-	
 	public int getRq_num() {
 		return rq_num;
 	}

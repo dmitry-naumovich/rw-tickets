@@ -24,12 +24,6 @@ public class User {
 	private String city;
 	private boolean isAdmin;
 	
-	/**
-	 * Explicit empty constructor
-	 * 
-	 */
-	public User() {}
-	
 	public int getId() {
 		return id;
 	}

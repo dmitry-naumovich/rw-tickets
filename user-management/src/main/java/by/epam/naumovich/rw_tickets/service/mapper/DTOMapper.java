@@ -13,10 +13,12 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
 public class DTOMapper {
 
+	private DTOMapper() { };
+	
 	public static UserDTO constructUserDTO(User user, List<UserGroup> groups) {
 		UserDTO dto = new UserDTO();
 		dto.setUser(user);
-		Map<Integer, String> grs = new LinkedHashMap<Integer, String>();
+		Map<Integer, String> grs = new LinkedHashMap<>();
 		for (UserGroup gr : groups) {
 			grs.put(gr.getGr_id(), gr.getGr_name());
 		}
@@ -28,7 +30,7 @@ public class DTOMapper {
 		UserGroupDTO dto = new UserGroupDTO();
 		dto.setGroup(group);
 		dto.setOwnerLogin(ownerLogin);
-		Map<Integer, String> membs = new LinkedHashMap<Integer, String>();
+		Map<Integer, String> membs = new LinkedHashMap<>();
 		for (User user : members) {
 			membs.put(user.getId(), user.getLogin());
 		}

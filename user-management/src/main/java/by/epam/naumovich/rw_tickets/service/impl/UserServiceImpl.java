@@ -24,13 +24,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public int addUser(User user) {
-		int id = 0;
-		try {
-			id = userDAO.addUser(user);
-		} catch (Exception e) {
-			// handle exceptions from dao
-		}
-		return id;
+		return userDAO.addUser(user);
 	}
 
 	@Override
