@@ -19,7 +19,7 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 import by.epam.naumovich.rw_tickets.service.iface.IRequestService;
 import by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl;
 
-public class GroupRequestServiceTest {
+public class RequestServiceTest {
 	
 	private IRequestDAO dao;
 	private IRequestService service = new RequestServiceImpl();
@@ -57,7 +57,7 @@ public class GroupRequestServiceTest {
 	
 	@Test
 	public void testAddRequest() {
-		when(dao.addGroupRequest(expectedRequest)).thenAnswer(new Answer<Integer>() {
+		when(dao.addRequest(expectedRequest)).thenAnswer(new Answer<Integer>() {
 
 			@Override
 			public Integer answer(InvocationOnMock invocation) throws Throwable {
@@ -68,34 +68,34 @@ public class GroupRequestServiceTest {
 		});
 		
 		assertEquals(1, service.addRequest(expectedRequest));
-		verify(dao).addGroupRequest(expectedRequest);
+		verify(dao).addRequest(expectedRequest);
 		verifyNoMoreInteractions(dao);
 	}
 	
 	@Test
 	public void testUpdateRequest() {
 		service.updateRequest(2, 'c');
-		verify(dao).updateGroupRequest(2, 'c');
+		verify(dao).updateRequest(2, 'c');
 	}
 	
 	@Test
 	public void testDeleteRequest() {
 		service.deleteRequest(20);
-		verify(dao).deleteGroupRequest(20);
+		verify(dao).deleteRequest(20);
 	}
 	
 	@Test(expected=RuntimeException.class)
 	public void testGetRequestByNum() {
-		when(dao.getGroupRequestByNum(anyInt())).thenReturn(expectedRequest);
-		when(dao.getGroupRequestByNum(-1)).thenThrow(RuntimeException.class);
+		when(dao.getRequestByNum(anyInt())).thenReturn(expectedRequest);
+		when(dao.getRequestByNum(-1)).thenThrow(RuntimeException.class);
 		
 		GroupRequest actual = service.getRequestByNum(30);
-		verify(dao).getGroupRequestByNum(30);
+		verify(dao).getRequestByNum(30);
 		
 		assertEquals(expectedRequest, actual);
 	
 		service.getRequestByNum(-1);
-		verify(dao).getGroupRequestByNum(-1);
+		verify(dao).getRequestByNum(-1);
 		verifyNoMoreInteractions(dao);
 	}
 	

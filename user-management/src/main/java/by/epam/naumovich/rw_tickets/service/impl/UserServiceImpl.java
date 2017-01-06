@@ -40,10 +40,10 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void deleteUser(int id) {
-		groupDAO.deleteUserFromAllGroups(id);
+		groupDAO.removeUserFromAllGroups(id);
 		List<UserGroup> groups = groupDAO.getGroupsByOwner(id);
 		for (UserGroup group : groups) {
-			groupDAO.deleteAllUsersFromGroup(group.getGr_id());
+			groupDAO.removeAllGroupMembers(group.getGr_id());
 			groupDAO.deleteGroup(group.getGr_id());
 		}
 		userDAO.deleteUser(id);
@@ -67,8 +67,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<User> getAllGroupUsers(int groupID) {
-		return userDAO.getAllGroupUsers(groupID);
+	public List<User> getAllGroupMembers(int groupID) {
+		return userDAO.getAllGroupMembers(groupID);
 	}
 
 	@Override

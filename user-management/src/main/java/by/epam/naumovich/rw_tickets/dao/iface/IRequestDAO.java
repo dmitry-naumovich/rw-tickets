@@ -18,7 +18,7 @@ public interface IRequestDAO {
 	 * @return request num of the newly added group request or 0 if it was not added
 	 * @throws DAOException
 	 */
-	int addGroupRequest(GroupRequest request);
+	int addRequest(GroupRequest request);
 	
 	/**
 	 * Updates the group request status in the data source
@@ -27,7 +27,7 @@ public interface IRequestDAO {
 	 * @param newStatus new group request status
 	 * @throws DAOException
 	 */
-	void updateGroupRequest(int num, char newStatus);
+	void updateRequest(int num, char newStatus);
 	
 	/**
 	 * Deletes group request entity from the data source
@@ -36,7 +36,7 @@ public interface IRequestDAO {
 	 * 
 	 * @throws DAOException
 	 */
-	void deleteGroupRequest(int num);
+	void deleteRequest(int num);
 	
 	/**
 	 * Gets group request by its num from the data source
@@ -45,7 +45,7 @@ public interface IRequestDAO {
 	 * @return found GroupRequest entity
 	 * @throws DAOException
 	 */
-	GroupRequest getGroupRequestByNum(int num);
+	GroupRequest getRequestByNum(int num);
 	
 
 	/**

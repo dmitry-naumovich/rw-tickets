@@ -97,8 +97,8 @@ public class UserDAOTest extends UnitilsJUnit4 {
    	}
     
     @Test
-    public void testGetGroupUsers() {
-    	List<User> result = userDAO.getAllGroupUsers(1);
+    public void testGetGroupMembers() {
+    	List<User> result = userDAO.getAllGroupMembers(1);
     	assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk"), result);
     }
     

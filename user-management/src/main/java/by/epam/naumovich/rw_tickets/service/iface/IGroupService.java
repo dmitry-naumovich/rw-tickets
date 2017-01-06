@@ -22,8 +22,8 @@ public interface IGroupService {
 	String getGroupNameByID(int id);
 	List<UserGroup> getGroupsByUser(int userID);
 	
-    void addUserToGroup(int userID, int groupID);
-	void deleteUserFromGroup(int userID, int groupID);
+    void addGroupMember(int userID, int groupID);
+	void removeGroupMember(int userID, int groupID);
 	
 	void deleteAllGroupsByOwner(int ownerID);	
 }

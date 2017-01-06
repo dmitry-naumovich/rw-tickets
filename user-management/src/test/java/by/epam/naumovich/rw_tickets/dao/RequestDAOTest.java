@@ -18,7 +18,7 @@ import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 
 @DataSet("dbunit/DAODataTest.xml")
-public class GroupRequestDAOTest extends UnitilsJUnit4 {
+public class RequestDAOTest extends UnitilsJUnit4 {
 
 	ApplicationContext context;
 	private IRequestDAO requestDAO;;
@@ -43,7 +43,7 @@ public class GroupRequestDAOTest extends UnitilsJUnit4 {
 	@ExpectedDataSet("dbunit/AfterAddRequest.xml")
 	public void testAddRequest() {
 		initTestRequest();
-		int reqNum = requestDAO.addGroupRequest(testRequest);
+		int reqNum = requestDAO.addRequest(testRequest);
 		testRequest.setRq_num(reqNum);
 	}
 	
@@ -51,18 +51,18 @@ public class GroupRequestDAOTest extends UnitilsJUnit4 {
 	@ExpectedDataSet("dbunit/AfterUpdRequest.xml")
 	public void testUpdateRequest() {
 		char newStatus = 'a';
-		requestDAO.updateGroupRequest(2, newStatus);
+		requestDAO.updateRequest(2, newStatus);
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void testDeleteRequest() {
-		requestDAO.deleteGroupRequest(4);
-		requestDAO.getGroupRequestByNum(4);
+		requestDAO.deleteRequest(4);
+		requestDAO.getRequestByNum(4);
 	}
 	
 	@Test
 	public void testGetReqByNum() {
-		GroupRequest result = requestDAO.getGroupRequestByNum(2);
+		GroupRequest result = requestDAO.getRequestByNum(2);
 		assertPropertyLenientEquals("from_user", 3, result);
 		assertPropertyLenientEquals("to_user", 1, result);
 		assertPropertyLenientEquals("gr_id", 1, result);

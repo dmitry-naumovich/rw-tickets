@@ -76,8 +76,6 @@ public class UserServiceTest {
 		assertEquals(expectedUser.getId(), service.addUser(expectedUser));
 		verify(dao).addUser(expectedUser);
 		verifyNoMoreInteractions(dao);
-	    //assertTrue(service.addUser(testUser) > 0);
-	    //assertNotNull(service.addUser(testUser));
 	}
 	
 	@Test 
@@ -130,9 +128,9 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testGetGroupUsers() {
-		service.getAllGroupUsers(1);
-		verify(dao).getAllGroupUsers(1);
+	public void testGetGroupMembers() {
+		service.getAllGroupMembers(1);
+		verify(dao).getAllGroupMembers(1);
 	}
 	
 	@Test

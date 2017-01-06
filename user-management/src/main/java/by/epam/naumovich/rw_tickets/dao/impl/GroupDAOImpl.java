@@ -36,18 +36,18 @@ public class GroupDAOImpl implements IGroupDAO {
 	}
 	
 	@Override
-	public int addUserGroup(UserGroup group) {
+	public int addGroup(UserGroup group) {
 		Object[] params = new Object[] {group.getGr_name(), group.getOwner_id()};
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER};
 		jdbcTemplate.update(INSERT_NEW_GROUP, params, types);
 		
 		int newGroupID = getGroupIdByNameAndOwner(group.getGr_name(), group.getOwner_id());
-		addUserToGroup(group.getOwner_id(), newGroupID);
+		addGroupMember(group.getOwner_id(), newGroupID);
 		return newGroupID;
 	}
 
 	@Override
-	public void updateUserGroup(int id, UserGroup updGroup) {
+	public void updateGroup(int id, UserGroup updGroup) {
 		Object[] params = new Object[] {updGroup.getGr_name(), updGroup.getOwner_id(), id};
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER, Types.INTEGER};
 		jdbcTemplate.update(UPDATE_GROUP, params, types);
@@ -60,7 +60,7 @@ public class GroupDAOImpl implements IGroupDAO {
 	}
 
 	@Override
-	public UserGroup getUserGroupById(int id) {
+	public UserGroup getGroupById(int id) {
 		Object[] params = new Object[] {id};
 		List<UserGroup> groups = jdbcTemplate.query(SELECT_GROUP_BY_ID, params, new UserGroupRowMapper());
 		return groups.get(0);
@@ -74,14 +74,14 @@ public class GroupDAOImpl implements IGroupDAO {
 	}
 
 	@Override
-	public void addUserToGroup(int userID, int groupID) {
+	public void addGroupMember(int userID, int groupID) {
 		Object[] params = new Object[] {userID, groupID};
 		int[] types = new int[] {Types.INTEGER, Types.INTEGER};
 		jdbcTemplate.update(INSERT_NEW_INVOLVE, params, types);
 	}
 
 	@Override
-	public void deleteUserFromGroup(int userID, int groupID) {
+	public void removeGroupMember(int userID, int groupID) {
 		Object[] params = new Object[] {userID, groupID};
 		int[] types = new int[] {Types.INTEGER, Types.INTEGER};
 		jdbcTemplate.update(DELETE_USER_FROM_GROUP, params, types);
@@ -108,7 +108,7 @@ public class GroupDAOImpl implements IGroupDAO {
 	}
 
 	@Override
-	public void deleteAllUsersFromGroup(int groupID) {
+	public void removeAllGroupMembers(int groupID) {
 		Object[] params = new Object[] {groupID};
 		jdbcTemplate.update(DELETE_ALL_GROUP_USERS, params);
 	}
@@ -120,7 +120,7 @@ public class GroupDAOImpl implements IGroupDAO {
 	}
 
 	@Override
-	public void deleteUserFromAllGroups(int userID) {
+	public void removeUserFromAllGroups(int userID) {
 		Object[] params = new Object[] {userID};
 		jdbcTemplate.update(DELETE_USER_FROM_ALL_GROUPS, params);
 	}

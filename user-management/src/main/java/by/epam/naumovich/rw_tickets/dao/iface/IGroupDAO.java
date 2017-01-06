@@ -18,7 +18,7 @@ public interface IGroupDAO {
 	 * @param group new user group entity
 	 * @return id of the newly added user group or 0 if it was not added
 	 */
-	int addUserGroup(UserGroup group);
+	int addGroup(UserGroup group);
 	
 	/**
 	 * Updates the user group in the data source
@@ -26,7 +26,7 @@ public interface IGroupDAO {
 	 * @param id user group's id
 	 * @param updUserGroup updated user group entity
 	 */
-	void updateUserGroup(int id, UserGroup updGroup);
+	void updateGroup(int id, UserGroup updGroup);
 	
 	/**
 	 * Deletes user group entity from the data source
@@ -41,7 +41,7 @@ public interface IGroupDAO {
 	 * @param id user group's ID
 	 * @return found UserGroup entity
 	 */
-	UserGroup getUserGroupById(int id);
+	UserGroup getGroupById(int id);
 	
 	/**
 	 * Gets group ID by its name and owner from the data source
@@ -66,7 +66,7 @@ public interface IGroupDAO {
 	 * @param userID ID of the user
 	 * @param groupID ID of the user group
 	 */
-	void addUserToGroup(int userID, int groupID);
+	void addGroupMember(int userID, int groupID);
 	
 	/**
 	 * Deletes user from the user group
@@ -74,14 +74,14 @@ public interface IGroupDAO {
 	 * @param userID ID of the user
 	 * @param groupID ID of the user group
 	 */
-	void deleteUserFromGroup(int userID, int groupID);
+	void removeGroupMember(int userID, int groupID);
 	
 	/**
 	 * Deletes all users from the specified group
 	 * 
 	 * @param groupID - ID of the group
 	 */
-	void deleteAllUsersFromGroup(int groupID);
+	void removeAllGroupMembers(int groupID);
 	
 	/**
 	 * Deletes all groups which are owned by the user with the specified ID
@@ -95,7 +95,7 @@ public interface IGroupDAO {
 	 * 
 	 * @param userID ID of the user
 	 */
-	void deleteUserFromAllGroups(int userID);
+	void removeUserFromAllGroups(int userID);
 	
 	/**
 	 * Gets list of user groups by his ID

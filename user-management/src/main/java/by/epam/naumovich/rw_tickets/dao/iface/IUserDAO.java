@@ -72,7 +72,7 @@ public interface IUserDAO {
 	 * @return the list containing all users from the concrete group
 	 * @throws DAOException
 	 */
-	List<User> getAllGroupUsers(int groupID);
+	List<User> getAllGroupMembers(int groupID);
 	
 	/**
 	 * Returns the id of the user by his login

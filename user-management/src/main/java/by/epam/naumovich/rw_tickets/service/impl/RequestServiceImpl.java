@@ -16,22 +16,22 @@ public class RequestServiceImpl implements IRequestService {
 
 	@Override
 	public int addRequest(GroupRequest request) {
-		return requestDAO.addGroupRequest(request);
+		return requestDAO.addRequest(request);
 	}
 
 	@Override
 	public void updateRequest(int reqNum, char newStatus) {
-		requestDAO.updateGroupRequest(reqNum, newStatus);
+		requestDAO.updateRequest(reqNum, newStatus);
 	}
 
 	@Override
 	public void deleteRequest(int reqNum) {
-		requestDAO.deleteGroupRequest(reqNum);
+		requestDAO.deleteRequest(reqNum);
 	}
 
 	@Override
 	public GroupRequest getRequestByNum(int num) {
-		return requestDAO.getGroupRequestByNum(num);
+		return requestDAO.getRequestByNum(num);
 	}
 
 	@Override

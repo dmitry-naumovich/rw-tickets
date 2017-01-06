@@ -22,7 +22,7 @@ public interface IUserService {
 	User getUserById(int id);
 	User getUserByLogin(String login);
 	List<User> getAllUsers();
-	List<User> getAllGroupUsers(int groupID);
+	List<User> getAllGroupMembers(int groupID);
 	String getPasswordByLogin(String login);
 	String getPasswordByEmail(String email);
 	String getLoginById(int id);

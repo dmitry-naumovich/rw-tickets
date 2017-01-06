@@ -95,7 +95,7 @@ public class UserDAOImpl implements IUserDAO {
 	}
 
 	@Override
-	public List<User> getAllGroupUsers(int groupID) {
+	public List<User> getAllGroupMembers(int groupID) {
 		Object[] params = new Object[] {groupID};
 		return jdbcTemplate.query(SELECT_GROUP_USERS, params, new UserRowMapper());	
 	}

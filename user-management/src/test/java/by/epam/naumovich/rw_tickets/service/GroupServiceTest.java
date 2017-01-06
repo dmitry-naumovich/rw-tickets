@@ -59,7 +59,7 @@ public class GroupServiceTest {
 	
 	@Test
 	public void testAddGroup() {
-		when(dao.addUserGroup(expectedGroup)).thenAnswer(new Answer<Integer>() {
+		when(dao.addGroup(expectedGroup)).thenAnswer(new Answer<Integer>() {
 
 			@Override
 			public Integer answer(InvocationOnMock invocation) throws Throwable {
@@ -70,8 +70,8 @@ public class GroupServiceTest {
 		});
 		
 		assertEquals(90, service.addGroup(expectedGroup));
-		verify(dao).addUserGroup(expectedGroup);
-		verify(dao).addUserToGroup(expectedGroup.getOwner_id(), expectedGroup.getGr_id());
+		verify(dao).addGroup(expectedGroup);
+		verify(dao).addGroupMember(expectedGroup.getOwner_id(), expectedGroup.getGr_id());
 		verifyNoMoreInteractions(dao);
 	}
 	
@@ -79,45 +79,45 @@ public class GroupServiceTest {
 	public void testUpdateGroup() {
 		expectedGroup.setGr_id(13);
 		service.updateGroup(expectedGroup);
-		verify(dao).updateUserGroup(13, expectedGroup);
+		verify(dao).updateGroup(13, expectedGroup);
 	}
 	
 	@Test
 	public void testDeleteGroup() {
 		service.deleteGroup(10);
 		verify(dao).deleteGroup(10);
-		verify(dao).deleteAllUsersFromGroup(10);
+		verify(dao).removeAllGroupMembers(10);
 	}
 	
 	@Test(expected=RuntimeException.class)
 	public void testGetGroupByID() {
-		when(dao.getUserGroupById(anyInt())).thenReturn(expectedGroup);
-		when(dao.getUserGroupById(-1)).thenThrow(RuntimeException.class);
+		when(dao.getGroupById(anyInt())).thenReturn(expectedGroup);
+		when(dao.getGroupById(-1)).thenThrow(RuntimeException.class);
 		
 		UserGroup actual = service.getGroupByID(2);
-		verify(dao).getUserGroupById(2);
+		verify(dao).getGroupById(2);
 		
 		assertEquals(expectedGroup, actual);
 		
 		service.getGroupByID(-1);
-		verify(dao).getUserGroupById(-1);
+		verify(dao).getGroupById(-1);
 		verifyNoMoreInteractions(dao);
 	}
 	
 	@Test
-	public void testAddUserToGroup() {
-		service.addUserToGroup(1, 10);
-		verify(dao).addUserToGroup(1, 10);
+	public void testAddGroupMember() {
+		service.addGroupMember(1, 10);
+		verify(dao).addGroupMember(1, 10);
 	}
 	
 	@Test
-	public void testDeleteUserFromGroup() {
-		service.deleteUserFromGroup(1, 10);
-		verify(dao).deleteUserFromGroup(1, 10);
+	public void testRemoveGroupMember() {
+		service.removeGroupMember(1, 10);
+		verify(dao).removeGroupMember(1, 10);
 	}
 	
 	@Test
-	public void testGetUserGroups() {
+	public void testGetGroupsByUser() {
 		when(dao.getGroupsByUser(anyInt())).thenReturn(groups);
 		List<UserGroup> actual = service.getGroupsByUser(2);
 		assertThat(actual, is(groups));
