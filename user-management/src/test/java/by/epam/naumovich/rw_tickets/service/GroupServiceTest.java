@@ -16,6 +16,7 @@ import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl;
 
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
+import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
 import by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl;
 
@@ -66,7 +67,7 @@ public class GroupServiceTest {
 	}
 	
 	@Test
-	public void testAddGroup() {
+	public void testAddGroup() throws ServiceException {
 		when(dao.addGroup(expectedGroup)).thenAnswer(new Answer<Integer>() {
 
 			@Override
@@ -84,20 +85,20 @@ public class GroupServiceTest {
 	}
 	
 	@Test
-	public void testUpdateGroup() {
+	public void testUpdateGroup() throws ServiceException {
 		service.updateGroup(expectedGroup);
 		verify(dao).updateGroup(90, expectedGroup);
 	}
 	
 	@Test
-	public void testDeleteGroup() {
+	public void testDeleteGroup() throws ServiceException {
 		service.deleteGroup(10);
 		verify(dao).deleteGroup(10);
 		verify(dao).removeAllGroupMembers(10);
 	}
 	
 	@Test(expected=RuntimeException.class)
-	public void testGetGroupByID() {
+	public void testGetGroupByID() throws ServiceException {
 		when(dao.getGroupById(anyInt())).thenReturn(expectedGroup);
 		when(dao.getGroupById(-1)).thenThrow(RuntimeException.class);
 		
@@ -112,19 +113,19 @@ public class GroupServiceTest {
 	}
 	
 	@Test
-	public void testAddGroupMember() {
+	public void testAddGroupMember() throws ServiceException {
 		service.addGroupMember(1, 10);
 		verify(dao).addGroupMember(1, 10);
 	}
 	
 	@Test
-	public void testRemoveGroupMember() {
+	public void testRemoveGroupMember() throws ServiceException {
 		service.removeGroupMember(1, 10);
 		verify(dao).removeGroupMember(1, 10);
 	}
 	
 	@Test
-	public void testGetGroupsByUser() {
+	public void testGetGroupsByUser() throws ServiceException {
 		when(dao.getGroupsByUser(anyInt())).thenReturn(groups);
 		List<UserGroup> actual = service.getGroupsByUser(2);
 		assertThat(actual, is(groups));
@@ -132,7 +133,7 @@ public class GroupServiceTest {
 	}
 	
 	@Test
-	public void deleteAllGroupsByOwner() {
+	public void deleteAllGroupsByOwner() throws ServiceException {
 		service.deleteAllGroupsByOwner(2);
 		verify(dao).getGroupsByOwner(2);
 	}

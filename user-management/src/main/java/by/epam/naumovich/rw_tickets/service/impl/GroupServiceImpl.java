@@ -2,9 +2,13 @@ package by.epam.naumovich.rw_tickets.service.impl;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
+import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
+import by.epam.naumovich.rw_tickets.service.util.ExceptionMessages;
 
 public class GroupServiceImpl implements IGroupService {
 
@@ -15,56 +19,95 @@ public class GroupServiceImpl implements IGroupService {
 	}
 	
 	@Override
-	public int addGroup(UserGroup group) {
-		int id = groupDAO.addGroup(group);
-		groupDAO.addGroupMember(group.getOwner_id(), id);
-		return id;
-	}
-
-	@Override
-	public void updateGroup(UserGroup group) {
-		groupDAO.updateGroup(group.getGr_id(), group);
+	public int addGroup(UserGroup group) throws ServiceException {
+		try {
+			int id = groupDAO.addGroup(group);
+			groupDAO.addGroupMember(group.getOwner_id(), id);
+			return id;
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
 		
 	}
 
 	@Override
-	public void deleteGroup(int groupID) {
-		groupDAO.removeAllGroupMembers(groupID);
-		groupDAO.deleteGroup(groupID);
+	public void updateGroup(UserGroup group) throws ServiceException {
+		try {
+			groupDAO.updateGroup(group.getGr_id(), group);
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
+		
 	}
 
 	@Override
-	public UserGroup getGroupByID(int id) {
-		return groupDAO.getGroupById(id);
+	public void deleteGroup(int groupID) throws ServiceException {
+		try { 
+			groupDAO.removeAllGroupMembers(groupID);
+			groupDAO.deleteGroup(groupID);
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
+		
 	}
 
 	@Override
-	public String getGroupNameByID(int id) {
-		return groupDAO.getGroupNameById(id);
+	public UserGroup getGroupByID(int id) throws ServiceException {
+		try {
+			return groupDAO.getGroupById(id);
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
 	}
 
 	@Override
-	public List<UserGroup> getGroupsByUser(int userID) {
-		return groupDAO.getGroupsByUser(userID);
+	public String getGroupNameByID(int id) throws ServiceException {
+		try {
+			return groupDAO.getGroupNameById(id);
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
 	}
 
 	@Override
-	public void addGroupMember(int userID, int groupID) {
-		groupDAO.addGroupMember(userID, groupID);
+	public List<UserGroup> getGroupsByUser(int userID) throws ServiceException {
+		try {
+			return groupDAO.getGroupsByUser(userID);
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
 	}
 
 	@Override
-	public void removeGroupMember(int userID, int groupID) {
-		groupDAO.removeGroupMember(userID, groupID);
+	public void addGroupMember(int userID, int groupID) throws ServiceException {
+		try {
+			groupDAO.addGroupMember(userID, groupID);
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
 	}
 
 	@Override
-	public void deleteAllGroupsByOwner(int ownerID) {
-		List<UserGroup> groups = groupDAO.getGroupsByOwner(ownerID);
-		for (UserGroup group : groups) {
-			groupDAO.removeAllGroupMembers(group.getGr_id());
-			groupDAO.deleteGroup(group.getGr_id());
-		}	
+	public void removeGroupMember(int userID, int groupID) throws ServiceException {
+		try {
+			groupDAO.removeGroupMember(userID, groupID);
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
+	}
+
+	@Override
+	public void deleteAllGroupsByOwner(int ownerID) throws ServiceException {
+		try {
+			List<UserGroup> groups = groupDAO.getGroupsByOwner(ownerID);
+			for (UserGroup group : groups) {
+				groupDAO.removeAllGroupMembers(group.getGr_id());
+				groupDAO.deleteGroup(group.getGr_id());
+			}	
+		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		}
+		
 	}
 
 }

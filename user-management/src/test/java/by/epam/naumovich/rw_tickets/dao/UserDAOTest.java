@@ -96,6 +96,17 @@ public class UserDAOTest extends UnitilsJUnit4 {
         assertPropertyLenientEquals("phone", "111223334455", result);
     }
 	
+	@Test
+    public void testGetByEmail() {
+        User result = userDAO.getUserByEmail("nobody4@nowhere.com");
+        assertPropertyLenientEquals("login", "resk", result);
+        assertPropertyLenientEquals("pwd", "pwdd", result);
+        assertPropertyLenientEquals("email", "nobody4@nowhere.com", result);
+        assertPropertyLenientEquals("fname", "donny", result);
+        assertPropertyLenientEquals("sname", "moe", result);
+        assertPropertyLenientEquals("phone", "111222324225", result);
+    }
+	
     @Test
     public void testGetAllUsers() {
         List<User> result = userDAO.getAllUsers();

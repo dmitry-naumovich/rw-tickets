@@ -3,6 +3,7 @@ package by.epam.naumovich.rw_tickets.service.iface;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
+import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 
 /**
 * Defines methods that receive parameters from Command implementations, verify them, construct necessary entities if needed 
@@ -14,12 +15,12 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 */
 public interface IRequestService {
 
-	public int addRequest(GroupRequest request);
-	public void updateRequest(int reqNum, char newStatus);
-	public void deleteRequest(int reqNum);
+	public int addRequest(GroupRequest request) throws ServiceException;
+	public void updateRequest(int reqNum, char newStatus) throws ServiceException;
+	public void deleteRequest(int reqNum) throws ServiceException;
 	
-	GroupRequest getRequestByNum(int num);
+	GroupRequest getRequestByNum(int num) throws ServiceException;
 	
-	List<GroupRequest> getUserIncRequests(int userID);
-	List<GroupRequest> getUserOutRequests(int userID);
+	List<GroupRequest> getUserIncRequests(int userID) throws ServiceException;
+	List<GroupRequest> getUserOutRequests(int userID) throws ServiceException;
 }

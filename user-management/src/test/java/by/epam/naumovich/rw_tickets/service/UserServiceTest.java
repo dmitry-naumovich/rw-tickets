@@ -16,6 +16,7 @@ import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl;
 import by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.User;
+import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
 import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
 
@@ -72,7 +73,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testAddUser() {		
+	public void testAddUser() throws ServiceException {		
 		when(dao.addUser(expectedUser)).thenAnswer(new Answer<Integer>() {
 			@Override
 			public Integer answer(InvocationOnMock invocation) throws Throwable {
@@ -86,19 +87,19 @@ public class UserServiceTest {
 	}
 	
 	@Test 
-	public void testUpdateUser() {
+	public void testUpdateUser() throws ServiceException {
 		service.updateUser(expectedUser);
 		verify(dao).updateUser(2, expectedUser);
 	}
 	
 	@Test
-	public void testDeleteUser() {
+	public void testDeleteUser() throws ServiceException {
 		service.deleteUser(1);
 		verify(dao).deleteUser(1);
 	}
 	
 	@Test(expected=RuntimeException.class)
-	public void testGetUserByID() {
+	public void testGetUserByID() throws ServiceException {
 		when(dao.getUserById(anyInt())).thenReturn(expectedUser);
 		when(dao.getUserById(-1)).thenThrow(RuntimeException.class);
 		
@@ -113,7 +114,7 @@ public class UserServiceTest {
 	}
 	
 	@Test(expected=RuntimeException.class)
-	public void testGetUserByLogin() {
+	public void testGetUserByLogin() throws ServiceException {
 		when(dao.getUserByLogin(anyString())).thenReturn(expectedUser);
 		when(dao.getUserByLogin(null)).thenThrow(RuntimeException.class);
 		
@@ -128,31 +129,37 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testGetAllUsers() {
+	public void testGetAllUsers() throws ServiceException {
 		service.getAllUsers();
 		verify(dao).getAllUsers();
 	}
 	
 	@Test
-	public void testGetGroupMembers() {
+	public void testGetGroupMembers() throws ServiceException {
 		service.getAllGroupMembers(1);
 		verify(dao).getAllGroupMembers(1);
 	}
 	
 	@Test
-	public void testGetPasswordByLogin() {
-		service.getPasswordByLogin("loginT");
-		verify(dao).getPasswordByLogin("loginT");
+	public void testAuthenticateByLogin() {
+		try {
+			service.authenticateByLogin("loginT", "wr");
+		} catch (ServiceException e) {
+			verify(dao).getUserByLogin("loginT");
+		}
 	}
 	
 	@Test
-	public void getPasswordByEmail() {
-		service.getPasswordByEmail("email@mail.com");
-		verify(dao).getPasswordByEmail("email@mail.com");
+	public void testAuthenticateByEmail() {
+		try {
+			service.authenticateByEmail("email@mail.com", "pss");
+		} catch (ServiceException e) {
+			 verify(dao).getUserByEmail("email@mail.com");
+		}
 	}
 	
 	@Test
-	public void testGetLoginById() {
+	public void testGetLoginById() throws ServiceException {
 		String expected = "testLg";
 		when(dao.getLoginById(8)).thenReturn(expected);
 		String actual = service.getLoginById(8);

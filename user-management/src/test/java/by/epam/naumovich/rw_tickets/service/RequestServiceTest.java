@@ -16,6 +16,7 @@ import static org.hamcrest.CoreMatchers.*;
 import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.RequestDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
+import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IRequestService;
 import by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl;
 
@@ -65,7 +66,7 @@ public class RequestServiceTest {
 	}
 	
 	@Test
-	public void testAddRequest() {
+	public void testAddRequest() throws ServiceException {
 		when(dao.addRequest(expectedRequest)).thenAnswer(new Answer<Integer>() {
 
 			@Override
@@ -82,19 +83,19 @@ public class RequestServiceTest {
 	}
 	
 	@Test
-	public void testUpdateRequest() {
+	public void testUpdateRequest() throws ServiceException {
 		service.updateRequest(2, 'c');
 		verify(dao).updateRequest(2, 'c');
 	}
 	
 	@Test
-	public void testDeleteRequest() {
+	public void testDeleteRequest() throws ServiceException {
 		service.deleteRequest(20);
 		verify(dao).deleteRequest(20);
 	}
 	
 	@Test(expected=RuntimeException.class)
-	public void testGetRequestByNum() {
+	public void testGetRequestByNum() throws ServiceException {
 		when(dao.getRequestByNum(anyInt())).thenReturn(expectedRequest);
 		when(dao.getRequestByNum(-1)).thenThrow(RuntimeException.class);
 		
@@ -109,7 +110,7 @@ public class RequestServiceTest {
 	}
 	
 	@Test
-	public void testGetIncomingRequests() {
+	public void testGetIncomingRequests() throws ServiceException {
 		when(dao.getUserIncRequests(anyInt())).thenReturn(expectedReqList);
 		List<GroupRequest> actual = service.getUserIncRequests(3);
 		assertThat(actual, is(expectedReqList));
@@ -117,7 +118,7 @@ public class RequestServiceTest {
 	}
 	
 	@Test
-	public void testGetOutcomingRequests() {
+	public void testGetOutcomingRequests() throws ServiceException {
 		when(dao.getUserOutRequests(anyInt())).thenReturn(expectedReqList);
 		List<GroupRequest> actual = service.getUserOutRequests(4);
 		assertThat(actual, is(expectedReqList));
