@@ -21,29 +21,37 @@ import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
 
 public class UserServiceTest {
 
-	private IUserDAO dao;
-	private IGroupDAO groupDAO;
+	private static boolean setUpIsDone = false;
+	private static IUserDAO dao;
+	private static IGroupDAO groupDAO;
 	
-	IUserService service = new UserServiceImpl();
+	private static IUserService service = new UserServiceImpl();
 	
-	private User expectedUser;
-	private List<User> userCollection;
+	private static User expectedUser;
+	private static List<User> userCollection;
 	
 	@Before
 	public void init() {
+		if (setUpIsDone) {
+			return;
+		}
 		dao = mock(UserDAOImpl.class);
 		groupDAO = mock(GroupDAOImpl.class);
 		((UserServiceImpl)service).setUserDAO(dao);
 		((UserServiceImpl)service).setGroupDAO(groupDAO);
-		
+		initTestUser();
+		initUserCollection();
+		setUpIsDone = true;
+	}
+	
+	public void initTestUser() {
 		expectedUser = new User();
 		expectedUser.setId(2);
 		expectedUser.setLogin("vasya");
 		expectedUser.setFname("nama");
 	}
 	
-	@Before
-	public void initCollection() {
+	public void initUserCollection() {
 		userCollection = new ArrayList<User>();
 		
 		User sec = new User();
@@ -75,14 +83,12 @@ public class UserServiceTest {
 		
 		assertEquals(expectedUser.getId(), service.addUser(expectedUser));
 		verify(dao).addUser(expectedUser);
-		verifyNoMoreInteractions(dao);
 	}
 	
 	@Test 
 	public void testUpdateUser() {
-		expectedUser.setId(1);
 		service.updateUser(expectedUser);
-		verify(dao).updateUser(1, expectedUser);
+		verify(dao).updateUser(2, expectedUser);
 	}
 	
 	@Test

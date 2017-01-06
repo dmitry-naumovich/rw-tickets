@@ -21,24 +21,32 @@ import by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl;
 
 public class GroupServiceTest {
 
-	private IGroupDAO dao;
-	IGroupService service = new GroupServiceImpl();
+	private static boolean setUpIsDone = false;
+	private static IGroupDAO dao;
+	private static IGroupService service = new GroupServiceImpl();
 	
-	private UserGroup expectedGroup;
-
-	private List<UserGroup> groups;
+	private static UserGroup expectedGroup;
+	private static List<UserGroup> groups;
 	
 	@Before
 	public void init() {
+		if (setUpIsDone) {
+			return;
+		}
 		dao = mock(GroupDAOImpl.class);
 		((GroupServiceImpl)service).setGroupDAO(dao);
+		initTestGroup();
+		initGroupCollection();
+		setUpIsDone = true;
+	}
+	
+	public void initTestGroup() {
 		expectedGroup = new UserGroup();
 		expectedGroup.setGr_id(90);
 		expectedGroup.setGr_name("testGroup");
 		expectedGroup.setOwner_id(1);
 	}
 	
-	@Before
 	public void initGroupCollection() {
 		groups = new ArrayList<UserGroup>();
 		
@@ -77,9 +85,8 @@ public class GroupServiceTest {
 	
 	@Test
 	public void testUpdateGroup() {
-		expectedGroup.setGr_id(13);
 		service.updateGroup(expectedGroup);
-		verify(dao).updateGroup(13, expectedGroup);
+		verify(dao).updateGroup(90, expectedGroup);
 	}
 	
 	@Test

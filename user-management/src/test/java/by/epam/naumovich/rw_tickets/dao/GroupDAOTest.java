@@ -17,17 +17,38 @@ import static org.unitils.reflectionassert.ReflectionAssert.*;
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
+/**
+ * This unit testing class tests the IGroupDAO interface implementation which is injected into this class by Spring IOC technology.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
+
 @DataSet("dbunit/DAODataTest.xml")
 public class GroupDAOTest extends UnitilsJUnit4 {
 
-	ApplicationContext context;
-	private IGroupDAO usGroupDAO;
-	UserGroup testGroup;
+	public static final String SPRING_TEST_CONFIG_FILE = "user-module-test.xml";
+	public static final String SPRING_DAO_BEAN_NAME = "groupDao";
+	
+	private static boolean setUpIsDone = false;
+	private static ApplicationContext context;
+	private static IGroupDAO usGroupDAO;
+	private static UserGroup testGroup;
+	
 
+	/**
+	 * The methods initializes Test static fields once.
+	 * 
+	 */
 	@Before    
     public void init() {
-		context = new ClassPathXmlApplicationContext("user-module-test.xml");
-		usGroupDAO = (IGroupDAO) context.getBean("groupDao");
+		if (setUpIsDone) {
+			return;
+		}
+		context = new ClassPathXmlApplicationContext(SPRING_TEST_CONFIG_FILE);
+		usGroupDAO = (IGroupDAO) context.getBean(SPRING_DAO_BEAN_NAME);
+		initTestGroup();
+		setUpIsDone = true;
     }
 	
 	public void initTestGroup() {
@@ -39,7 +60,6 @@ public class GroupDAOTest extends UnitilsJUnit4 {
 	@Test
 	@ExpectedDataSet("dbunit/AfterAddGroup.xml")
 	public void testAddGroup() {
-		initTestGroup();
 		usGroupDAO.addGroup(testGroup);
 	}
 	

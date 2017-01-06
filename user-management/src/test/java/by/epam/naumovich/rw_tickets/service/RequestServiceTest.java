@@ -21,16 +21,26 @@ import by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl;
 
 public class RequestServiceTest {
 	
-	private IRequestDAO dao;
-	private IRequestService service = new RequestServiceImpl();
+	private static boolean setUpIsDone = false;
+	private static IRequestDAO dao;
+	private static IRequestService service = new RequestServiceImpl();
 	
-	private GroupRequest expectedRequest;
-	private List<GroupRequest> expectedReqList;
+	private static GroupRequest expectedRequest;
+	private static List<GroupRequest> expectedReqList;
 	
 	@Before
 	public void init() {
+		if (setUpIsDone) {
+			return;
+		}
 		dao = mock(RequestDAOImpl.class);
 		((RequestServiceImpl)service).setRequestDAO(dao);
+		initTestRequest();
+		initRequestCollection();
+		setUpIsDone = true;
+	}
+	
+	public void initTestRequest() {
 		expectedRequest = new GroupRequest();
 		expectedRequest.setRq_num(1);
 		expectedRequest.setFrom_user(2);
@@ -38,7 +48,6 @@ public class RequestServiceTest {
 		expectedRequest.setGr_id(4);
 	}
 	
-	@Before
 	public void initRequestCollection() {
 		expectedReqList = new ArrayList<GroupRequest>();
 		
