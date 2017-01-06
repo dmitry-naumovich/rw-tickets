@@ -1,9 +1,9 @@
-/target/
-/.settings/
+/target
+/.settings
 /.project
 /.classpath
 /desktop.ini
-/user-management/target/
-/user-management/.settings/
+/user-management/target
+/user-management/.settings
 /user-management/.project
 /user-management/.classpath
