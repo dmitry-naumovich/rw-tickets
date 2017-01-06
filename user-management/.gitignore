@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-/target/
-/.settings
-/.project
-/.classpath
-/bin/
-=======
 /target
 /.settings
 /.project
 /.classpath
 /bin
->>>>>>> develop
