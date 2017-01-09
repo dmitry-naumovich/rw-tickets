@@ -29,7 +29,7 @@ public class RequestDAOImpl implements IRequestDAO {
 	}
 	
 	@Override
-	public int addGroupRequest(GroupRequest request)  {
+	public int addRequest(GroupRequest request)  {
 		Object[] params = new Object[] {request.getFrom_user(), request.getTo_user(), request.getGr_id(),
 				request.getStatus(), request.getRq_comment()};
 		int[] types = new int[] {Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
@@ -38,20 +38,20 @@ public class RequestDAOImpl implements IRequestDAO {
 	}
 
 	@Override
-	public void updateGroupRequest(int num, char newStatus) {
+	public void updateRequest(int num, char newStatus) {
 		Object[] params = new Object[] {newStatus, num};
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER};
 		jdbcTemplate.update(UPDATE_REQUEST, params, types);
 	}
 
 	@Override
-	public void deleteGroupRequest(int num) {
+	public void deleteRequest(int num) {
 		Object[] params = new Object[] {num};
 		jdbcTemplate.update(DELETE_REQUEST, params);
 	}
 
 	@Override
-	public GroupRequest getGroupRequestByNum(int num) {
+	public GroupRequest getRequestByNum(int num) {
 		Object[] params = new Object[] {num};
 		List<GroupRequest> reqs = jdbcTemplate.query(SELECT_REQ_BY_NUM, params, new GroupRequestMapper());
 		return reqs.get(0);

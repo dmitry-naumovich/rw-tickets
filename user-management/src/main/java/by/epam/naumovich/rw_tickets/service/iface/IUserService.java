@@ -3,6 +3,7 @@ package by.epam.naumovich.rw_tickets.service.iface;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.entity.User;
+import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 
 /**
@@ -15,22 +16,23 @@ import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
  */
 public interface IUserService {
 	
-	int addUser(User user);
-	void updateUser(User updUser);
-	void deleteUser(int id);
+	int addUser(User user) throws ServiceException;
+	void updateUser(User updUser) throws ServiceException;
+	void deleteUser(int id) throws ServiceException;
 	
-	User getUserById(int id);
-	User getUserByLogin(String login);
-	List<User> getAllUsers();
-	List<User> getAllGroupUsers(int groupID);
-	String getPasswordByLogin(String login);
-	String getPasswordByEmail(String email);
-	String getLoginById(int id);
+	User getUserById(int id) throws ServiceException;
+	User getUserByLogin(String login) throws ServiceException;
+	List<User> getAllUsers() throws ServiceException;
+	List<User> getAllGroupMembers(int groupID) throws ServiceException;
 	
-	List<User> findUsersByName(String name);
-	List<User> findUsersBySurname(String surname);	
-	List<User> findUsersByCountry(String country);	
-	List<User> findUsersByCity(String city);	
+	void authenticateByLogin(String login, String pass) throws ServiceException;
+	void authenticateByEmail(String email, String pass) throws ServiceException;
+	String getLoginById(int id) throws ServiceException;
 	
-	List<User> getAllUsersSorted(USER_SORT_TYPE type);	
+	List<User> findUsersByName(String name) throws ServiceException;
+	List<User> findUsersBySurname(String surname) throws ServiceException;	
+	List<User> findUsersByCountry(String country) throws ServiceException;	
+	List<User> findUsersByCity(String city) throws ServiceException;	
+	
+	List<User> getAllUsersSorted(USER_SORT_TYPE type) throws ServiceException;	
 }

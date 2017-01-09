@@ -17,8 +17,6 @@ public class UserGroup {
 	private Time createTime;
 	private int owner_id;
 	
-	public UserGroup() {}
-	
 	public int getGr_id() {
 		return gr_id;
 	}
@@ -73,9 +71,15 @@ public class UserGroup {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) { return true; }
-		if (null == obj) { return false; }
-		if (obj.getClass() != getClass()) { return false; }
+		if (this == obj) { 
+			return true; 
+		}
+		if (null == obj) { 
+			return false; 
+		}
+		if (obj.getClass() != getClass()) { 
+			return false; 
+		}
 		
 		UserGroup grp = (UserGroup)obj;
 		if (gr_id != grp.gr_id) { 

@@ -22,9 +22,6 @@ public class GroupRequest {
 	private Date closeDate;
 	private Time closeTime;
 	
-	
-	public GroupRequest() {}
-	
 	public int getRq_num() {
 		return rq_num;
 	}
@@ -123,9 +120,15 @@ public class GroupRequest {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) { return true; }
-		if (null == obj) { return false; }
-		if (obj.getClass() != getClass()) { return false; }
+		if (this == obj) { 
+			return true; 
+		}
+		if (null == obj) { 
+			return false; 
+		}
+		if (obj.getClass() != getClass()) { 
+			return false; 
+		}
 		
 		GroupRequest req = (GroupRequest)obj;
 		if (rq_num != req.rq_num) { 
@@ -172,12 +175,18 @@ public class GroupRequest {
 	    result.append(", fromUser: " + from_user);
 	    result.append(", toUser: " + to_user);
 	    result.append(", groupId: " + gr_id);
-	    if (rq_comment != null) { result.append(", comment: " + rq_comment); }
+	    if (rq_comment != null) { 
+	    	result.append(", comment: " + rq_comment); 
+	    }
 	    result.append(", status: " + status);
 	    result.append(", createDate: " + createDate);
 	    result.append(", createTime: " + createTime);
-	    if (closeDate != null) { result.append(", closeDate: " + closeDate); }
-	    if (closeTime != null) { result.append(", closeTime: " + closeTime); }
+	    if (closeDate != null) { 
+	    	result.append(", closeDate: " + closeDate); 
+	    }
+	    if (closeTime != null) { 
+	    	result.append(", closeTime: " + closeTime); 
+	    }
 	    result.append("}");
 		
 	    return result.toString();

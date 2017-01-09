@@ -3,6 +3,7 @@ package by.epam.naumovich.rw_tickets.service.iface;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
+import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 
 /**
 * Defines methods that receive parameters from Command implementations, verify them, construct necessary entities if needed 
@@ -14,16 +15,16 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
 */
 public interface IGroupService {
 
-	public int addGroup(UserGroup group);
-	public void updateGroup(UserGroup group);
-	public void deleteGroup(int groupID);
+	public int addGroup(UserGroup group) throws ServiceException;
+	public void updateGroup(UserGroup group) throws ServiceException;
+	public void deleteGroup(int groupID) throws ServiceException;
 	
-	UserGroup getGroupByID(int id);
-	String getGroupNameByID(int id);
-	List<UserGroup> getGroupsByUser(int userID);
+	UserGroup getGroupByID(int id) throws ServiceException;
+	String getGroupNameByID(int id) throws ServiceException;
+	List<UserGroup> getGroupsByUser(int userID) throws ServiceException;
 	
-    void addUserToGroup(int userID, int groupID);
-	void deleteUserFromGroup(int userID, int groupID);
+    void addGroupMember(int userID, int groupID) throws ServiceException;
+	void removeGroupMember(int userID, int groupID) throws ServiceException;
 	
-	void deleteAllGroupsByOwner(int ownerID);	
+	void deleteAllGroupsByOwner(int ownerID) throws ServiceException;	
 }

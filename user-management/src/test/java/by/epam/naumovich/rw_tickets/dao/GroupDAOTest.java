@@ -17,17 +17,38 @@ import static org.unitils.reflectionassert.ReflectionAssert.*;
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
+/**
+ * This unit testing class tests the IGroupDAO interface implementation which is injected into this class by Spring IOC technology.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
+
 @DataSet("dbunit/DAODataTest.xml")
-public class UserGroupDAOTest extends UnitilsJUnit4 {
+public class GroupDAOTest extends UnitilsJUnit4 {
 
-	ApplicationContext context;
-	private IGroupDAO usGroupDAO;
-	UserGroup testGroup;
+	public static final String SPRING_TEST_CONFIG_FILE = "user-module-test.xml";
+	public static final String SPRING_DAO_BEAN_NAME = "groupDao";
+	
+	private static boolean setUpIsDone = false;
+	private static ApplicationContext context;
+	private static IGroupDAO usGroupDAO;
+	private static UserGroup testGroup;
+	
 
+	/**
+	 * The methods initializes Test static fields once.
+	 * 
+	 */
 	@Before    
     public void init() {
-		context = new ClassPathXmlApplicationContext("user-module-test.xml");
-		usGroupDAO = (IGroupDAO) context.getBean("groupDao");
+		if (setUpIsDone) {
+			return;
+		}
+		context = new ClassPathXmlApplicationContext(SPRING_TEST_CONFIG_FILE);
+		usGroupDAO = (IGroupDAO) context.getBean(SPRING_DAO_BEAN_NAME);
+		initTestGroup();
+		setUpIsDone = true;
     }
 	
 	public void initTestGroup() {
@@ -39,27 +60,26 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 	@Test
 	@ExpectedDataSet("dbunit/AfterAddGroup.xml")
 	public void testAddGroup() {
-		initTestGroup();
-		usGroupDAO.addUserGroup(testGroup);
+		usGroupDAO.addGroup(testGroup);
 	}
 	
 	@Test
 	@ExpectedDataSet("dbunit/AfterUpdGroup.xml")
 	public void testUpdateGroup() {
-		UserGroup group = usGroupDAO.getUserGroupById(2);
+		UserGroup group = usGroupDAO.getGroupById(2);
 		group.setGr_name("updName");
-		usGroupDAO.updateUserGroup(2, group);
+		usGroupDAO.updateGroup(2, group);
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void testDeleteGroup() {
 		usGroupDAO.deleteGroup(6);
-		usGroupDAO.getUserGroupById(6);
+		usGroupDAO.getGroupById(6);
 	}
 	
 	@Test
 	public void testGetGroupById() {
-		UserGroup result = usGroupDAO.getUserGroupById(1);
+		UserGroup result = usGroupDAO.getGroupById(1);
 		assertPropertyLenientEquals("gr_name", "TestGrName1", result);
 		assertPropertyLenientEquals("owner_id", 1, result);
 	}
@@ -78,19 +98,19 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 	
 	@Test
 	@ExpectedDataSet("dbunit/AfterAddGroupUser.xml")
-	public void testAddUserToGroup() {
-		usGroupDAO.addUserToGroup(3, 2);
+	public void testAddGroupMember() {
+		usGroupDAO.addGroupMember(3, 2);
 	}
 	
 	@Test
-	public void testDeleteUserFromGroup() {
-		usGroupDAO.deleteUserFromGroup(2, 1);
+	public void testRemoveGroupMember() {
+		usGroupDAO.removeGroupMember(2, 1);
 		List<UserGroup> groups = usGroupDAO.getGroupsByUser(2);
 		assertEquals(groups.size(), 1);
 	}
 	
 	@Test
-	public void testGetUserGroups() {
+	public void testGetGroupsByUser() {
 		List<UserGroup> result = usGroupDAO.getGroupsByUser(1);
 		assertPropertyLenientEquals("gr_id", Arrays.asList(1, 5), result);
 		assertPropertyLenientEquals("gr_name", Arrays.asList("TestGrName1", "TestGrName5"), result);
@@ -106,12 +126,12 @@ public class UserGroupDAOTest extends UnitilsJUnit4 {
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void testDeleteAllGroupsByOwner() {
 		usGroupDAO.deleteAllGroupsByOwner(5);
-		usGroupDAO.getUserGroupById(7);
+		usGroupDAO.getGroupById(7);
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void testDeleteUserFromAllGroups() {
-		usGroupDAO.deleteUserFromAllGroups(5);
+	public void testRemoveUserFromAllGroups() {
+		usGroupDAO.removeUserFromAllGroups(5);
 		usGroupDAO.getGroupsByUser(5).get(0);
 	}
 }

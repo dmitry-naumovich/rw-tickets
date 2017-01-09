@@ -16,21 +16,32 @@ import static org.hamcrest.CoreMatchers.*;
 import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.RequestDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
+import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IRequestService;
 import by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl;
 
-public class GroupRequestServiceTest {
+public class RequestServiceTest {
 	
-	private IRequestDAO dao;
-	private IRequestService service = new RequestServiceImpl();
+	private static boolean setUpIsDone = false;
+	private static IRequestDAO dao;
+	private static IRequestService service = new RequestServiceImpl();
 	
-	private GroupRequest expectedRequest;
-	private List<GroupRequest> expectedReqList;
+	private static GroupRequest expectedRequest;
+	private static List<GroupRequest> expectedReqList;
 	
 	@Before
 	public void init() {
+		if (setUpIsDone) {
+			return;
+		}
 		dao = mock(RequestDAOImpl.class);
 		((RequestServiceImpl)service).setRequestDAO(dao);
+		initTestRequest();
+		initRequestCollection();
+		setUpIsDone = true;
+	}
+	
+	public void initTestRequest() {
 		expectedRequest = new GroupRequest();
 		expectedRequest.setRq_num(1);
 		expectedRequest.setFrom_user(2);
@@ -38,7 +49,6 @@ public class GroupRequestServiceTest {
 		expectedRequest.setGr_id(4);
 	}
 	
-	@Before
 	public void initRequestCollection() {
 		expectedReqList = new ArrayList<GroupRequest>();
 		
@@ -56,8 +66,8 @@ public class GroupRequestServiceTest {
 	}
 	
 	@Test
-	public void testAddRequest() {
-		when(dao.addGroupRequest(expectedRequest)).thenAnswer(new Answer<Integer>() {
+	public void testAddRequest() throws ServiceException {
+		when(dao.addRequest(expectedRequest)).thenAnswer(new Answer<Integer>() {
 
 			@Override
 			public Integer answer(InvocationOnMock invocation) throws Throwable {
@@ -68,39 +78,39 @@ public class GroupRequestServiceTest {
 		});
 		
 		assertEquals(1, service.addRequest(expectedRequest));
-		verify(dao).addGroupRequest(expectedRequest);
+		verify(dao).addRequest(expectedRequest);
 		verifyNoMoreInteractions(dao);
 	}
 	
 	@Test
-	public void testUpdateRequest() {
+	public void testUpdateRequest() throws ServiceException {
 		service.updateRequest(2, 'c');
-		verify(dao).updateGroupRequest(2, 'c');
+		verify(dao).updateRequest(2, 'c');
 	}
 	
 	@Test
-	public void testDeleteRequest() {
+	public void testDeleteRequest() throws ServiceException {
 		service.deleteRequest(20);
-		verify(dao).deleteGroupRequest(20);
+		verify(dao).deleteRequest(20);
 	}
 	
 	@Test(expected=RuntimeException.class)
-	public void testGetRequestByNum() {
-		when(dao.getGroupRequestByNum(anyInt())).thenReturn(expectedRequest);
-		when(dao.getGroupRequestByNum(-1)).thenThrow(RuntimeException.class);
+	public void testGetRequestByNum() throws ServiceException {
+		when(dao.getRequestByNum(anyInt())).thenReturn(expectedRequest);
+		when(dao.getRequestByNum(-1)).thenThrow(RuntimeException.class);
 		
 		GroupRequest actual = service.getRequestByNum(30);
-		verify(dao).getGroupRequestByNum(30);
+		verify(dao).getRequestByNum(30);
 		
 		assertEquals(expectedRequest, actual);
 	
 		service.getRequestByNum(-1);
-		verify(dao).getGroupRequestByNum(-1);
+		verify(dao).getRequestByNum(-1);
 		verifyNoMoreInteractions(dao);
 	}
 	
 	@Test
-	public void testGetIncomingRequests() {
+	public void testGetIncomingRequests() throws ServiceException {
 		when(dao.getUserIncRequests(anyInt())).thenReturn(expectedReqList);
 		List<GroupRequest> actual = service.getUserIncRequests(3);
 		assertThat(actual, is(expectedReqList));
@@ -108,7 +118,7 @@ public class GroupRequestServiceTest {
 	}
 	
 	@Test
-	public void testGetOutcomingRequests() {
+	public void testGetOutcomingRequests() throws ServiceException {
 		when(dao.getUserOutRequests(anyInt())).thenReturn(expectedReqList);
 		List<GroupRequest> actual = service.getUserOutRequests(4);
 		assertThat(actual, is(expectedReqList));

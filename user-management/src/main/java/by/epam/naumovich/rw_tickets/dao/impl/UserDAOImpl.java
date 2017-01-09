@@ -20,7 +20,9 @@ public class UserDAOImpl implements IUserDAO {
 	public static final String DELETE_USER = "DELETE FROM rw_users WHERE u_id = ?";
 	public static final String SELECT_USER_BY_ID = "SELECT * FROM rw_users WHERE u_id = ?";
 	public static final String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_users WHERE login = ?";
+	public static final String SELECT_USER_BY_EMAIL = "SELECT * FROM rw_users WHERE email = ?";
 	public static final String SELECT_ALL_USERS = "SELECT * FROM rw_users";
+	public static final String SELECT_ALL_USERS_SORTED = "SELECT * FROM rw_users ORDER BY ? ASC";
 	public static final String SELECT_ID_BY_LOGIN = "SELECT u_id FROM rw_users WHERE login = ?";
 	public static final String SELECT_LOGIN_BY_ID = "SELECT login FROM rw_users WHERE u_id = ?";
 	public static final String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.user_id WHERE gr_id = ?";
@@ -30,14 +32,7 @@ public class UserDAOImpl implements IUserDAO {
 	public static final String SELECT_USERS_BY_SNAME = "SELECT * FROM rw_users WHERE sname = ?";
 	public static final String SELECT_USERS_BY_COUNTRY = "SELECT * FROM rw_users WHERE country = ?";
 	public static final String SELECT_USERS_BY_CITY = "SELECT * FROM rw_users WHERE city = ?";
-	public static final String SELECT_ALL_USERS_SORT_BY_NAME = "SELECT * FROM rw_users ORDER BY fname ASC";
-	public static final String SELECT_ALL_USERS_SORT_BY_SURNAME = "SELECT * FROM rw_users ORDER BY sname ASC";
-	public static final String SELECT_ALL_USERS_SORT_BY_EMAIL = "SELECT * FROM rw_users ORDER BY email ASC";
-	public static final String SELECT_ALL_USERS_SORT_BY_COUNTRY = "SELECT * FROM rw_users ORDER BY country ASC";
-	public static final String SELECT_ALL_USERS_SORT_BY_CITY = "SELECT * FROM rw_users ORDER BY city ASC";
-	public static final String SELECT_ALL_USERS_SORT_BY_ADDRESS = "SELECT * FROM rw_users ORDER BY address ASC";
-	public static final String SELECT_ALL_USERS_SORT_BY_LOGIN = "SELECT * FROM rw_users ORDER BY login ASC";
-	public static final String SELECT_ALL_USERS_SORT_BY_BDATE = "SELECT * FROM rw_users ORDER BY b_date ASC";
+	
 
 	private JdbcTemplate jdbcTemplate;
 	
@@ -88,6 +83,13 @@ public class UserDAOImpl implements IUserDAO {
 		List<User> users = jdbcTemplate.query(SELECT_USER_BY_LOGIN, params, new UserRowMapper());
 		return users.get(0);
 	}
+	
+	@Override
+	public User getUserByEmail(String email) {
+		Object[] params = new Object[] {email};
+		List<User> users = jdbcTemplate.query(SELECT_USER_BY_EMAIL, params, new UserRowMapper());
+		return users.get(0);
+	}
 
 	@Override
 	public List<User> getAllUsers() {
@@ -95,7 +97,13 @@ public class UserDAOImpl implements IUserDAO {
 	}
 
 	@Override
-	public List<User> getAllGroupUsers(int groupID) {
+	public List<User> getAllUsersSorted(String columnName) {
+		Object[] params = new Object[] {columnName};
+		return jdbcTemplate.query(SELECT_ALL_USERS_SORTED, params, new UserRowMapper());
+	}
+
+	@Override
+	public List<User> getAllGroupMembers(int groupID) {
 		Object[] params = new Object[] {groupID};
 		return jdbcTemplate.query(SELECT_GROUP_USERS, params, new UserRowMapper());	
 	}
@@ -154,45 +162,4 @@ public class UserDAOImpl implements IUserDAO {
 		Object[] params = new Object[] {city};
 		return jdbcTemplate.query(SELECT_USERS_BY_CITY, params, new UserRowMapper());
 	}
-
-	@Override
-	public List<User> getAllUsersSortByName() {
-		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_NAME, new UserRowMapper());
-	}
-
-	@Override
-	public List<User> getAllUsersSortBySurname() {
-		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_SURNAME, new UserRowMapper());
-	}
-
-	@Override
-	public List<User> getAllUsersSortByEmail() {
-		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_EMAIL, new UserRowMapper());
-	}
-
-	@Override
-	public List<User> getAllUsersSortByCountry() {
-		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_COUNTRY, new UserRowMapper());
-	}
-
-	@Override
-	public List<User> getAllUsersSortByCity() {
-		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_CITY, new UserRowMapper());
-	}
-
-	@Override
-	public List<User> getAllUsersSortByAddress() {
-		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_ADDRESS, new UserRowMapper());
-	}
-
-	@Override
-	public List<User> getAllUsersSortByLogin() {
-		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_LOGIN, new UserRowMapper());
-	}
-
-	@Override
-	public List<User> getAllUsersSortByBirthdate() {
-		return jdbcTemplate.query(SELECT_ALL_USERS_SORT_BY_BDATE, new UserRowMapper());
-	}
-
 }

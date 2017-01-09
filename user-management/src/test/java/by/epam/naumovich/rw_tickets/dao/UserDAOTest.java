@@ -20,14 +20,27 @@ import by.epam.naumovich.rw_tickets.entity.User;
 @DataSet("dbunit/DAODataTest.xml")
 public class UserDAOTest extends UnitilsJUnit4 {
 	
-	ApplicationContext context;
-	private IUserDAO userDAO;
-	User testUser;
+	public static final String SPRING_TEST_CONFIG_FILE = "user-module-test.xml";
+	public static final String SPRING_DAO_BEAN_NAME = "userDao";
+	
+	private static boolean setUpIsDone = false;
+	private static ApplicationContext context;
+	private static IUserDAO userDAO;
+	private static User testUser;
 
+	/**
+	 * The methods initializes Test static fields once.
+	 * 
+	 */
 	@Before    
     public void init() {
-		context = new ClassPathXmlApplicationContext("user-module-test.xml");
-		userDAO = (IUserDAO) context.getBean("userDao");
+		if (setUpIsDone) {
+			return;
+		}
+		context = new ClassPathXmlApplicationContext(SPRING_TEST_CONFIG_FILE);
+		userDAO = (IUserDAO) context.getBean(SPRING_DAO_BEAN_NAME);
+		initTestUser();
+		setUpIsDone = true;
     }
 	
 	public void initTestUser() {
@@ -49,7 +62,6 @@ public class UserDAOTest extends UnitilsJUnit4 {
     @Test
     @ExpectedDataSet({"dbunit/AfterAddUser.xml"})
     public void testAddUser() {
-    	initTestUser();
     	int id = userDAO.addUser(testUser);
     	testUser.setId(id);
     }
@@ -84,6 +96,17 @@ public class UserDAOTest extends UnitilsJUnit4 {
         assertPropertyLenientEquals("phone", "111223334455", result);
     }
 	
+	@Test
+    public void testGetByEmail() {
+        User result = userDAO.getUserByEmail("nobody4@nowhere.com");
+        assertPropertyLenientEquals("login", "resk", result);
+        assertPropertyLenientEquals("pwd", "pwdd", result);
+        assertPropertyLenientEquals("email", "nobody4@nowhere.com", result);
+        assertPropertyLenientEquals("fname", "donny", result);
+        assertPropertyLenientEquals("sname", "moe", result);
+        assertPropertyLenientEquals("phone", "111222324225", result);
+    }
+	
     @Test
     public void testGetAllUsers() {
         List<User> result = userDAO.getAllUsers();
@@ -97,8 +120,8 @@ public class UserDAOTest extends UnitilsJUnit4 {
    	}
     
     @Test
-    public void testGetGroupUsers() {
-    	List<User> result = userDAO.getAllGroupUsers(1);
+    public void testGetGroupMembers() {
+    	List<User> result = userDAO.getAllGroupMembers(1);
     	assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk"), result);
     }
     

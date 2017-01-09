@@ -16,37 +16,31 @@ public interface IRequestDAO {
 	 * 
 	 * @param request new group request entity
 	 * @return request num of the newly added group request or 0 if it was not added
-	 * @throws DAOException
 	 */
-	int addGroupRequest(GroupRequest request);
+	int addRequest(GroupRequest request);
 	
 	/**
 	 * Updates the group request status in the data source
 	 * 
 	 * @param num group request's num
 	 * @param newStatus new group request status
-	 * @throws DAOException
 	 */
-	void updateGroupRequest(int num, char newStatus);
+	void updateRequest(int num, char newStatus);
 	
 	/**
 	 * Deletes group request entity from the data source
 	 * 
 	 * @param num group request's num
-	 * 
-	 * @throws DAOException
 	 */
-	void deleteGroupRequest(int num);
+	void deleteRequest(int num);
 	
 	/**
 	 * Gets group request by its num from the data source
 	 * 
 	 * @param num group request's num
 	 * @return found GroupRequest entity
-	 * @throws DAOException
 	 */
-	GroupRequest getGroupRequestByNum(int num);
-	
+	GroupRequest getRequestByNum(int num);
 
 	/**
 	 * Returns the number of the request by its toUser, fromUser and groupID fields from the data source
@@ -55,7 +49,6 @@ public interface IRequestDAO {
 	 * @param toUser id of the user who was sent the request to
 	 * @param groupID id of the group
 	 * @return request number
-	 * @throws DAOException
 	 */
 	int getReqNumByUserAndGroupIDs(int fromUser, int toUser, int groupID);
 
@@ -64,7 +57,6 @@ public interface IRequestDAO {
 	 * 
 	 * @param userID ID of the user
 	 * @return list of user incoming group requests
-	 * @throws DAOException
 	 */
 	List<GroupRequest> getUserIncRequests(int userID);
 	
@@ -73,7 +65,6 @@ public interface IRequestDAO {
 	 * 
 	 * @param userID ID of the user
 	 * @return list of user outcoming group requests
-	 * @throws DAOException
 	 */
 	List<GroupRequest> getUserOutRequests(int userID);
 	
