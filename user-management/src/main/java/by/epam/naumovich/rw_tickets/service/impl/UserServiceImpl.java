@@ -65,6 +65,8 @@ public class UserServiceImpl implements IUserService {
 			return userDAO.getUserById(id);
 		} catch (DataAccessException e) {
 			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		} catch (IndexOutOfBoundsException e) {
+			throw new ServiceException(ExceptionMessages.NO_SUCH_USER);
 		}
 	}
 
