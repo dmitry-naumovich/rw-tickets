@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
+import by.epam.naumovich.rw_tickets.service.exception.InvalidInputServiceException;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
 import by.epam.naumovich.rw_tickets.service.util.ExceptionMessages;
@@ -20,6 +21,9 @@ public class GroupServiceImpl implements IGroupService {
 	
 	@Override
 	public int addGroup(UserGroup group) throws ServiceException {
+		if (group == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			int id = groupDAO.addGroup(group);
 			groupDAO.addGroupMember(group.getOwner_id(), id);
@@ -32,6 +36,9 @@ public class GroupServiceImpl implements IGroupService {
 
 	@Override
 	public void updateGroup(UserGroup group) throws ServiceException {
+		if (group == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			groupDAO.updateGroup(group.getGr_id(), group);
 		} catch (DataAccessException e) {
