@@ -31,6 +31,8 @@ public final class ExceptionMessages {
 	public static final String WRONG_PASSWORD = "Wrong password! Please, try again.";
 	public static final String NO_SUCH_USER = "No such user found in the data source";
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method.";
+	public static final String USER_NOT_ADDED = "User was not sucessfully added. Please, try again.";
+	public static final String USER_NOT_UPDATED = "User was not sucessfully updated. Please, try again.";
 	
 	private ExceptionMessages() {}
 }

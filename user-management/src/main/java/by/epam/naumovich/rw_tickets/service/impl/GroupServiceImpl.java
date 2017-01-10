@@ -29,9 +29,10 @@ public class GroupServiceImpl implements IGroupService {
 			groupDAO.addGroupMember(group.getOwner_id(), id);
 			return id;
 		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.USER_NOT_ADDED);
+		} catch (Exception e) {
 			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
 		}
-		
 	}
 
 	@Override
@@ -42,6 +43,8 @@ public class GroupServiceImpl implements IGroupService {
 		try {
 			groupDAO.updateGroup(group.getGr_id(), group);
 		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.USER_NOT_UPDATED);
+		} catch (Exception e) {
 			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
 		}
 		
@@ -49,6 +52,9 @@ public class GroupServiceImpl implements IGroupService {
 
 	@Override
 	public void deleteGroup(int groupID) throws ServiceException {
+		if (groupID < 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try { 
 			groupDAO.removeAllGroupMembers(groupID);
 			groupDAO.deleteGroup(groupID);
