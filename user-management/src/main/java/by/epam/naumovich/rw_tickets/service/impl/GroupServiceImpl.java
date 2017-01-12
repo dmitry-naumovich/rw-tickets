@@ -44,8 +44,6 @@ public class GroupServiceImpl implements IGroupService {
 			groupDAO.updateGroup(group.getGr_id(), group);
 		} catch (DataAccessException e) {
 			throw new ServiceException(ExceptionMessages.USER_NOT_UPDATED);
-		} catch (Exception e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
 		}
 		
 	}
@@ -59,8 +57,6 @@ public class GroupServiceImpl implements IGroupService {
 			groupDAO.removeAllGroupMembers(groupID);
 			groupDAO.deleteGroup(groupID);
 		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		} catch (Exception e) {
 			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
 		}
 		
