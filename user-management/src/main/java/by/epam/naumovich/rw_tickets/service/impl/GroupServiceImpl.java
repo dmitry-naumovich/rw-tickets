@@ -52,7 +52,7 @@ public class GroupServiceImpl implements IGroupService {
 
 	@Override
 	public void deleteGroup(int groupID) throws ServiceException {
-		if (groupID < 0) {
+		if (groupID <= 0) {
 			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
 		}
 		try { 
@@ -60,21 +60,31 @@ public class GroupServiceImpl implements IGroupService {
 			groupDAO.deleteGroup(groupID);
 		} catch (DataAccessException e) {
 			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		} catch (Exception e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
 		}
 		
 	}
 
 	@Override
 	public UserGroup getGroupByID(int id) throws ServiceException {
+		if (id <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return groupDAO.getGroupById(id);
 		} catch (DataAccessException e) {
 			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		} catch (IndexOutOfBoundsException e) {
+			throw new ServiceException(ExceptionMessages.GROUP_NOT_FOUND);
 		}
 	}
 
 	@Override
 	public String getGroupNameByID(int id) throws ServiceException {
+		if (id <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return groupDAO.getGroupNameById(id);
 		} catch (DataAccessException e) {
@@ -84,6 +94,9 @@ public class GroupServiceImpl implements IGroupService {
 
 	@Override
 	public List<UserGroup> getGroupsByUser(int userID) throws ServiceException {
+		if (userID <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return groupDAO.getGroupsByUser(userID);
 		} catch (DataAccessException e) {
@@ -93,6 +106,9 @@ public class GroupServiceImpl implements IGroupService {
 
 	@Override
 	public void addGroupMember(int userID, int groupID) throws ServiceException {
+		if (userID <= 0 || groupID <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			groupDAO.addGroupMember(userID, groupID);
 		} catch (DataAccessException e) {
@@ -102,6 +118,9 @@ public class GroupServiceImpl implements IGroupService {
 
 	@Override
 	public void removeGroupMember(int userID, int groupID) throws ServiceException {
+		if (userID <= 0 || groupID <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			groupDAO.removeGroupMember(userID, groupID);
 		} catch (DataAccessException e) {
@@ -111,6 +130,9 @@ public class GroupServiceImpl implements IGroupService {
 
 	@Override
 	public void deleteAllGroupsByOwner(int ownerID) throws ServiceException {
+		if (ownerID <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			List<UserGroup> groups = groupDAO.getGroupsByOwner(ownerID);
 			for (UserGroup group : groups) {
@@ -118,6 +140,8 @@ public class GroupServiceImpl implements IGroupService {
 				groupDAO.deleteGroup(group.getGr_id());
 			}	
 		} catch (DataAccessException e) {
+			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		} catch (Exception e) {
 			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
 		}
 		

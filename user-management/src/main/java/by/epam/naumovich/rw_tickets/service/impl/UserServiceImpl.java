@@ -8,6 +8,7 @@ import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
+import by.epam.naumovich.rw_tickets.service.exception.InvalidInputServiceException;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
 import by.epam.naumovich.rw_tickets.service.util.ExceptionMessages;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public int addUser(User user) throws ServiceException {
+		if (user == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.addUser(user);
 		} catch (DataAccessException e) {
@@ -37,6 +41,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void updateUser(User updUser) throws ServiceException {
+		if (updUser == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			userDAO.updateUser(updUser.getId(), updUser);
 		} catch (DataAccessException e) {
@@ -46,12 +53,17 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void deleteUser(int id) throws ServiceException {
+		if (id <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			groupDAO.removeUserFromAllGroups(id);
 			List<UserGroup> groups = groupDAO.getGroupsByOwner(id);
-			for (UserGroup group : groups) {
-				groupDAO.removeAllGroupMembers(group.getGr_id());
-				groupDAO.deleteGroup(group.getGr_id());
+			if (!groups.isEmpty()) {
+				for (UserGroup group : groups) {
+					groupDAO.removeAllGroupMembers(group.getGr_id());
+					groupDAO.deleteGroup(group.getGr_id());
+				}	
 			}
 			userDAO.deleteUser(id);
 		} catch (DataAccessException e) {
@@ -61,6 +73,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User getUserById(int id) throws ServiceException {
+		if (id <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getUserById(id);
 		} catch (DataAccessException e) {
@@ -72,6 +87,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User getUserByLogin(String login) throws ServiceException {
+		if (login == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getUserByLogin(login);
 		} catch (DataAccessException e) {
@@ -91,6 +109,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<User> getAllGroupMembers(int groupID) throws ServiceException {
+		if (groupID <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getAllGroupMembers(groupID);
 		} catch (DataAccessException e) {
@@ -100,6 +121,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public String getLoginById(int id) throws ServiceException {
+		if (id <= 0) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getLoginById(id);
 		} catch (DataAccessException e) {
@@ -109,6 +133,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void authenticateByLogin(String login, String pass) throws ServiceException {
+		if (login == null || pass == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			User user = userDAO.getUserByLogin(login);
 			if (user == null) {
@@ -125,6 +152,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void authenticateByEmail(String email, String pass) throws ServiceException {
+		if (email == null || pass == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			User user = userDAO.getUserByEmail(email);
 			if (user == null) {
@@ -141,6 +171,9 @@ public class UserServiceImpl implements IUserService {
 	
 	@Override
 	public List<User> getAllUsersSorted(USER_SORT_TYPE type) throws ServiceException {
+		if (type == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getAllUsersSorted(type.toString().toLowerCase());
 		} catch (DataAccessException e) {
@@ -151,6 +184,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<User> findUsersByName(String name) throws ServiceException {
+		if (name == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getUsersByName(name);
 		} catch (DataAccessException e) {
@@ -160,6 +196,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<User> findUsersBySurname(String surname) throws ServiceException {
+		if (surname == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getUsersBySurname(surname);
 		} catch (DataAccessException e) {
@@ -169,6 +208,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<User> findUsersByCountry(String country) throws ServiceException {
+		if (country == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getUsersByCountry(country);
 		} catch (DataAccessException e) {
@@ -178,6 +220,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<User> findUsersByCity(String city) throws ServiceException {
+		if (city == null) {
+			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		}
 		try {
 			return userDAO.getUsersByCity(city);
 		} catch (DataAccessException e) {

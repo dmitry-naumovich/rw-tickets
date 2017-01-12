@@ -33,6 +33,7 @@ public final class ExceptionMessages {
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method.";
 	public static final String USER_NOT_ADDED = "User was not sucessfully added. Please, try again.";
 	public static final String USER_NOT_UPDATED = "User was not sucessfully updated. Please, try again.";
+	public static final String GROUP_NOT_FOUND = "UserGroup was not found in the data source";
 	
 	private ExceptionMessages() {}
 }
