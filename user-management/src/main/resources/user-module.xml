@@ -53,27 +53,29 @@
 		<property name="requestDAO"><ref bean="requestDao"/></property>
 	</bean>
 	
-	<bean id="consolePrintBeforeAdvice" class="by.epam.naumovich.rw_tickets.service.aop.ConsolePrintBeforeAdvice" />
-	<bean id="consolePrintAfterAdvice" class="by.epam.naumovich.rw_tickets.service.aop.ConsolePrintAfterAdvice" />
-	<bean id="serviceExceptionLogAdvice" class="by.epam.naumovich.rw_tickets.service.aop.ExceptionLoggingAdvice"/>
 	
-	<bean id="transactionAttributeSource" class="org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource"></bean>
+	<bean id="loggingBeforeAdvice" class="by.epam.naumovich.rw_tickets.service.aop.LoggingBeforeAdvice" />
+	<bean id="loggingAfterAdvice" class="by.epam.naumovich.rw_tickets.service.aop.LoggingAfterAdvice" />
+	<bean id="loggingThrowsAdvice" class="by.epam.naumovich.rw_tickets.service.aop.LoggingThrowsAdvice"/>
+	
+	<bean id="transactionAttributeSource" class="org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource">
+		<property name="properties">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
+				<prop key="authenticate*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-ServiceException</prop>
+			</props>
+		</property>
+	</bean>
+	
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     	<property name="dataSource">
     		<ref bean="dataSource"/>
     	</property>
     </bean>
-   
-    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
-    	<property name="transactionManager">
-			<ref bean="transactionManager"/>
-		</property>
-		<property name="transactionAttributeSource">
-			<ref bean="transactionAttributeSource"/>
-		</property>
-    </bean>
     
-	<bean id="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
+	<bean id="userService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" >
 		<property name="proxyInterfaces">
 			<list>
 				<value>by.epam.naumovich.rw_tickets.service.iface.IUserService</value>
@@ -82,17 +84,22 @@
 		<property name="target">
 			<ref bean="userServiceTarget"/>
 		</property>
-		<property name="interceptorNames">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+		<property name="preInterceptors">
 			<list>
-				<value>consolePrintBeforeAdvice</value>
-				<value>consolePrintAfterAdvice</value>
-				<value>serviceExceptionLogAdvice</value>
-				<value>transactionInterceptor</value>
-			</list>
+		        <ref bean="loggingBeforeAdvice"/>
+		        <ref bean="loggingAfterAdvice"/>
+		        <ref bean="loggingThrowsAdvice"/>
+    		</list>
 		</property>
 	</bean>
 	
-	<bean id="groupService" class="org.springframework.aop.framework.ProxyFactoryBean">
+	<bean id="groupService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<list>
 				<value>by.epam.naumovich.rw_tickets.service.iface.IGroupService</value>
@@ -101,19 +108,23 @@
 		<property name="target">
 			<ref bean="groupServiceTarget"/>
 		</property>
-		<property name="interceptorNames">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+		<property name="preInterceptors">
 			<list>
-				<value>consolePrintBeforeAdvice</value>
-				<value>consolePrintAfterAdvice</value>
-				<value>serviceExceptionLogAdvice</value>
-				<value>transactionInterceptor</value>
-				
-			</list>
+		        <ref bean="loggingBeforeAdvice"/>
+		        <ref bean="loggingAfterAdvice"/>
+		        <ref bean="loggingThrowsAdvice"/>
+    		</list>
 		</property>
 	</bean>
-	
-	<bean id="requestService" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
+
+	<bean id="requestService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces"> 
 			<list>
 				<value>by.epam.naumovich.rw_tickets.service.iface.IRequestService</value>
 			</list>
@@ -121,13 +132,18 @@
 		<property name="target">
 			<ref bean="requestServiceTarget"/>
 		</property>
-		<property name="interceptorNames">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+		<property name="preInterceptors">
 			<list>
-				<value>consolePrintBeforeAdvice</value>
-				<value>consolePrintAfterAdvice</value>
-				<value>serviceExceptionLogAdvice</value>
-				<value>transactionInterceptor</value>
-			</list>
+		        <ref bean="loggingBeforeAdvice"/>
+		        <ref bean="loggingAfterAdvice"/>
+		        <ref bean="loggingThrowsAdvice"/>
+    		</list>
 		</property>
 	</bean>
 	
@@ -136,5 +152,4 @@
 		<property name="groupService"><ref bean="groupService"/></property>
 		<property name="requestService"><ref bean="requestService"/></property>
 	</bean>
-	
 </beans>
