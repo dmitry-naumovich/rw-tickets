@@ -25,8 +25,8 @@ public interface IUserService {
 	List<User> getAllUsers() throws ServiceException;
 	List<User> getAllGroupMembers(int groupID) throws ServiceException;
 	
-	void authenticateByLogin(String login, String pass) throws ServiceException;
-	void authenticateByEmail(String email, String pass) throws ServiceException;
+	boolean authenticateByLogin(String login, String pass) throws ServiceException;
+	boolean authenticateByEmail(String email, String pass) throws ServiceException;
 	String getLoginById(int id) throws ServiceException;
 	
 	List<User> findUsersByName(String name) throws ServiceException;

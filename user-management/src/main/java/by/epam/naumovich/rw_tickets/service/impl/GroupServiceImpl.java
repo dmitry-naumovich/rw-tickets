@@ -2,17 +2,15 @@ package by.epam.naumovich.rw_tickets.service.impl;
 
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
-
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
-import by.epam.naumovich.rw_tickets.service.exception.InvalidInputServiceException;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
-import by.epam.naumovich.rw_tickets.service.util.ExceptionMessages;
+import by.epam.naumovich.rw_tickets.service.util.Validator;
 
 public class GroupServiceImpl implements IGroupService {
 
+	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
 	private IGroupDAO groupDAO;
 	
 	public void setGroupDAO(IGroupDAO groupDAO) {
@@ -21,126 +19,87 @@ public class GroupServiceImpl implements IGroupService {
 	
 	@Override
 	public int addGroup(UserGroup group) throws ServiceException {
-		if (group == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateNewUserGroup(group)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			int id = groupDAO.addGroup(group);
-			groupDAO.addGroupMember(group.getOwner_id(), id);
-			return id;
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.USER_NOT_ADDED);
-		} catch (Exception e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		int id = groupDAO.addGroup(group);
+		groupDAO.addGroupMember(group.getOwner_id(), id);
+		return id;
 	}
 
 	@Override
 	public void updateGroup(UserGroup group) throws ServiceException {
-		if (group == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateExistingUserGroup(group)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			groupDAO.updateGroup(group.getGr_id(), group);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.USER_NOT_UPDATED);
-		}
-		
+		groupDAO.updateGroup(group.getGr_id(), group);
 	}
 
 	@Override
 	public void deleteGroup(int groupID) throws ServiceException {
-		if (groupID <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(groupID)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try { 
-			groupDAO.removeAllGroupMembers(groupID);
-			groupDAO.deleteGroup(groupID);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
-		
+		groupDAO.removeAllGroupMembers(groupID);
+		groupDAO.deleteGroup(groupID);
 	}
 
 	@Override
 	public UserGroup getGroupByID(int id) throws ServiceException {
-		if (id <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(id)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return groupDAO.getGroupById(id);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		} catch (IndexOutOfBoundsException e) {
-			throw new ServiceException(ExceptionMessages.GROUP_NOT_FOUND);
-		}
+		return groupDAO.getGroupById(id);
+		
 	}
 
 	@Override
 	public String getGroupNameByID(int id) throws ServiceException {
-		if (id <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(id)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return groupDAO.getGroupNameById(id);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return groupDAO.getGroupNameById(id);
 	}
 
 	@Override
 	public List<UserGroup> getGroupsByUser(int userID) throws ServiceException {
-		if (userID <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(userID)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return groupDAO.getGroupsByUser(userID);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return groupDAO.getGroupsByUser(userID);
 	}
 
 	@Override
 	public void addGroupMember(int userID, int groupID) throws ServiceException {
-		if (userID <= 0 || groupID <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(userID, groupID)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			groupDAO.addGroupMember(userID, groupID);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		groupDAO.addGroupMember(userID, groupID);
+		
 	}
 
 	@Override
 	public void removeGroupMember(int userID, int groupID) throws ServiceException {
-		if (userID <= 0 || groupID <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(userID, groupID)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			groupDAO.removeGroupMember(userID, groupID);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		groupDAO.removeGroupMember(userID, groupID);
 	}
+		
 
 	@Override
 	public void deleteAllGroupsByOwner(int ownerID) throws ServiceException {
-		if (ownerID <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(ownerID)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			List<UserGroup> groups = groupDAO.getGroupsByOwner(ownerID);
+		List<UserGroup> groups = groupDAO.getGroupsByOwner(ownerID);
+		if (!groups.isEmpty()) {
 			for (UserGroup group : groups) {
 				groupDAO.removeAllGroupMembers(group.getGr_id());
 				groupDAO.deleteGroup(group.getGr_id());
-			}	
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		} catch (Exception e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+			}
 		}
-		
+			
 	}
 
 }

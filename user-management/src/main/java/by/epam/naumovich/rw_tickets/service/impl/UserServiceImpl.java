@@ -2,19 +2,18 @@ package by.epam.naumovich.rw_tickets.service.impl;
 
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
-
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
-import by.epam.naumovich.rw_tickets.service.exception.InvalidInputServiceException;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
-import by.epam.naumovich.rw_tickets.service.util.ExceptionMessages;
 import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
+import by.epam.naumovich.rw_tickets.service.util.Validator;
 
 public class UserServiceImpl implements IUserService {
+
+	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
 
 	private IUserDAO userDAO;
 	private IGroupDAO groupDAO;
@@ -29,204 +28,143 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public int addUser(User user) throws ServiceException {
-		if (user == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateNewUser(user)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.addUser(user);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.addUser(user);
+		
 	}
 
 	@Override
 	public void updateUser(User updUser) throws ServiceException {
-		if (updUser == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateExistingUser(updUser)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			userDAO.updateUser(updUser.getId(), updUser);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		userDAO.updateUser(updUser.getId(), updUser);
+		
 	}
 
 	@Override
 	public void deleteUser(int id) throws ServiceException {
-		if (id <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(id)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			groupDAO.removeUserFromAllGroups(id);
-			List<UserGroup> groups = groupDAO.getGroupsByOwner(id);
-			if (!groups.isEmpty()) {
-				for (UserGroup group : groups) {
-					groupDAO.removeAllGroupMembers(group.getGr_id());
-					groupDAO.deleteGroup(group.getGr_id());
-				}	
-			}
-			userDAO.deleteUser(id);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		groupDAO.removeUserFromAllGroups(id);
+		List<UserGroup> groups = groupDAO.getGroupsByOwner(id);
+		if (!groups.isEmpty()) {
+			for (UserGroup group : groups) {
+				groupDAO.removeAllGroupMembers(group.getGr_id());
+				groupDAO.deleteGroup(group.getGr_id());
+			}	
 		}
+		userDAO.deleteUser(id);
+		
 	}
 
 	@Override
 	public User getUserById(int id) throws ServiceException {
-		if (id <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(id)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getUserById(id);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		} catch (IndexOutOfBoundsException e) {
-			throw new ServiceException(ExceptionMessages.NO_SUCH_USER);
-		}
+		return userDAO.getUserById(id);
+		
 	}
 
 	@Override
 	public User getUserByLogin(String login) throws ServiceException {
-		if (login == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateStrings(login)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getUserByLogin(login);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.getUserByLogin(login);
+		
 	}
 	
 
 	@Override
 	public List<User> getAllUsers() throws ServiceException {
-		try {
-			return userDAO.getAllUsers();
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.getAllUsers();
 	}
 
 	@Override
 	public List<User> getAllGroupMembers(int groupID) throws ServiceException {
-		if (groupID <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(groupID)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getAllGroupMembers(groupID);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.getAllGroupMembers(groupID);
+		
 	}
 
 	@Override
 	public String getLoginById(int id) throws ServiceException {
-		if (id <= 0) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateIds(id)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getLoginById(id);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.getLoginById(id);
+		
 	}
 
 	@Override
-	public void authenticateByLogin(String login, String pass) throws ServiceException {
-		if (login == null || pass == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+	public boolean authenticateByLogin(String login, String pass) throws ServiceException {
+		if (!Validator.validateStrings(login, pass)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			User user = userDAO.getUserByLogin(login);
-			if (user == null) {
-				throw new ServiceException(ExceptionMessages.LOGIN_NOT_REGISTRATED);
-			} else {
-				if (!pass.equals(user.getPwd())) {
-					throw new ServiceException(ExceptionMessages.WRONG_PASSWORD);
-				}
-			}
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		User user = userDAO.getUserByLogin(login);
+		if (!pass.equals(user.getPwd())) {
+			return false;
 		}
+		return true;
 	}
 
 	@Override
-	public void authenticateByEmail(String email, String pass) throws ServiceException {
-		if (email == null || pass == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+	public boolean authenticateByEmail(String email, String pass) throws ServiceException {
+		if (!Validator.validateStrings(email, pass)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			User user = userDAO.getUserByEmail(email);
-			if (user == null) {
-				throw new ServiceException(ExceptionMessages.EMAIL_NOT_REGISTRATED);
-			} else {
-				if (!pass.equals(user.getPwd())) {
-					throw new ServiceException(ExceptionMessages.WRONG_PASSWORD);
-				}
-			}
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
+		User user = userDAO.getUserByEmail(email);
+		if (!pass.equals(user.getPwd())) {
+			return false;
 		}
+		return true;
+		
 	}
 	
 	@Override
 	public List<User> getAllUsersSorted(USER_SORT_TYPE type) throws ServiceException {
 		if (type == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getAllUsersSorted(type.toString().toLowerCase());
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
-		
+		return userDAO.getAllUsersSorted(type.toString().toLowerCase());
 	}
 
 	@Override
 	public List<User> findUsersByName(String name) throws ServiceException {
-		if (name == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateStrings(name)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getUsersByName(name);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.getUsersByName(name);
 	}
 
 	@Override
 	public List<User> findUsersBySurname(String surname) throws ServiceException {
-		if (surname == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateStrings(surname)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getUsersBySurname(surname);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.getUsersBySurname(surname);
 	}
 
 	@Override
 	public List<User> findUsersByCountry(String country) throws ServiceException {
-		if (country == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateStrings(country)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getUsersByCountry(country);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.getUsersByCountry(country);
 	}
 
 	@Override
 	public List<User> findUsersByCity(String city) throws ServiceException {
-		if (city == null) {
-			throw new InvalidInputServiceException(ExceptionMessages.INVALID_INPUT_PARAMS);
+		if (!Validator.validateStrings(city)) {
+			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		try {
-			return userDAO.getUsersByCity(city);
-		} catch (DataAccessException e) {
-			throw new ServiceException(ExceptionMessages.SOURCE_ERROR);
-		}
+		return userDAO.getUsersByCity(city);
 	}
 }

@@ -16,7 +16,6 @@ import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl;
 
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
-import by.epam.naumovich.rw_tickets.service.exception.InvalidInputServiceException;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
 import by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl;
@@ -98,7 +97,7 @@ public class GroupServiceTest {
 		verify(dao).removeAllGroupMembers(10);
 	}
 	
-	@Test(expected=InvalidInputServiceException.class)
+	@Test(expected=ServiceException.class)
 	public void testGetGroupByID() throws ServiceException {
 		when(dao.getGroupById(anyInt())).thenReturn(expectedGroup);
 		

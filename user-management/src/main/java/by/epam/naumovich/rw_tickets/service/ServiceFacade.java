@@ -1,6 +1,7 @@
 package by.epam.naumovich.rw_tickets.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dto.GroupRequestDTO;
@@ -146,34 +147,42 @@ public class ServiceFacade {
 	
 	public List<GroupRequestDTO> getIncomingRequests(int userID) throws ServiceException {
 		List<GroupRequest> requests = requestService.getUserIncRequests(userID);
-		List<GroupRequestDTO> incReqs = new ArrayList<>();
-		for (GroupRequest req : requests) {
-			String sender = userService.getLoginById(req.getFrom_user());
-			String receiver = userService.getLoginById(req.getTo_user());
-			String group = groupService.getGroupNameByID(req.getGr_id());
-			incReqs.add(DTOMapper.constructGroupRequestDTO(req, sender, receiver, group));
+		if (!requests.isEmpty()) {
+			List<GroupRequestDTO> incReqs = new ArrayList<>();
+			for (GroupRequest req : requests) {
+				String sender = userService.getLoginById(req.getFrom_user());
+				String receiver = userService.getLoginById(req.getTo_user());
+				String group = groupService.getGroupNameByID(req.getGr_id());
+				incReqs.add(DTOMapper.constructGroupRequestDTO(req, sender, receiver, group));
+			}
+			return incReqs;
 		}
-		return incReqs;
+		
+		return Collections.emptyList();
 	}
 	
 	public List<GroupRequestDTO> getOutcomingRequests(int userID) throws ServiceException {
 		List<GroupRequest> requests = requestService.getUserOutRequests(userID);
-		List<GroupRequestDTO> outReqs = new ArrayList<>();
-		for (GroupRequest req : requests) {
-			String sender = userService.getLoginById(req.getFrom_user());
-			String receiver = userService.getLoginById(req.getTo_user());
-			String group = groupService.getGroupNameByID(req.getGr_id());
-			outReqs.add(DTOMapper.constructGroupRequestDTO(req, sender, receiver, group));
+		if (!requests.isEmpty()) {
+			List<GroupRequestDTO> outReqs = new ArrayList<>();
+			for (GroupRequest req : requests) {
+				String sender = userService.getLoginById(req.getFrom_user());
+				String receiver = userService.getLoginById(req.getTo_user());
+				String group = groupService.getGroupNameByID(req.getGr_id());
+				outReqs.add(DTOMapper.constructGroupRequestDTO(req, sender, receiver, group));
+			}
+			return outReqs;
 		}
-		return outReqs;
+		
+		return Collections.emptyList();
 	}
 
-	public void authenticateByLogin(String login, String pass) throws ServiceException {
-		userService.authenticateByLogin(login, pass);
+	public boolean authenticateByLogin(String login, String pass) throws ServiceException {
+		return userService.authenticateByLogin(login, pass);
 	}
 	
-	public void authenticateByEmail(String email, String pass) throws ServiceException {
-		userService.authenticateByEmail(email, pass);
+	public boolean authenticateByEmail(String email, String pass) throws ServiceException {
+		return userService.authenticateByEmail(email, pass);
 	}
 	
 }
