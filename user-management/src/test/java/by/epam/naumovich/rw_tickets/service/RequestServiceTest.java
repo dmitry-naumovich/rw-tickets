@@ -16,7 +16,6 @@ import static org.hamcrest.CoreMatchers.*;
 import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.RequestDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
-import by.epam.naumovich.rw_tickets.service.exception.InvalidInputServiceException;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IRequestService;
 import by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl;
@@ -95,7 +94,7 @@ public class RequestServiceTest {
 		verify(dao).deleteRequest(20);
 	}
 	
-	@Test(expected=InvalidInputServiceException.class)
+	@Test(expected=ServiceException.class)
 	public void testGetRequestByNum() throws ServiceException {
 		when(dao.getRequestByNum(anyInt())).thenReturn(expectedRequest);
 		

@@ -18,11 +18,13 @@ public class DTOMapper {
 	public static UserDTO constructUserDTO(User user, List<UserGroup> groups) {
 		UserDTO dto = new UserDTO();
 		dto.setUser(user);
-		Map<Integer, String> grs = new LinkedHashMap<>();
-		for (UserGroup gr : groups) {
-			grs.put(gr.getGr_id(), gr.getGr_name());
+		if (!groups.isEmpty()) {
+			Map<Integer, String> grs = new LinkedHashMap<>();
+			for (UserGroup gr : groups) {
+				grs.put(gr.getGr_id(), gr.getGr_name());
+			}
+			dto.setUserGroups(grs);
 		}
-		dto.setUserGroups(grs);
 		return dto;
 	}
 	

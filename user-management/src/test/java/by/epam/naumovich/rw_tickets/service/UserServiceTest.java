@@ -16,7 +16,6 @@ import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl;
 import by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.User;
-import by.epam.naumovich.rw_tickets.service.exception.InvalidInputServiceException;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
 import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
@@ -99,7 +98,7 @@ public class UserServiceTest {
 		verify(dao).deleteUser(1);
 	}
 	
-	@Test(expected=InvalidInputServiceException.class)
+	@Test(expected=ServiceException.class)
 	public void testGetUserByID() throws ServiceException {
 		when(dao.getUserById(anyInt())).thenReturn(expectedUser);
 		
@@ -113,7 +112,7 @@ public class UserServiceTest {
 		verifyNoMoreInteractions(dao);
 	}
 	
-	@Test(expected=InvalidInputServiceException.class)
+	@Test(expected=ServiceException.class)
 	public void testGetUserByLogin() throws ServiceException {
 		when(dao.getUserByLogin(anyString())).thenReturn(expectedUser);
 		
