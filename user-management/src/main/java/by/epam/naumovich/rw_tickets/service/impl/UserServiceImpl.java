@@ -121,6 +121,7 @@ public class UserServiceImpl implements IUserService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		User user = userDAO.getUserByEmail(email);
+		
 		if (!pass.equals(user.getPwd())) {
 			return false;
 		}

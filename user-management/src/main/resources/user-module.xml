@@ -61,10 +61,10 @@
 	<bean id="transactionAttributeSource" class="org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource">
 		<property name="properties">
 			<props>
-				<prop key="get*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
-				<prop key="find*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
-				<prop key="authenticate*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
-				<prop key="*">PROPAGATION_REQUIRED,-ServiceException</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="authenticate*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-ServiceException,-RuntimeException</prop>
 			</props>
 		</property>
 	</bean>

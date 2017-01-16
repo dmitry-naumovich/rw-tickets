@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +88,8 @@ public class GroupServiceTest {
 	
 	@Test
 	public void testUpdateGroup() throws ServiceException {
+		expectedGroup.setCreateDate(new Date(1L));
+		expectedGroup.setCreateTime(new Time(1L));
 		service.updateGroup(expectedGroup);
 		verify(dao).updateGroup(90, expectedGroup);
 	}

@@ -50,6 +50,10 @@ public class UserServiceTest {
 		expectedUser.setId(2);
 		expectedUser.setLogin("vasya");
 		expectedUser.setFname("nama");
+		expectedUser.setEmail("email");
+		expectedUser.setSname("snama");
+		expectedUser.setPassport("11");
+		expectedUser.setPwd("pws");
 	}
 	
 	public void initUserCollection() {
@@ -139,21 +143,17 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testAuthenticateByLogin() {
-		try {
-			service.authenticateByLogin("loginT", "wr");
-		} catch (ServiceException e) {
-			verify(dao).getUserByLogin("loginT");
-		}
+	public void testAuthenticateByLogin() throws ServiceException {
+		service.authenticateByLogin("loginT", "pws");
+		verify(dao).getUserByLogin("loginT");
+		
 	}
 	
 	@Test
-	public void testAuthenticateByEmail() {
-		try {
-			service.authenticateByEmail("email@mail.com", "pss");
-		} catch (ServiceException e) {
-			 verify(dao).getUserByEmail("email@mail.com");
-		}
+	public void testAuthenticateByEmail() throws ServiceException {
+		when(dao.getUserByEmail(anyString())).thenReturn(expectedUser);
+		service.authenticateByEmail("email@mail.com", "pws");
+		verify(dao).getUserByEmail("email@mail.com");
 	}
 	
 	@Test
