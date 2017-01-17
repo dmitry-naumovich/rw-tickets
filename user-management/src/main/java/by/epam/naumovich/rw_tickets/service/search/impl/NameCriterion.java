@@ -24,7 +24,7 @@ public class NameCriterion implements UserCriterion {
 	
 	@Override
 	public List<User> meetCriterion(List<User> users) {
-		List<User> found = new ArrayList<User>();
+		List<User> found = new ArrayList<>();
 		
 		for (User u : users) {
 			String realFName = u.getFname().toLowerCase();
@@ -39,9 +39,6 @@ public class NameCriterion implements UserCriterion {
 	
 	private boolean isNameSuitable(String fName, String sName) {
 		if (name.equals(fName) || name.equals(sName)) {
-			return true;
-		}
-		if (fName.equals(name) || sName.equals(name)) {
 			return true;
 		}
 		

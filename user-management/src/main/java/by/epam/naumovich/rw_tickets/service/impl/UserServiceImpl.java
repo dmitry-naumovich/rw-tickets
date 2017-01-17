@@ -155,7 +155,7 @@ public class UserServiceImpl implements IUserService {
 			users = userDAO.getAllUsers();
 		}
 		
-		List<UserCriterion> criteria = new ArrayList<UserCriterion>();
+		List<UserCriterion> criteria = new ArrayList<>();
 		if (name != null) {
 			criteria.add(new NameCriterion(name));
 		}

@@ -16,7 +16,7 @@ public class EmailCriterion implements UserCriterion {
 	
 	@Override
 	public List<User> meetCriterion(List<User> users) {
-		List<User> found = new ArrayList<User>();
+		List<User> found = new ArrayList<>();
 		
 		for (User u : users) {
 			String realEmail = u.getEmail().toLowerCase();
@@ -29,7 +29,7 @@ public class EmailCriterion implements UserCriterion {
 	}
 	
 	private boolean isEmailSuitable(String realEmail) {
-		if (email.equals(realEmail) || realEmail.equals(email)) {
+		if (email.equals(realEmail)) {
 			return true;
 		}
 		

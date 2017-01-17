@@ -23,7 +23,7 @@ public class LoginCriterion implements UserCriterion {
 	}
 	@Override
 	public List<User> meetCriterion(List<User> users) {
-		List<User> found = new ArrayList<User>();
+		List<User> found = new ArrayList<>();
 		
 		for (User u : users) {
 			String realLogin = u.getLogin().toLowerCase();
@@ -36,7 +36,7 @@ public class LoginCriterion implements UserCriterion {
 	}
 	
 	private boolean isLoginSuitable(String realLogin) {
-		if (login.equals(realLogin) || realLogin.equals(login)) {
+		if (login.equals(realLogin)) {
 			return true;
 		}
 		
