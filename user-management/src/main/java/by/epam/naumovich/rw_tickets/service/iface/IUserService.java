@@ -29,10 +29,9 @@ public interface IUserService {
 	boolean authenticateByEmail(String email, String pass) throws ServiceException;
 	String getLoginById(int id) throws ServiceException;
 	
-	List<User> findUsersByName(String name) throws ServiceException;
-	List<User> findUsersBySurname(String surname) throws ServiceException;	
-	List<User> findUsersByCountry(String country) throws ServiceException;	
-	List<User> findUsersByCity(String city) throws ServiceException;	
+	List<User> searchForUsers(String name, String login, String email, String countryCode, String cityCode) throws ServiceException;
+	List<User> getUsersByCountry(String countryCode) throws ServiceException;	
+	List<User> getUsersByCity(String cityCode, String countryCode) throws ServiceException;	
 	
 	List<User> getAllUsersSorted(USER_SORT_TYPE type) throws ServiceException;	
 }

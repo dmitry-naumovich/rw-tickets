@@ -107,36 +107,21 @@ public interface IUserDAO {
 	String getPasswordByEmail(String email);
 	
 	/**
-	 * Gets users from the data source by specified name
-	 * 
-	 * @param name user name
-	 * @return the list containing users with the specified name
-	 */
-	List<User> getUsersByName(String name);
-	
-	/**
-	 * Gets users from the data source by specified surname
-	 * 
-	 * @param surname user surname
-	 * @return the list containing users with the specified surname
-	 */
-	List<User> getUsersBySurname(String surname);
-	
-	/**
 	 * Gets users from the data source by specified country
 	 * 
-	 * @param country country
+	 * @param countryCode country code
 	 * @return the list containing users from the specified country
 	 */
-	List<User> getUsersByCountry(String country);
+	List<User> getUsersByCountry(String countryCode);
 	
 	/**
-	 * Gets users from the data source by specified city
+	 * Gets users from the data source by specified city and country
 	 * 
-	 * @param city city
+	 * @param cityCode city code
+	 * @param countryCode country code
 	 * @return the list containing users from the specified city
 	 */
-	List<User> getUsersByCity(String city);
+	List<User> getUsersByCity(String cityCode, String countryCode);
 	
 	/**
 	 * Gets all users from the data source sorted by column specified

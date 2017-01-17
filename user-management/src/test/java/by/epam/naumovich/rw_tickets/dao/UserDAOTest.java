@@ -148,19 +148,6 @@ public class UserDAOTest extends UnitilsJUnit4 {
     	assertEquals("testLgn", result);
     }
     
-
-    @Test
-    public void testGetUsersByName() {
-    	List<User> result = userDAO.getUsersByName("bonny");
-    	assertPropertyLenientEquals("login", Arrays.asList("testLgn", "tytyty"), result);
-    }
-    
-    @Test
-    public void testGetUsersBySurname() {
-    	List<User> result = userDAO.getUsersBySurname("toge");
-    	assertPropertyLenientEquals("login", Arrays.asList("tytyty", "separ"), result);
-    }
-    
     @Test
     public void testGetUsersByCountry() {
     	List<User> result = userDAO.getUsersByCountry("by");
@@ -169,7 +156,7 @@ public class UserDAOTest extends UnitilsJUnit4 {
     
     @Test
     public void testGetUsersByCity() {
-    	List<User> result = userDAO.getUsersByCity("mn");
+    	List<User> result = userDAO.getUsersByCity("mn", "by");
     	assertPropertyLenientEquals("login", Arrays.asList("jdoe", "resk"), result);
     }
 }

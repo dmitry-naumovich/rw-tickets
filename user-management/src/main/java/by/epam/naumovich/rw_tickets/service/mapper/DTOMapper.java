@@ -7,6 +7,8 @@ import java.util.Map;
 import by.epam.naumovich.rw_tickets.dto.GroupRequestDTO;
 import by.epam.naumovich.rw_tickets.dto.UserDTO;
 import by.epam.naumovich.rw_tickets.dto.UserGroupDTO;
+import by.epam.naumovich.rw_tickets.entity.City;
+import by.epam.naumovich.rw_tickets.entity.Country;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
@@ -15,9 +17,11 @@ public class DTOMapper {
 
 	private DTOMapper() { };
 	
-	public static UserDTO constructUserDTO(User user, List<UserGroup> groups) {
+	public static UserDTO constructUserDTO(User user, List<UserGroup> groups, City city, Country country) {
 		UserDTO dto = new UserDTO();
 		dto.setUser(user);
+		dto.setCity(city.getCity_name());
+		dto.setCountry(country.getCountry());
 		if (!groups.isEmpty()) {
 			Map<Integer, String> grs = new LinkedHashMap<>();
 			for (UserGroup gr : groups) {

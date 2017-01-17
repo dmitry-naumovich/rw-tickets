@@ -91,4 +91,6 @@ public final class Validator {
 		}
 		return true;
 	}
+	
+	private Validator() { };
 }

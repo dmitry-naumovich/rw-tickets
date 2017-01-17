@@ -7,6 +7,8 @@ import java.util.List;
 import by.epam.naumovich.rw_tickets.dto.GroupRequestDTO;
 import by.epam.naumovich.rw_tickets.dto.UserDTO;
 import by.epam.naumovich.rw_tickets.dto.UserGroupDTO;
+import by.epam.naumovich.rw_tickets.entity.City;
+import by.epam.naumovich.rw_tickets.entity.Country;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
@@ -31,23 +33,28 @@ public class ServiceFacade {
 	private IUserService userService;
 	private IGroupService groupService;
 	private IRequestService requestService;
+	private ICityCountryService cityCountryService;
 	
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
-	
 	public void setGroupService(IGroupService userGroupService) {
 		this.groupService = userGroupService;
 	}
 	public void setRequestService(IRequestService requestService) {
 		this.requestService = requestService;
 	}
-	
+	public void setCityCountryService(ICityCountryService cityCountryService) {
+		this.cityCountryService = cityCountryService;
+	}
+
 	public UserDTO addUser(User user) throws ServiceException {
 		int userID = userService.addUser(user);
 		user.setId(userID);
 		List<UserGroup> userGroups = groupService.getGroupsByUser(userID);
-		return DTOMapper.constructUserDTO(user, userGroups);
+		City userCity = cityCountryService.getCityByCode(user.getCity(), user.getCountry());
+		Country userCountry = cityCountryService.getCountryByCode( user.getCountry());
+		return DTOMapper.constructUserDTO(user, userGroups, userCity, userCountry);
 	}
 	
 	public UserGroupDTO addUserGroup(UserGroup group) throws ServiceException {
@@ -70,7 +77,9 @@ public class ServiceFacade {
 	public UserDTO updateUser(User updUser) throws ServiceException {
 		userService.updateUser(updUser);
 		List<UserGroup> userGroups = groupService.getGroupsByUser(updUser.getId());
-		return DTOMapper.constructUserDTO(updUser, userGroups);
+		City userCity = cityCountryService.getCityByCode(updUser.getCity(), updUser.getCountry());
+		Country userCountry = cityCountryService.getCountryByCode( updUser.getCountry());
+		return DTOMapper.constructUserDTO(updUser, userGroups, userCity, userCountry);
 	}
 	
 	public UserGroupDTO updateUserGroup(UserGroup updGroup) throws ServiceException {
@@ -108,8 +117,10 @@ public class ServiceFacade {
 	
 	public UserDTO getUserById(int userID) throws ServiceException {
 		User user = userService.getUserById(userID);
+		City userCity = cityCountryService.getCityByCode(user.getCity(), user.getCountry());
+		Country userCountry = cityCountryService.getCountryByCode( user.getCountry());
 		List<UserGroup> userGroups = groupService.getGroupsByUser(userID);
-		return DTOMapper.constructUserDTO(user, userGroups);
+		return DTOMapper.constructUserDTO(user, userGroups, userCity, userCountry);
 	}
 	
 	public UserGroupDTO getGroupById(int groupID) throws ServiceException {
@@ -130,7 +141,11 @@ public class ServiceFacade {
 	public List<User> getAllExistingUsers() throws ServiceException {
 		return userService.getAllUsers();
 	}
-
+	
+	public List<User> searchForUsers(String name, String login, String email, String countryCode, String cityCode) throws ServiceException {
+		return userService.searchForUsers(name, login, email, countryCode, cityCode);
+	}
+	
 	public List<User> getAllUsersSorted(USER_SORT_TYPE sortType) throws ServiceException {
 		return userService.getAllUsersSorted(sortType);
 	}
@@ -184,5 +199,4 @@ public class ServiceFacade {
 	public boolean authenticateByEmail(String email, String pass) throws ServiceException {
 		return userService.authenticateByEmail(email, pass);
 	}
-	
 }

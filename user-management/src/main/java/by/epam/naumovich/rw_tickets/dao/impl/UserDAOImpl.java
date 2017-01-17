@@ -28,10 +28,8 @@ public class UserDAOImpl implements IUserDAO {
 	public static final String SELECT_GROUP_USERS = "SELECT rw_users.* FROM rw_users JOIN gr_involve ON rw_users.u_id = gr_involve.user_id WHERE gr_id = ?";
 	public static final String SELECT_PASS_BY_LOGIN = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.login = ?";
 	public static final String SELECT_PASS_BY_EMAIL = "SELECT rw_users.pwd FROM rw_users WHERE rw_users.email = ?";
-	public static final String SELECT_USERS_BY_FNAME = "SELECT * FROM rw_users WHERE fname = ?";
-	public static final String SELECT_USERS_BY_SNAME = "SELECT * FROM rw_users WHERE sname = ?";
 	public static final String SELECT_USERS_BY_COUNTRY = "SELECT * FROM rw_users WHERE country = ?";
-	public static final String SELECT_USERS_BY_CITY = "SELECT * FROM rw_users WHERE city = ?";
+	public static final String SELECT_USERS_BY_CITY = "SELECT * FROM rw_users WHERE city = ? AND country = ?";
 	
 
 	private JdbcTemplate jdbcTemplate;
@@ -111,8 +109,7 @@ public class UserDAOImpl implements IUserDAO {
 	@Override
 	public int getIdByLogin(String login) {
 		Object[] params = new Object[]{login};
-		int[] types = new int[] {Types.VARCHAR};
-		List<Integer> ints = jdbcTemplate.query(SELECT_ID_BY_LOGIN, params, types, new IntegerRowMapper());
+		List<Integer> ints = jdbcTemplate.query(SELECT_ID_BY_LOGIN, params, new IntegerRowMapper());
 		return ints.get(0);
 	}
 
@@ -126,29 +123,15 @@ public class UserDAOImpl implements IUserDAO {
 	@Override
 	public String getPasswordByLogin(String login) {
 		Object[] params = new Object[]{login};
-		int[] types = new int[] {Types.VARCHAR};
-		List<String> strings = jdbcTemplate.query(SELECT_PASS_BY_LOGIN, params, types, new StringRowMapper());
+		List<String> strings = jdbcTemplate.query(SELECT_PASS_BY_LOGIN, params, new StringRowMapper());
 		return strings.get(0);
 	}
 
 	@Override
 	public String getPasswordByEmail(String email) {
 		Object[] params = new Object[]{email};
-		int[] types = new int[] {Types.VARCHAR};
-		List<String> strings = jdbcTemplate.query(SELECT_PASS_BY_EMAIL, params, types, new StringRowMapper());
+		List<String> strings = jdbcTemplate.query(SELECT_PASS_BY_EMAIL, params, new StringRowMapper());
 		return strings.get(0);
-	}
-
-	@Override
-	public List<User> getUsersByName(String name) {
-		Object[] params = new Object[] {name};
-		return jdbcTemplate.query(SELECT_USERS_BY_FNAME, params, new UserRowMapper());
-	}
-
-	@Override
-	public List<User> getUsersBySurname(String surname) {
-		Object[] params = new Object[] {surname};
-		return jdbcTemplate.query(SELECT_USERS_BY_SNAME, params, new UserRowMapper());
 	}
 
 	@Override
@@ -158,8 +141,9 @@ public class UserDAOImpl implements IUserDAO {
 	}
 
 	@Override
-	public List<User> getUsersByCity(String city) {
-		Object[] params = new Object[] {city};
-		return jdbcTemplate.query(SELECT_USERS_BY_CITY, params, new UserRowMapper());
+	public List<User> getUsersByCity(String cityCode, String countryCode) {
+		Object[] params = new Object[] {cityCode, countryCode};
+		int[] types = new int[] {Types.VARCHAR, Types.VARCHAR};
+		return jdbcTemplate.query(SELECT_USERS_BY_CITY, params, types, new UserRowMapper());
 	}
 }
