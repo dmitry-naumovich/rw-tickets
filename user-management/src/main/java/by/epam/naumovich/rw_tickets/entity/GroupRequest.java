@@ -4,9 +4,9 @@ import java.sql.Date;
 import java.sql.Time;
 
 /**
- * This entity bean class describes the group request
+ * This simple entity bean class describes the group request.
  * 
- * @author Dzmitry Naumovich
+ * @author Dzmitry_Naumovich
  * @version 1.0
  */
 public class GroupRequest {

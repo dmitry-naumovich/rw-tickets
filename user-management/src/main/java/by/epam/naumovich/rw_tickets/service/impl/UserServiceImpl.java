@@ -1,5 +1,6 @@
 package by.epam.naumovich.rw_tickets.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
@@ -8,9 +9,22 @@ import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
+import by.epam.naumovich.rw_tickets.service.search.iface.UserCriterion;
+import by.epam.naumovich.rw_tickets.service.search.impl.AndCriterion;
+import by.epam.naumovich.rw_tickets.service.search.impl.EmailCriterion;
+import by.epam.naumovich.rw_tickets.service.search.impl.LoginCriterion;
+import by.epam.naumovich.rw_tickets.service.search.impl.NameCriterion;
 import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 import by.epam.naumovich.rw_tickets.service.util.Validator;
 
+/**
+ * IUserService implementation which validates input parameters using the Validator class and invokes the methods from DAO 
+ * which is injected into this class by the Spring Framework IoC framework.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ * @see Validator
+ */
 public class UserServiceImpl implements IUserService {
 
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
@@ -121,6 +135,7 @@ public class UserServiceImpl implements IUserService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		User user = userDAO.getUserByEmail(email);
+		
 		if (!pass.equals(user.getPwd())) {
 			return false;
 		}
@@ -137,34 +152,51 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<User> findUsersByName(String name) throws ServiceException {
-		if (!Validator.validateStrings(name)) {
-			throw new ServiceException(INVALID_INPUT_PARAMS);
+	public List<User> searchForUsers(String name, String login, String email, String countryCode, String cityCode) throws ServiceException {
+		List<User> users;
+		
+		if (cityCode != null) {
+			users = userDAO.getUsersByCity(cityCode, countryCode);
+		} else if (countryCode != null) {
+			users = userDAO.getUsersByCountry(countryCode);
+		} else {
+			users = userDAO.getAllUsers();
 		}
-		return userDAO.getUsersByName(name);
+		
+		List<UserCriterion> criteria = new ArrayList<>();
+		if (name != null) {
+			criteria.add(new NameCriterion(name));
+		}
+		if (login != null) {
+			criteria.add(new LoginCriterion(login));
+		}
+		if (email != null) {
+			criteria.add(new EmailCriterion(email));
+		}
+		
+		if (criteria.isEmpty()) {
+			return users;
+		} else if (criteria.size() == 1) {
+			return criteria.get(0).meetCriterion(users);
+		} else {
+			UserCriterion andCrit = new AndCriterion(criteria);
+			return andCrit.meetCriterion(users);
+		}
 	}
 
 	@Override
-	public List<User> findUsersBySurname(String surname) throws ServiceException {
-		if (!Validator.validateStrings(surname)) {
+	public List<User> getUsersByCountry(String countryCode) throws ServiceException {
+		if (!Validator.validateStrings(countryCode)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return userDAO.getUsersBySurname(surname);
+		return userDAO.getUsersByCountry(countryCode);
 	}
 
 	@Override
-	public List<User> findUsersByCountry(String country) throws ServiceException {
-		if (!Validator.validateStrings(country)) {
+	public List<User> getUsersByCity(String cityCode, String countryCode) throws ServiceException {
+		if (!Validator.validateStrings(cityCode, countryCode)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return userDAO.getUsersByCountry(country);
-	}
-
-	@Override
-	public List<User> findUsersByCity(String city) throws ServiceException {
-		if (!Validator.validateStrings(city)) {
-			throw new ServiceException(INVALID_INPUT_PARAMS);
-		}
-		return userDAO.getUsersByCity(city);
+		return userDAO.getUsersByCity(cityCode, countryCode);
 	}
 }

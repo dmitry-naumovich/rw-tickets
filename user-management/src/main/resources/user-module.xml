@@ -41,6 +41,11 @@
 			<ref bean="dataSource"/>
 		</constructor-arg>
 	</bean>
+	<bean id="cityCountryDao" class="by.epam.naumovich.rw_tickets.dao.impl.CityCountryDAOImpl">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+	</bean>
 	
 	<bean id="userServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
 		<property name="userDAO"><ref bean="userDao"/></property>
@@ -52,6 +57,9 @@
 	<bean id="requestServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl">
 		<property name="requestDAO"><ref bean="requestDao"/></property>
 	</bean>
+	<bean id="cityCountryServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.CityCountryServiceImpl">
+		<property name="cityCountryDAO"><ref bean="cityCountryDao"/></property>
+	</bean>
 	
 	
 	<bean id="loggingBeforeAdvice" class="by.epam.naumovich.rw_tickets.service.aop.LoggingBeforeAdvice" />
@@ -61,10 +69,10 @@
 	<bean id="transactionAttributeSource" class="org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource">
 		<property name="properties">
 			<props>
-				<prop key="get*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
-				<prop key="find*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
-				<prop key="authenticate*">PROPAGATION_REQUIRED,readOnly,-ServiceException</prop>
-				<prop key="*">PROPAGATION_REQUIRED,-ServiceException</prop>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="authenticate*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-ServiceException,-RuntimeException</prop>
 			</props>
 		</property>
 	</bean>
@@ -147,9 +155,34 @@
 		</property>
 	</bean>
 	
+	<bean id="cityCountryService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyInterfaces"> 
+			<list>
+				<value>by.epam.naumovich.rw_tickets.service.iface.ICityCountryService</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="cityCountryServiceTarget"/>
+		</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+		<property name="preInterceptors">
+			<list>
+		        <ref bean="loggingBeforeAdvice"/>
+		        <ref bean="loggingAfterAdvice"/>
+		        <ref bean="loggingThrowsAdvice"/>
+    		</list>
+		</property>
+	</bean>
+	
 	<bean id="serviceFacade" class="by.epam.naumovich.rw_tickets.service.ServiceFacade">
 		<property name="userService"><ref bean="userService"/></property>
 		<property name="groupService"><ref bean="groupService"/></property>
 		<property name="requestService"><ref bean="requestService"/></property>
+		<property name="cityCountryService"><ref bean="cityCountryService"/></property>
 	</bean>
 </beans>

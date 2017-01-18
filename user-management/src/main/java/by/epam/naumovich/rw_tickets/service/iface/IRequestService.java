@@ -6,13 +6,13 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 
 /**
-* Defines methods that receive parameters from Command implementations, verify them, construct necessary entities if needed 
-* and then pass them to the DAO layer, possibly getting some objects or primitive values back and passing them further back to the commands.
-* Works with the GroupRequest entity mostly.
-* 
-* @author Dmitry Naumovich
-* @version 1.0
-*/
+ * Defines methods that receive parameters from ServiceFacade layer, verify them, and then either pass them to the DAO layer 
+ * or additionally does some logic possibly getting some objects or primitive values back and passing them further back to the ServiceFacade.
+ * This class operates with the GroupRequest entity.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public interface IRequestService {
 
 	public int addRequest(GroupRequest request) throws ServiceException;

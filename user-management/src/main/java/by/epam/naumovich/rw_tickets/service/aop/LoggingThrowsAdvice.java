@@ -7,7 +7,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.aop.ThrowsAdvice;
 
-
+/**
+* Spring AOP ThrowsAdvice implementation which logs the info about the exception and method which has thrown it right after it was thrown.
+* 
+* @author Dzmitry_Naumovich
+* @version 1.0
+*/
 public class LoggingThrowsAdvice implements ThrowsAdvice {
 
 	private static final Logger logger = LogManager.getLogger(Logger.class.getName());

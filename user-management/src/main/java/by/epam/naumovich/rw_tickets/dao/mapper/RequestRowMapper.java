@@ -9,7 +9,13 @@ import org.springframework.jdbc.core.RowMapper;
 
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 
-public class GroupRequestMapper implements RowMapper<GroupRequest> {
+/**
+ * Spring JDBC RowMapper implementation which maps GroupRequest table in database on GroupRequest entity.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
+public class RequestRowMapper implements RowMapper<GroupRequest> {
 
 	@Override
 	public GroupRequest mapRow(ResultSet arg0, int arg1) throws SQLException {

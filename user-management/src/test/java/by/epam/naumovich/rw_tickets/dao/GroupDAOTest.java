@@ -18,12 +18,13 @@ import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
 /**
- * This unit testing class tests the IGroupDAO interface implementation which is injected into this class by Spring IOC technology.
+ * This unit testing class tests the IGroupDAO interface implementation which is injected by the Spring IOC technology.
+ * The test data is loaded automatically from the XML file.
+ * Test class is set up with the help of the DBUnit framework.
  * 
  * @author Dzmitry_Naumovich
  * @version 1.0
  */
-
 @DataSet("dbunit/DAODataTest.xml")
 public class GroupDAOTest extends UnitilsJUnit4 {
 

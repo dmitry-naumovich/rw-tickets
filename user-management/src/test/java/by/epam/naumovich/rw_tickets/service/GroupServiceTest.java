@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,13 @@ import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
 import by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl;
 
+/**
+ * Tests the IGroupService interface implementation which is injected by the Spring IOC technology.
+ * Test class is set up with the help of the Mockito framework.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class GroupServiceTest {
 
 	private static boolean setUpIsDone = false;
@@ -86,6 +95,8 @@ public class GroupServiceTest {
 	
 	@Test
 	public void testUpdateGroup() throws ServiceException {
+		expectedGroup.setCreateDate(new Date(1L));
+		expectedGroup.setCreateTime(new Time(1L));
 		service.updateGroup(expectedGroup);
 		verify(dao).updateGroup(90, expectedGroup);
 	}

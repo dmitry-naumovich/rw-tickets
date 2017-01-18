@@ -4,9 +4,9 @@ import java.sql.Date;
 import java.sql.Time;
 
 /**
- * This entity bean class describes the user group
+ * This simple entity bean class describes the user group.
  * 
- * @author Dzmitry Naumovich
+ * @author Dzmitry_Naumovich
  * @version 1.0
  */
 public class UserGroup {
