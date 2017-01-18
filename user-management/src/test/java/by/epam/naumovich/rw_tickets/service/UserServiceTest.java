@@ -20,6 +20,13 @@ import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
 import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
 
+/**
+ * Tests the IUserService interface implementation which is injected by the Spring IOC technology.
+ * Test class is set up with the help of the Mockito framework.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class UserServiceTest {
 
 	private static boolean setUpIsDone = false;

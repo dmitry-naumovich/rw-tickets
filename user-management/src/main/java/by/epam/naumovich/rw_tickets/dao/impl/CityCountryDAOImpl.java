@@ -13,6 +13,13 @@ import by.epam.naumovich.rw_tickets.dao.mapper.CountryRowMapper;
 import by.epam.naumovich.rw_tickets.entity.City;
 import by.epam.naumovich.rw_tickets.entity.Country;
 
+/**
+ * ICityCountryDAO implementation for Oracle database which uses Spring JDBC framework to connect to the DB and perform all operations,
+ * which might be needed by the service layer. This class works with City and Country entities and relevant tables in the DB.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class CityCountryDAOImpl implements ICityCountryDAO {
 
 	public static final String SELECT_COUNTRY_BY_CODE = "SELECT * FROM Countries WHERE code = ?";

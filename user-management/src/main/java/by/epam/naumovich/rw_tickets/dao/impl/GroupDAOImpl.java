@@ -13,6 +13,13 @@ import by.epam.naumovich.rw_tickets.dao.mapper.StringRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.UserGroupRowMapper;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
+/**
+ * IGroupDAO implementation for Oracle database which uses Spring JDBC framework to connect to the DB and perform all operations,
+ * which might be needed by the service layer. This class works with UserGroup entity and relevant table in the DB.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class GroupDAOImpl implements IGroupDAO {
 
 	public static final String INSERT_NEW_GROUP = "INSERT INTO rw_groups (gr_name, owner_id) VALUES (?, ?)";

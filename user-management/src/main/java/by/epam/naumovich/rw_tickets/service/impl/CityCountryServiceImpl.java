@@ -9,6 +9,14 @@ import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.ICityCountryService;
 import by.epam.naumovich.rw_tickets.service.util.Validator;
 
+/**
+ * ICityCountryService implementation which validates input parameters using the Validator class and invokes the methods from DAO 
+ * which is injected into this class by the Spring Framework IoC framework.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ * @see Validator
+ */
 public class CityCountryServiceImpl implements ICityCountryService {
 
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";

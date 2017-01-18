@@ -6,11 +6,29 @@ import java.util.List;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.service.search.iface.UserCriterion;
 
+/**
+ * UserCriterion implementation which searches for users by the name/surname specified.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class NameCriterion implements UserCriterion {
 
-	public final static String SPACE = " ";
+	public static final String SPACE = " ";
+	
+	/**
+	 * The name/surname value defined for search by the user.
+	 */
 	private String name;
+	
+	/**
+	 * The flag that shows that the value entered consists of more that one word.
+	 */
 	private boolean moreThanOneWord;
+	
+	/**
+	 * The array of words which is created by separating the entered value into the words.
+	 */
 	private String[] words;
 	
 	public NameCriterion(String name) {
@@ -37,6 +55,13 @@ public class NameCriterion implements UserCriterion {
 		return found;
 	}
 	
+	/**
+	 * Checks if the name/surname is suitable in terms of the search.
+	 * 
+	 * @param fName - the real user's first name
+	 * @param sName - the real user's second name
+	 * @return true if the name or surname or both are suitable and false otherwise
+	 */
 	private boolean isNameSuitable(String fName, String sName) {
 		if (name.equals(fName) || name.equals(sName)) {
 			return true;

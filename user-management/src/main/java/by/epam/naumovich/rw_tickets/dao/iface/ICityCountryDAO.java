@@ -6,9 +6,9 @@ import by.epam.naumovich.rw_tickets.entity.City;
 import by.epam.naumovich.rw_tickets.entity.Country;
 
 /**
- * Defines methods for implementing in the DAO layer for City and Country entities.
+ * Defines methods to be implemented in the DAO layer for City and Country entities.
  * 
- * @author Dzmitry Naumovich
+ * @author Dzmitry_Naumovich
  * @version 1.0
  */
 public interface ICityCountryDAO {

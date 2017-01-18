@@ -1,9 +1,9 @@
 package by.epam.naumovich.rw_tickets.service.exception;
 
 /**
- * Describes exceptions that may occur in service layer classes
+ * Describes exceptions that may occur in service layer classes.
  * 
- * @author Dmitry Naumovich
+ * @author Dmitry_Naumovich
  * @version 1.0
  */
 public class ServiceException extends Exception {

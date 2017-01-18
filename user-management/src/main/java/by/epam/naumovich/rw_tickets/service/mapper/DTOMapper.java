@@ -13,6 +13,12 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
+/**
+ * Contains methods that are responsible for mapping simple entities and collections of such entities on Data Transfer Objects and pass them back.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class DTOMapper {
 
 	private DTOMapper() { };
@@ -21,7 +27,7 @@ public class DTOMapper {
 		UserDTO dto = new UserDTO();
 		dto.setUser(user);
 		dto.setCity(city.getCity_name());
-		dto.setCountry(country.getCountry());
+		dto.setCountry(country.getName());
 		if (!groups.isEmpty()) {
 			Map<Integer, String> grs = new LinkedHashMap<>();
 			for (UserGroup gr : groups) {

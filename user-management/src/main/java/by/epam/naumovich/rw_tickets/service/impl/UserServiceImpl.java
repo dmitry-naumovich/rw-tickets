@@ -17,6 +17,14 @@ import by.epam.naumovich.rw_tickets.service.search.impl.NameCriterion;
 import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 import by.epam.naumovich.rw_tickets.service.util.Validator;
 
+/**
+ * IUserService implementation which validates input parameters using the Validator class and invokes the methods from DAO 
+ * which is injected into this class by the Spring Framework IoC framework.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ * @see Validator
+ */
 public class UserServiceImpl implements IUserService {
 
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
@@ -145,7 +153,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<User> searchForUsers(String name, String login, String email, String countryCode, String cityCode) throws ServiceException {
-		List<User> users = new ArrayList<User>();
+		List<User> users;
 		
 		if (cityCode != null) {
 			users = userDAO.getUsersByCity(cityCode, countryCode);

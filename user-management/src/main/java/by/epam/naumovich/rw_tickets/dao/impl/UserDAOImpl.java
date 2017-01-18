@@ -13,6 +13,13 @@ import by.epam.naumovich.rw_tickets.dao.mapper.StringRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.UserRowMapper;
 import by.epam.naumovich.rw_tickets.entity.User;
 
+/**
+ * IUserDAO implementation for Oracle database which uses Spring JDBC framework to connect to the DB and perform all operations,
+ * which might be needed by the service layer. This class works with User and UserGroup entities and relevant tables in the DB.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class UserDAOImpl implements IUserDAO {
 
 	public static final String INSERT_NEW_USER = "INSERT INTO rw_users (login, pwd, fname, sname, email, country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

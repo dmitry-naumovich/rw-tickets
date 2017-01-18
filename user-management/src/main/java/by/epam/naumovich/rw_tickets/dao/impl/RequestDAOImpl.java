@@ -8,10 +8,17 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
-import by.epam.naumovich.rw_tickets.dao.mapper.GroupRequestMapper;
+import by.epam.naumovich.rw_tickets.dao.mapper.RequestRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.IntegerRowMapper;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 
+/**
+ * IRequestDAO implementation for Oracle database which uses Spring JDBC framework to connect to the DB and perform all operations,
+ * which might be needed by the service layer. This class works with GroupRequest entity and relevant table in the DB.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class RequestDAOImpl implements IRequestDAO {
 
 	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_requests (from_user, to_user, gr_id, status, rq_comment) VALUES (?, ?, ?, ?, ?)";
@@ -53,7 +60,7 @@ public class RequestDAOImpl implements IRequestDAO {
 	@Override
 	public GroupRequest getRequestByNum(int num) {
 		Object[] params = new Object[] {num};
-		List<GroupRequest> reqs = jdbcTemplate.query(SELECT_REQ_BY_NUM, params, new GroupRequestMapper());
+		List<GroupRequest> reqs = jdbcTemplate.query(SELECT_REQ_BY_NUM, params, new RequestRowMapper());
 		return reqs.get(0);
 	}
 
@@ -68,12 +75,12 @@ public class RequestDAOImpl implements IRequestDAO {
 	@Override
 	public List<GroupRequest> getUserIncRequests(int userID) {
 		Object[] params = new Object[] {userID};
-		return jdbcTemplate.query(SELECT_USER_INC_REQUESTS, params, new GroupRequestMapper());
+		return jdbcTemplate.query(SELECT_USER_INC_REQUESTS, params, new RequestRowMapper());
 	}
 
 	@Override
 	public List<GroupRequest> getUserOutRequests(int userID) {
 		Object[] params = new Object[] {userID};
-		return jdbcTemplate.query(SELECT_USER_OUT_REQUESTS, params, new GroupRequestMapper());
+		return jdbcTemplate.query(SELECT_USER_OUT_REQUESTS, params, new RequestRowMapper());
 	}
 }

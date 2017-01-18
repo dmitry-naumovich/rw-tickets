@@ -5,9 +5,9 @@ import java.util.List;
 import by.epam.naumovich.rw_tickets.entity.User;
 
 /**
- * Defines methods for implementing in the DAO layer for the User entity.
+ * Defines methods to be implemented in the DAO layer for User entity.
  * 
- * @author Dzmitry Naumovich
+ * @author Dzmitry_Naumovich
  * @version 1.0
  */
 public interface IUserDAO {

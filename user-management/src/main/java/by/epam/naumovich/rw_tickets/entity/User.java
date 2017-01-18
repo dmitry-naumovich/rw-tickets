@@ -3,9 +3,9 @@ package by.epam.naumovich.rw_tickets.entity;
 import java.sql.Date;
 
 /**
- * This entity bean class describes the user
+ * This simple entity bean class describes the user.
  * 
- * @author Dzmitry Naumovich
+ * @author Dzmitry_Naumovich
  * @version 1.0
  */
 public class User {

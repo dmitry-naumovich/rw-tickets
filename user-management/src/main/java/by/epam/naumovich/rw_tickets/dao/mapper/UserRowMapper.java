@@ -7,6 +7,12 @@ import org.springframework.jdbc.core.RowMapper;
 
 import by.epam.naumovich.rw_tickets.entity.User;
 
+/**
+ * Spring JDBC RowMapper implementation which maps User table in database on User entity.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class UserRowMapper implements RowMapper<User> {
 
 	@Override

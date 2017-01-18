@@ -9,6 +9,12 @@ import org.springframework.jdbc.core.RowMapper;
 
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 
+/**
+ * Spring JDBC RowMapper implementation which maps UserGroup table in database on UserGroup entity.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 public class UserGroupRowMapper implements RowMapper<UserGroup> {
 
 	@Override

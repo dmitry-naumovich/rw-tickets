@@ -17,6 +17,14 @@ import static org.unitils.reflectionassert.ReflectionAssert.*;
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
 import by.epam.naumovich.rw_tickets.entity.User;
 
+/**
+ * This unit testing class tests the IUserDAO interface implementation which is injected by the Spring IOC technology.
+ * The test data is loaded automatically from the XML file.
+ * Test class is set up with the help of the DBUnit framework.
+ * 
+ * @author Dzmitry_Naumovich
+ * @version 1.0
+ */
 @DataSet("dbunit/DAODataTest.xml")
 public class UserDAOTest extends UnitilsJUnit4 {
 	

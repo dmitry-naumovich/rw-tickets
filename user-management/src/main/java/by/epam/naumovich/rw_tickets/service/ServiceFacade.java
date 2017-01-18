@@ -27,6 +27,7 @@ import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
  * 
  * @author Dzmitry_Naumovich
  * @version 1.0
+ * @see DTOMapper
  */
 public class ServiceFacade {
 
