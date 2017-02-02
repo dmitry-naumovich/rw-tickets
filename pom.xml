@@ -11,7 +11,6 @@
 </properties>
   <modules>
   	<module>user-management</module>
-    <module>ticket-management</module>
   </modules>
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
