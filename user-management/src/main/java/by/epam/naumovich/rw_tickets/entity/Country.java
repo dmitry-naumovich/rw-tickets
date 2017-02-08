@@ -11,6 +11,9 @@ public class Country {
 	private String code;
 	private String name;
 	
+	public Country() {
+		// Empty constructor may be used by JAXB, for instance
+	}
 	public String getCode() {
 		return code;
 	}

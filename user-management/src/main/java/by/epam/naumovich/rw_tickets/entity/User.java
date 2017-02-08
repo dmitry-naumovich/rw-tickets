@@ -24,6 +24,10 @@ public class User {
 	private String city;
 	private boolean isAdmin;
 	
+	public User() {
+		// Empty constructor may be used by JAXB, for instance
+	}
+	
 	public int getId() {
 		return id;
 	}

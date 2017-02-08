@@ -22,6 +22,9 @@ public class GroupRequest {
 	private Date closeDate;
 	private Time closeTime;
 	
+	public GroupRequest() {
+		// Empty constructor may be used by JAXB, for instance
+	}
 	public int getRq_num() {
 		return rq_num;
 	}

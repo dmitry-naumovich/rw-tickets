@@ -12,6 +12,9 @@ public class City {
 	private String country;
 	private String city_name;
 	
+	public City() {
+		// Empty constructor may be used by JAXB, for instance
+	}
 	public String getCode() {
 		return code;
 	}

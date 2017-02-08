@@ -17,6 +17,10 @@ public class UserGroup {
 	private Time createTime;
 	private int owner_id;
 	
+	public UserGroup() {
+		// Empty constructor may be used by JAXB, for instance
+	}
+	
 	public int getGr_id() {
 		return gr_id;
 	}
