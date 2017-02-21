@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="url">
+			<value>${database.url}</value>
+		</property>
+		<property name="driverClassName">
+			<value>${database.driverClassName}</value>
+		</property>
+		<property name="username">
+			<value>${database.username}</value>
+		</property>
+		<property name="password">
+			<value>${database.password}</value>
+		</property>
+	</bean>
+	
+	<bean id="ticketDao" class="by.epam.naumovich.soap.dao.TicketDAOImpl">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="ticketServiceTarget" class="by.epam.naumovich.soap.service.TicketServiceImpl">
+		<property name="ticketDAO"><ref bean="ticketDao"/></property>
+	</bean>
+	
+	
+	<bean id="transactionAttributeSource" class="org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource">
+		<property name="properties">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="find*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="authenticate*">PROPAGATION_REQUIRED,readOnly,-ServiceException,-RuntimeException</prop>
+				<prop key="*">PROPAGATION_REQUIRED,-ServiceException,-RuntimeException</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource">
+    		<ref bean="dataSource"/>
+    	</property>
+    </bean>
+    
+	<bean id="ticketService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" >
+		<property name="proxyInterfaces">
+			<list>
+				<value>by.epam.naumovich.soap.service.ITicketService</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="ticketServiceTarget"/>
+		</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource"/>
+		</property>
+	</bean>
+	
+	
+</beans>
