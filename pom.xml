@@ -46,6 +46,12 @@
 	    <artifactId>spring-jdbc</artifactId>
 	    <version>3.2.17.RELEASE</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-test</artifactId>
+	    <version>1.4.1.RELEASE</version>
+	</dependency>
 	<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
 	<dependency>
         <groupId>commons-pool</groupId>
@@ -65,12 +71,7 @@
 	    <version>3.4.2</version>
 	    <scope>test</scope>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
-	<dependency>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-test</artifactId>
-	    <version>1.4.1.RELEASE</version>
-	</dependency>
+	
 	<!--  Oracle JDBC -->
 	<dependency>
         <groupId>com.oracle</groupId>

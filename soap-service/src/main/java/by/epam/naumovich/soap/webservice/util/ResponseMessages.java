@@ -3,7 +3,7 @@ package by.epam.naumovich.soap.webservice.util;
 public final class ResponseMessages {
 
 	public static final String MISSING_PARAMS = "Please, fill all the necessary fields";
-	public static final String SUCCESSFULL_TICKET_ACQUISITON = "The ticket was successfully deleted";
+	public static final String SUCCESSFULL_TICKET_ACQUISITON = "The ticket was successfully acquired";
 	public static final String SUCCESSFULL_TICKET_CREATION = "The ticket was successfully created";
 	public static final String SUCCESSFULL_TICKET_DELETION = "The ticket was successfully deleted";
 	public static final String TICKET_NOT_DELETED = "Something went wrong and the ticket was not deleted";
