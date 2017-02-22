@@ -10,8 +10,8 @@ import javax.ws.rs.core.Response;
 
 public class RestClient {
 
-	private static final String PLAIN_SERVICE_BASE_URL = "http://localhost:8080/ticket-web-service/plain";
-	private static final String XML_SERVICE_BASE_URL = "http://localhost:8080/ticket-web-service/xml";
+	private static final String PLAIN_SERVICE_BASE_URL = "http://localhost:8080/rest-service/plain";
+	private static final String XML_SERVICE_BASE_URL = "http://localhost:8080/rest-service/xml";
 	
 	private static final String ALL_TICKETS_URL_PART = "/tickets";
 	private static final String SINGLE_TICKET_URL_PART = "/ticket";

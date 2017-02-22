@@ -64,7 +64,7 @@ public class TicketSoap {
 		} catch (RuntimeException e) {
 			
 		}
-		return new Ticket();
+		return null;
 	}
 	
 	@WebMethod
