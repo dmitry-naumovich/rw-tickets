@@ -5,8 +5,17 @@ import java.sql.Time;
 
 import by.epam.naumovich.soap.entity.Ticket;
 
-
+/**
+ * Utility class which is responsible for mapping set of parameters to a new Ticket entity
+ * 
+ * @author Dzmitry Naumovich
+ * @version 1.0
+ */
 public class TicketMapper {
+	
+	private TicketMapper() {
+		// This class must not be instantiated
+	}
 	
 	public static Ticket createTicket(String depCity, String depCountry, String arrCity, String arrCountry,
 									  Date depDate, Time depTime, Date arrDate, Time arrTime,

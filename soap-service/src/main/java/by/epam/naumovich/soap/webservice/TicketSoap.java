@@ -26,7 +26,7 @@ public class TicketSoap {
 	private ITicketService ticketService;
 	
 	public TicketSoap() {
-		
+		// SOAP Web Service must contain an empty constructor
 	}
 	
 	private void checkSpringContext() {
