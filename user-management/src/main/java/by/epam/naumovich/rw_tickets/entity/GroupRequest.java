@@ -18,8 +18,8 @@ public class GroupRequest {
 	private int rq_num;
 	private int from_user;
 	private int to_user;
-	private int gr_id;
-	private String rq_comment;
+	private int grId;
+	private String comment;
 	private char status;
 	private Date createDate;
 	private Time createTime;
