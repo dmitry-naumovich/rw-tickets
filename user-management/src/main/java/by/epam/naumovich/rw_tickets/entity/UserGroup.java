@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // Empty constructor may be used by JAXB, for instance
 public class UserGroup {
 
-	private int gr_id;
-	private String gr_name;
+	private int id;
+	private String name;
 	private Date createDate;
 	private Time createTime;
-	private int owner_id;
+	private int owner;
 }

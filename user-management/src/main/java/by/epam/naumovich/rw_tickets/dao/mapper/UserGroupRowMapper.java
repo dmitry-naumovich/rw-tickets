@@ -20,11 +20,11 @@ public class UserGroupRowMapper implements RowMapper<UserGroup> {
 	@Override
 	public UserGroup mapRow(ResultSet arg0, int arg1) throws SQLException {
 		UserGroup group = new UserGroup();
-		group.setGr_id(arg0.getInt(1));
-		group.setGr_name(arg0.getString(2));
+		group.setId(arg0.getInt(1));
+		group.setName(arg0.getString(2));
 		group.setCreateDate(Date.valueOf(arg0.getString(3).substring(0, 10)));
 		group.setCreateTime(Time.valueOf(arg0.getString(3).substring(11, 19)));
-		group.setOwner_id(arg0.getInt(4));
+		group.setOwner(arg0.getInt(4));
 		return group;
 	}
 

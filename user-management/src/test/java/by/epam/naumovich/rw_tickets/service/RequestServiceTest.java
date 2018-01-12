@@ -50,7 +50,7 @@ public class RequestServiceTest {
 		expectedRequest.setRq_num(1);
 		expectedRequest.setFrom_user(2);
 		expectedRequest.setTo_user(3);
-		expectedRequest.setGr_id(4);
+		expectedRequest.setGrId(4);
 	}
 	
 	private void initRequestCollection() {

@@ -50,23 +50,23 @@ public class GroupServiceTest {
 	
 	private void initTestGroup() {
 		expectedGroup = new UserGroup();
-		expectedGroup.setGr_id(90);
-		expectedGroup.setGr_name("testGroup");
-		expectedGroup.setOwner_id(1);
+		expectedGroup.setId(90);
+		expectedGroup.setName("testGroup");
+		expectedGroup.setOwner(1);
 	}
 
 	private void initGroupCollection() {
 		groups = new ArrayList<>();
 		
 		UserGroup group = new UserGroup();
-		group.setGr_id(8);
-		group.setGr_name("test2");
-		group.setOwner_id(2);
+		group.setId(8);
+		group.setName("test2");
+		group.setOwner(2);
 		
 		UserGroup group2 = new UserGroup();
-		group2.setGr_id(9);
-		group2.setGr_name("test3");
-		group2.setOwner_id(7);
+		group2.setId(9);
+		group2.setName("test3");
+		group2.setOwner(7);
 		
 		groups.add(expectedGroup);
 		groups.add(group);
@@ -77,12 +77,12 @@ public class GroupServiceTest {
 	public void testAddGroup() throws ServiceException {
 		when(dao.addGroup(expectedGroup)).thenAnswer(invocation -> {
 					UserGroup group = (UserGroup) invocation.getArguments()[0];
-					return group.getGr_id();
+					return group.getId();
 				});
 		
 		assertEquals(90, service.addGroup(expectedGroup));
 		verify(dao).addGroup(expectedGroup);
-		verify(dao).addGroupMember(expectedGroup.getOwner_id(), expectedGroup.getGr_id());
+		verify(dao).addGroupMember(expectedGroup.getOwner(), expectedGroup.getId());
 		verifyNoMoreInteractions(dao);
 	}
 	

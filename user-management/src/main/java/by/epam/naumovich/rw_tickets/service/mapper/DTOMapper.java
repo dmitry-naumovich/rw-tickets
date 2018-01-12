@@ -26,12 +26,12 @@ public class DTOMapper {
 	public static UserDTO constructUserDTO(User user, List<UserGroup> groups, City city, Country country) {
 		UserDTO dto = new UserDTO();
 		dto.setUser(user);
-		dto.setCity(city.getCity_name());
+		dto.setCity(city.getName());
 		dto.setCountry(country.getName());
 		if (!groups.isEmpty()) {
 			Map<Integer, String> grs = new LinkedHashMap<>();
 			for (UserGroup gr : groups) {
-				grs.put(gr.getGr_id(), gr.getGr_name());
+				grs.put(gr.getId(), gr.getName());
 			}
 			dto.setUserGroups(grs);
 		}

@@ -46,18 +46,18 @@ public class GroupDAOImpl implements IGroupDAO {
 	
 	@Override
 	public int addGroup(UserGroup group) {
-		Object[] params = new Object[] {group.getGr_name(), group.getOwner_id()};
+		Object[] params = new Object[] {group.getName(), group.getOwner()};
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER};
 		jdbcTemplate.update(INSERT_NEW_GROUP, params, types);
 		
-		int newGroupID = getGroupIdByNameAndOwner(group.getGr_name(), group.getOwner_id());
-		addGroupMember(group.getOwner_id(), newGroupID);
+		int newGroupID = getGroupIdByNameAndOwner(group.getName(), group.getOwner());
+		addGroupMember(group.getOwner(), newGroupID);
 		return newGroupID;
 	}
 
 	@Override
 	public void updateGroup(int id, UserGroup updGroup) {
-		Object[] params = new Object[] {updGroup.getGr_name(), updGroup.getOwner_id(), id};
+		Object[] params = new Object[] {updGroup.getName(), updGroup.getOwner(), id};
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER, Types.INTEGER};
 		jdbcTemplate.update(UPDATE_GROUP, params, types);
 	}

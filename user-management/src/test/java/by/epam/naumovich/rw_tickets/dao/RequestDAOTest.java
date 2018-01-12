@@ -55,9 +55,9 @@ public class RequestDAOTest extends UnitilsJUnit4 {
 		testRequest = new GroupRequest();
 		testRequest.setFrom_user(4);
 		testRequest.setTo_user(1);
-		testRequest.setGr_id(1);
+		testRequest.setGrId(1);
 		testRequest.setStatus('o');
-		testRequest.setRq_comment("test comment 5");
+		testRequest.setComment("test comment 5");
 	}
 	
 	@Test
@@ -85,9 +85,9 @@ public class RequestDAOTest extends UnitilsJUnit4 {
 		GroupRequest result = requestDAO.getRequestByNum(2);
 		assertPropertyLenientEquals("from_user", 3, result);
 		assertPropertyLenientEquals("to_user", 1, result);
-		assertPropertyLenientEquals("gr_id", 1, result);
+		assertPropertyLenientEquals("id", 1, result);
 		assertPropertyLenientEquals("status", 'o', result);
-		assertPropertyLenientEquals("rq_comment", "test comment", result);
+		assertPropertyLenientEquals("comment", "test comment", result);
 	}
 	
 	@Test
@@ -100,15 +100,15 @@ public class RequestDAOTest extends UnitilsJUnit4 {
 	public void testGetUserIncReq() {
 		List<GroupRequest> result = requestDAO.getUserIncRequests(1);
 		assertPropertyLenientEquals("rq_num", Arrays.asList(2), result);
-		assertPropertyLenientEquals("gr_id", Arrays.asList(1), result);
-		assertPropertyLenientEquals("rq_comment", Arrays.asList("test comment"), result);
+		assertPropertyLenientEquals("id", Arrays.asList(1), result);
+		assertPropertyLenientEquals("comment", Arrays.asList("test comment"), result);
 	}
 	
 	@Test
 	public void testGetUserOutReq() {
 		List<GroupRequest> result = requestDAO.getUserOutRequests(1);
 		assertPropertyLenientEquals("rq_num", Arrays.asList(1, 3), result);
-		assertPropertyLenientEquals("gr_id", Arrays.asList(1, 5), result);
-		assertPropertyLenientEquals("rq_comment", Arrays.asList("test comment", "test comment"), result);
+		assertPropertyLenientEquals("id", Arrays.asList(1, 5), result);
+		assertPropertyLenientEquals("comment", Arrays.asList("test comment", "test comment"), result);
 	}
 }

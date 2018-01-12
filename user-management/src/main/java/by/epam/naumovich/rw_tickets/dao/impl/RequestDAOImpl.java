@@ -39,11 +39,11 @@ public class RequestDAOImpl implements IRequestDAO {
 	
 	@Override
 	public int addRequest(GroupRequest request)  {
-		Object[] params = new Object[] {request.getFrom_user(), request.getTo_user(), request.getGr_id(),
-				request.getStatus(), request.getRq_comment()};
+		Object[] params = new Object[] {request.getFrom_user(), request.getTo_user(), request.getGrId(),
+				request.getStatus(), request.getComment()};
 		int[] types = new int[] {Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
 		jdbcTemplate.update(INSERT_NEW_REQUEST, params, types);
-		return getReqNumByUserAndGroupIDs(request.getFrom_user(), request.getTo_user(), request.getGr_id());
+		return getReqNumByUserAndGroupIDs(request.getFrom_user(), request.getTo_user(), request.getGrId());
 	}
 
 	@Override

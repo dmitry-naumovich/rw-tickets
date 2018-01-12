@@ -68,8 +68,8 @@ public class UserServiceImpl implements IUserService {
 		List<UserGroup> groups = groupDAO.getGroupsByOwner(id);
 		if (!groups.isEmpty()) {
 			for (UserGroup group : groups) {
-				groupDAO.removeAllGroupMembers(group.getGr_id());
-				groupDAO.deleteGroup(group.getGr_id());
+				groupDAO.removeAllGroupMembers(group.getId());
+				groupDAO.deleteGroup(group.getId());
 			}	
 		}
 		userDAO.deleteUser(id);

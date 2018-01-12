@@ -36,7 +36,7 @@ public class GroupServiceImpl implements IGroupService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		int id = groupDAO.addGroup(group);
-		groupDAO.addGroupMember(group.getOwner_id(), id);
+		groupDAO.addGroupMember(group.getOwner(), id);
 		return id;
 	}
 
@@ -45,7 +45,7 @@ public class GroupServiceImpl implements IGroupService {
 		if (!Validator.validateExistingUserGroup(group)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		groupDAO.updateGroup(group.getGr_id(), group);
+		groupDAO.updateGroup(group.getId(), group);
 	}
 
 	@Override
@@ -108,8 +108,8 @@ public class GroupServiceImpl implements IGroupService {
 		List<UserGroup> groups = groupDAO.getGroupsByOwner(ownerID);
 		if (!groups.isEmpty()) {
 			for (UserGroup group : groups) {
-				groupDAO.removeAllGroupMembers(group.getGr_id());
-				groupDAO.deleteGroup(group.getGr_id());
+				groupDAO.removeAllGroupMembers(group.getId());
+				groupDAO.deleteGroup(group.getId());
 			}
 		}
 			

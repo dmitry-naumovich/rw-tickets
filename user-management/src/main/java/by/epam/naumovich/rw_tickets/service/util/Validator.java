@@ -54,7 +54,7 @@ public final class Validator {
 		if (group == null) {
 			return false;
 		}
-		if (!validateIds(group.getOwner_id()) || !validateStrings(group.getGr_name())) {
+		if (!validateIds(group.getOwner()) || !validateStrings(group.getName())) {
 			return false;
 		}
 		return true;
@@ -70,7 +70,7 @@ public final class Validator {
 		if (!validateNewUserGroup(group)) {
 			return false;
 		}
-		if (!validateIds(group.getGr_id()) ||  group.getCreateDate() == null || group.getCreateTime() == null) {
+		if (!validateIds(group.getId()) ||  group.getCreateDate() == null || group.getCreateTime() == null) {
 			return false;
 		}
 		return true;
@@ -87,7 +87,7 @@ public final class Validator {
 			return false;
 		}
 		
-		if (!validateIds(req.getFrom_user(), req.getTo_user(), req.getGr_id())) {
+		if (!validateIds(req.getFrom_user(), req.getTo_user(), req.getGrId())) {
 			return false;
 		}
 		return true;

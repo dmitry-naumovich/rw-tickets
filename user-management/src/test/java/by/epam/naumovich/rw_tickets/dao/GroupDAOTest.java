@@ -54,8 +54,8 @@ public class GroupDAOTest extends UnitilsJUnit4 {
 	
 	public void initTestGroup() {
 		testGroup = new UserGroup();
-		testGroup.setGr_name("testName");
-		testGroup.setOwner_id(2);
+		testGroup.setName("testName");
+		testGroup.setOwner(2);
 	}
 	
 	@Test
@@ -68,7 +68,7 @@ public class GroupDAOTest extends UnitilsJUnit4 {
 	@ExpectedDataSet("dbunit/AfterUpdGroup.xml")
 	public void testUpdateGroup() {
 		UserGroup group = usGroupDAO.getGroupById(2);
-		group.setGr_name("updName");
+		group.setName("updName");
 		usGroupDAO.updateGroup(2, group);
 	}
 	
@@ -81,8 +81,8 @@ public class GroupDAOTest extends UnitilsJUnit4 {
 	@Test
 	public void testGetGroupById() {
 		UserGroup result = usGroupDAO.getGroupById(1);
-		assertPropertyLenientEquals("gr_name", "TestGrName1", result);
-		assertPropertyLenientEquals("owner_id", 1, result);
+		assertPropertyLenientEquals("name", "TestGrName1", result);
+		assertPropertyLenientEquals("owner", 1, result);
 	}
 	
 	@Test
@@ -113,15 +113,15 @@ public class GroupDAOTest extends UnitilsJUnit4 {
 	@Test
 	public void testGetGroupsByUser() {
 		List<UserGroup> result = usGroupDAO.getGroupsByUser(1);
-		assertPropertyLenientEquals("gr_id", Arrays.asList(1, 5), result);
-		assertPropertyLenientEquals("gr_name", Arrays.asList("TestGrName1", "TestGrName5"), result);
+		assertPropertyLenientEquals("id", Arrays.asList(1, 5), result);
+		assertPropertyLenientEquals("name", Arrays.asList("TestGrName1", "TestGrName5"), result);
 	}
 	
 	@Test
 	public void testGetGroupsByOwner() {
 		List<UserGroup> result = usGroupDAO.getGroupsByOwner(1);
-		assertPropertyLenientEquals("gr_id", Arrays.asList(1,5), result);
-		assertPropertyLenientEquals("gr_name", Arrays.asList("TestGrName1", "TestGrName5"), result);
+		assertPropertyLenientEquals("id", Arrays.asList(1,5), result);
+		assertPropertyLenientEquals("name", Arrays.asList("TestGrName1", "TestGrName5"), result);
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)

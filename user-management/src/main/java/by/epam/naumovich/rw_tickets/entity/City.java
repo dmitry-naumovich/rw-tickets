@@ -15,5 +15,5 @@ public class City {
 
 	private String code;
 	private String country;
-	private String city_name;
+	private String name;
 }

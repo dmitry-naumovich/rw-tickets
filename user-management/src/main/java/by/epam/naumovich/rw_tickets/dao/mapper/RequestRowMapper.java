@@ -23,13 +23,13 @@ public class RequestRowMapper implements RowMapper<GroupRequest> {
 		req.setRq_num(arg0.getInt(1));
 		req.setFrom_user(arg0.getInt(2));
 		req.setTo_user(arg0.getInt(3));
-		req.setGr_id(arg0.getInt(4));
+		req.setGrId(arg0.getInt(4));
 		req.setCreateDate(Date.valueOf(arg0.getString(5).substring(0, 10)));
 		req.setCreateTime(Time.valueOf(arg0.getString(5).substring(11, 19)));
 		req.setCloseDate(Date.valueOf(arg0.getString(6).substring(0, 10)));
 		req.setCloseTime(Time.valueOf(arg0.getString(6).substring(11, 19)));
 		req.setStatus(arg0.getString(7).charAt(0));
-		req.setRq_comment(arg0.getString(8));
+		req.setComment(arg0.getString(8));
 		return req;
 	}
 
