@@ -7,6 +7,8 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
 import by.epam.naumovich.rw_tickets.service.util.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * IGroupService implementation which validates input parameters using the Validator class and invokes the methods from DAO 
@@ -16,15 +18,18 @@ import by.epam.naumovich.rw_tickets.service.util.Validator;
  * @version 1.0
  * @see Validator
  */
+@Service
 public class GroupServiceImpl implements IGroupService {
 
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
-	private IGroupDAO groupDAO;
-	
-	public void setGroupDAO(IGroupDAO groupDAO) {
+
+	private final IGroupDAO groupDAO;
+
+	@Autowired
+	public GroupServiceImpl(IGroupDAO groupDAO) {
 		this.groupDAO = groupDAO;
 	}
-	
+
 	@Override
 	public int addGroup(UserGroup group) throws ServiceException {
 		if (!Validator.validateNewUserGroup(group)) {

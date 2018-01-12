@@ -3,8 +3,7 @@ package by.epam.naumovich.rw_tickets.dao.impl;
 import java.sql.Types;
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import by.epam.naumovich.rw_tickets.dao.iface.ICityCountryDAO;
@@ -12,6 +11,7 @@ import by.epam.naumovich.rw_tickets.dao.mapper.CityRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.CountryRowMapper;
 import by.epam.naumovich.rw_tickets.entity.City;
 import by.epam.naumovich.rw_tickets.entity.Country;
+import org.springframework.stereotype.Repository;
 
 /**
  * ICityCountryDAO implementation for Oracle database which uses Spring JDBC framework to connect to the DB and perform all operations,
@@ -20,6 +20,7 @@ import by.epam.naumovich.rw_tickets.entity.Country;
  * @author Dzmitry_Naumovich
  * @version 1.0
  */
+@Repository
 public class CityCountryDAOImpl implements ICityCountryDAO {
 
 	public static final String SELECT_COUNTRY_BY_CODE = "SELECT * FROM Countries WHERE code = ?";
@@ -28,11 +29,12 @@ public class CityCountryDAOImpl implements ICityCountryDAO {
 	public static final String SELECT_ALL_COUNTRIES = "SELECT * FROM Countries";
 	public static final String SELECT_ALL_CITIES = "SELECT * FROM Cities";
 	public static final String SELECT_CITIES_BY_COUNTRY = "SELECT * FROM Cities WHERE country = ?";
-	
+
 	private JdbcTemplate jdbcTemplate;
-	
-	public CityCountryDAOImpl(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+
+	@Autowired
+	public CityCountryDAOImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 	@Override

@@ -3,8 +3,7 @@ package by.epam.naumovich.rw_tickets.dao.impl;
 import java.sql.Types;
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
@@ -12,6 +11,7 @@ import by.epam.naumovich.rw_tickets.dao.mapper.IntegerRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.StringRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.UserGroupRowMapper;
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
+import org.springframework.stereotype.Repository;
 
 /**
  * IGroupDAO implementation for Oracle database which uses Spring JDBC framework to connect to the DB and perform all operations,
@@ -20,6 +20,7 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
  * @author Dzmitry_Naumovich
  * @version 1.0
  */
+@Repository
 public class GroupDAOImpl implements IGroupDAO {
 
 	public static final String INSERT_NEW_GROUP = "INSERT INTO rw_groups (gr_name, owner_id) VALUES (?, ?)";
@@ -35,11 +36,12 @@ public class GroupDAOImpl implements IGroupDAO {
 	public static final String SELECT_USER_GROUPS_BY_ID = "SELECT rw_groups.* FROM rw_groups JOIN gr_involve ON rw_groups.gr_id = gr_involve.gr_id WHERE gr_involve.user_id = ?";
 	public static final String SELECT_GROUPS_BY_OWNER = "SELECT * FROM rw_groups WHERE owner_id = ?";
 	public static final String SELECT_GROUP_ID_BY_NAME_AND_OWNER = "SELECT gr_id FROM rw_groups WHERE gr_name = ? AND owner_id = ?";
-	
+
 	private JdbcTemplate jdbcTemplate;
-	
-	public GroupDAOImpl(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+
+	@Autowired
+	public GroupDAOImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 	@Override

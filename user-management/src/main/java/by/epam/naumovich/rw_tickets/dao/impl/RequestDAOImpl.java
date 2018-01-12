@@ -3,14 +3,14 @@ package by.epam.naumovich.rw_tickets.dao.impl;
 import java.sql.Types;
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
 import by.epam.naumovich.rw_tickets.dao.mapper.RequestRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.IntegerRowMapper;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
+import org.springframework.stereotype.Repository;
 
 /**
  * IRequestDAO implementation for Oracle database which uses Spring JDBC framework to connect to the DB and perform all operations,
@@ -19,6 +19,7 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
  * @author Dzmitry_Naumovich
  * @version 1.0
  */
+@Repository
 public class RequestDAOImpl implements IRequestDAO {
 
 	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_requests (from_user, to_user, gr_id, status, rq_comment) VALUES (?, ?, ?, ?, ?)";
@@ -30,9 +31,10 @@ public class RequestDAOImpl implements IRequestDAO {
 	public static final String SELECT_USER_OUT_REQUESTS = "SELECT * FROM gr_requests WHERE from_user = ? ORDER BY cr_datetime DESC";
 	
 	private JdbcTemplate jdbcTemplate;
-	
-	public RequestDAOImpl(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+
+	@Autowired
+	public RequestDAOImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 	@Override

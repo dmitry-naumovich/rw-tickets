@@ -16,6 +16,9 @@ import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.*;
 import by.epam.naumovich.rw_tickets.service.mapper.DTOMapper;
 import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * ServiceFacade class contains all necessary methods which may be called by the client. 
@@ -29,25 +32,23 @@ import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
  * @version 1.0
  * @see DTOMapper
  */
+@Service
+@Transactional
 public class ServiceFacade {
 
-	private IUserService userService;
-	private IGroupService groupService;
-	private IRequestService requestService;
-	private ICityCountryService cityCountryService;
-	
-	public void setUserService(IUserService userService) {
-		this.userService = userService;
-	}
-	public void setGroupService(IGroupService userGroupService) {
-		this.groupService = userGroupService;
-	}
-	public void setRequestService(IRequestService requestService) {
-		this.requestService = requestService;
-	}
-	public void setCityCountryService(ICityCountryService cityCountryService) {
-		this.cityCountryService = cityCountryService;
-	}
+	private final IUserService userService;
+	private final IGroupService groupService;
+	private final IRequestService requestService;
+	private final ICityCountryService cityCountryService;
+
+	@Autowired
+    public ServiceFacade(IUserService userService, IGroupService groupService, IRequestService requestService,
+                         ICityCountryService cityCountryService) {
+        this.userService = userService;
+        this.groupService = groupService;
+        this.requestService = requestService;
+        this.cityCountryService = cityCountryService;
+    }
 
 	public UserDTO addUser(User user) throws ServiceException {
 		int userID = userService.addUser(user);

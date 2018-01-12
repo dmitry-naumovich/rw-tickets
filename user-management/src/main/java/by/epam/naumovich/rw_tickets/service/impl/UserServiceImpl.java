@@ -16,6 +16,8 @@ import by.epam.naumovich.rw_tickets.service.search.impl.LoginCriterion;
 import by.epam.naumovich.rw_tickets.service.search.impl.NameCriterion;
 import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 import by.epam.naumovich.rw_tickets.service.util.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * IUserService implementation which validates input parameters using the Validator class and invokes the methods from DAO 
@@ -25,18 +27,17 @@ import by.epam.naumovich.rw_tickets.service.util.Validator;
  * @version 1.0
  * @see Validator
  */
+@Service
 public class UserServiceImpl implements IUserService {
 
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
 
-	private IUserDAO userDAO;
-	private IGroupDAO groupDAO;
-	
-	public void setUserDAO(IUserDAO userDAO) {
+	private final IUserDAO userDAO;
+	private final IGroupDAO groupDAO;
+
+	@Autowired
+	public UserServiceImpl(IUserDAO userDAO, IGroupDAO groupDAO) {
 		this.userDAO = userDAO;
-	}
-	
-	public void setGroupDAO(IGroupDAO groupDAO) {
 		this.groupDAO = groupDAO;
 	}
 

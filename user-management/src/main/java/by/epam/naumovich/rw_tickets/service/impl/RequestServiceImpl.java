@@ -7,6 +7,8 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IRequestService;
 import by.epam.naumovich.rw_tickets.service.util.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * IRequestService implementation which validates input parameters using the Validator class and invokes the methods from DAO 
@@ -16,12 +18,15 @@ import by.epam.naumovich.rw_tickets.service.util.Validator;
  * @version 1.0
  * @see Validator
  */
+@Service
 public class RequestServiceImpl implements IRequestService {
 
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
-	private IRequestDAO requestDAO;
-	
-	public void setRequestDAO(IRequestDAO requestDAO) {
+
+	private final IRequestDAO requestDAO;
+
+	@Autowired
+	public RequestServiceImpl(IRequestDAO requestDAO) {
 		this.requestDAO = requestDAO;
 	}
 

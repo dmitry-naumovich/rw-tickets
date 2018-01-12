@@ -3,65 +3,7 @@
 "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>jdbc.properties</value>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="url">
-			<value>${database.url}</value>
-		</property>
-		<property name="driverClassName">
-			<value>${database.driverClassName}</value>
-		</property>
-		<property name="username">
-			<value>${database.username}</value>
-		</property>
-		<property name="password">
-			<value>${database.password}</value>
-		</property>
-	</bean>
-	
-	<bean id="userDao" class="by.epam.naumovich.rw_tickets.dao.impl.UserDAOImpl">
-		<constructor-arg>
-			<ref bean="dataSource"/>
-		</constructor-arg>
-	</bean>
-	<bean id="groupDao" class="by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl">
-		<constructor-arg>
-			<ref bean="dataSource"/>
-		</constructor-arg>
-	</bean>
-	<bean id="requestDao" class="by.epam.naumovich.rw_tickets.dao.impl.RequestDAOImpl">
-		<constructor-arg>
-			<ref bean="dataSource"/>
-		</constructor-arg>
-	</bean>
-	<bean id="cityCountryDao" class="by.epam.naumovich.rw_tickets.dao.impl.CityCountryDAOImpl">
-		<constructor-arg>
-			<ref bean="dataSource"/>
-		</constructor-arg>
-	</bean>
-	
-	<bean id="userServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl">
-		<property name="userDAO"><ref bean="userDao"/></property>
-		<property name="groupDAO"><ref bean="groupDao"/></property>
-	</bean>
-	<bean id="groupServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl">
-		<property name="groupDAO"><ref bean="groupDao"/></property>
-	</bean>
-	<bean id="requestServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl">
-		<property name="requestDAO"><ref bean="requestDao"/></property>
-	</bean>
-	<bean id="cityCountryServiceTarget" class="by.epam.naumovich.rw_tickets.service.impl.CityCountryServiceImpl">
-		<property name="cityCountryDAO"><ref bean="cityCountryDao"/></property>
-	</bean>
-	
-	
+
 	<bean id="loggingBeforeAdvice" class="by.epam.naumovich.rw_tickets.service.aop.LoggingBeforeAdvice" />
 	<bean id="loggingAfterAdvice" class="by.epam.naumovich.rw_tickets.service.aop.LoggingAfterAdvice" />
 	<bean id="loggingThrowsAdvice" class="by.epam.naumovich.rw_tickets.service.aop.LoggingThrowsAdvice"/>
@@ -76,7 +18,7 @@
 			</props>
 		</property>
 	</bean>
-	
+
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     	<property name="dataSource">
     		<ref bean="dataSource"/>
@@ -177,12 +119,5 @@
 		        <ref bean="loggingThrowsAdvice"/>
     		</list>
 		</property>
-	</bean>
-	
-	<bean id="serviceFacade" class="by.epam.naumovich.rw_tickets.service.ServiceFacade">
-		<property name="userService"><ref bean="userService"/></property>
-		<property name="groupService"><ref bean="groupService"/></property>
-		<property name="requestService"><ref bean="requestService"/></property>
-		<property name="cityCountryService"><ref bean="cityCountryService"/></property>
 	</bean>
 </beans>

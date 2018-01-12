@@ -8,6 +8,8 @@ import by.epam.naumovich.rw_tickets.entity.Country;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.ICityCountryService;
 import by.epam.naumovich.rw_tickets.service.util.Validator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * ICityCountryService implementation which validates input parameters using the Validator class and invokes the methods from DAO 
@@ -17,13 +19,15 @@ import by.epam.naumovich.rw_tickets.service.util.Validator;
  * @version 1.0
  * @see Validator
  */
+@Service
 public class CityCountryServiceImpl implements ICityCountryService {
 
 	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
 	
-	private ICityCountryDAO cityCountryDAO;
-	
-	public void setCityCountryDAO(ICityCountryDAO cityCountryDAO) {
+	private final ICityCountryDAO cityCountryDAO;
+
+	@Autowired
+	public CityCountryServiceImpl(ICityCountryDAO cityCountryDAO) {
 		this.cityCountryDAO = cityCountryDAO;
 	}
 

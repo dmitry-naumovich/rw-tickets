@@ -3,8 +3,7 @@ package by.epam.naumovich.rw_tickets.dao.impl;
 import java.sql.Types;
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
@@ -12,6 +11,7 @@ import by.epam.naumovich.rw_tickets.dao.mapper.IntegerRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.StringRowMapper;
 import by.epam.naumovich.rw_tickets.dao.mapper.UserRowMapper;
 import by.epam.naumovich.rw_tickets.entity.User;
+import org.springframework.stereotype.Repository;
 
 /**
  * IUserDAO implementation for Oracle database which uses Spring JDBC framework to connect to the DB and perform all operations,
@@ -20,6 +20,7 @@ import by.epam.naumovich.rw_tickets.entity.User;
  * @author Dzmitry_Naumovich
  * @version 1.0
  */
+@Repository
 public class UserDAOImpl implements IUserDAO {
 
 	public static final String INSERT_NEW_USER = "INSERT INTO rw_users (login, pwd, fname, sname, email, country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -40,9 +41,10 @@ public class UserDAOImpl implements IUserDAO {
 	
 
 	private JdbcTemplate jdbcTemplate;
-	
-	public UserDAOImpl(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+
+	@Autowired
+	public UserDAOImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 	@Override
