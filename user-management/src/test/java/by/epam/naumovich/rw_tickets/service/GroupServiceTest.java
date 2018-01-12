@@ -2,8 +2,6 @@ package by.epam.naumovich.rw_tickets.service;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -50,15 +48,15 @@ public class GroupServiceTest {
 		setUpIsDone = true;
 	}
 	
-	public void initTestGroup() {
+	private void initTestGroup() {
 		expectedGroup = new UserGroup();
 		expectedGroup.setGr_id(90);
 		expectedGroup.setGr_name("testGroup");
 		expectedGroup.setOwner_id(1);
 	}
-	
-	public void initGroupCollection() {
-		groups = new ArrayList<UserGroup>();
+
+	private void initGroupCollection() {
+		groups = new ArrayList<>();
 		
 		UserGroup group = new UserGroup();
 		group.setGr_id(8);
@@ -77,15 +75,10 @@ public class GroupServiceTest {
 	
 	@Test
 	public void testAddGroup() throws ServiceException {
-		when(dao.addGroup(expectedGroup)).thenAnswer(new Answer<Integer>() {
-
-			@Override
-			public Integer answer(InvocationOnMock invocation) throws Throwable {
-				UserGroup group = (UserGroup) invocation.getArguments()[0];
-				return group.getGr_id();
-			}
-			
-		});
+		when(dao.addGroup(expectedGroup)).thenAnswer(invocation -> {
+					UserGroup group = (UserGroup) invocation.getArguments()[0];
+					return group.getGr_id();
+				});
 		
 		assertEquals(90, service.addGroup(expectedGroup));
 		verify(dao).addGroup(expectedGroup);

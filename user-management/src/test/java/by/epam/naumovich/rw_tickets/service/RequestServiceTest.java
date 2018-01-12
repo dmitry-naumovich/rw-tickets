@@ -5,11 +5,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -47,8 +44,8 @@ public class RequestServiceTest {
 		initRequestCollection();
 		setUpIsDone = true;
 	}
-	
-	public void initTestRequest() {
+
+	private void initTestRequest() {
 		expectedRequest = new GroupRequest();
 		expectedRequest.setRq_num(1);
 		expectedRequest.setFrom_user(2);
@@ -56,8 +53,8 @@ public class RequestServiceTest {
 		expectedRequest.setGr_id(4);
 	}
 	
-	public void initRequestCollection() {
-		expectedReqList = new ArrayList<GroupRequest>();
+	private void initRequestCollection() {
+		expectedReqList = new ArrayList<>();
 		
 		GroupRequest req = new GroupRequest();
 		req.setRq_num(2);
@@ -74,15 +71,10 @@ public class RequestServiceTest {
 	
 	@Test
 	public void testAddRequest() throws ServiceException {
-		when(dao.addRequest(expectedRequest)).thenAnswer(new Answer<Integer>() {
-
-			@Override
-			public Integer answer(InvocationOnMock invocation) throws Throwable {
+		when(dao.addRequest(expectedRequest)).thenAnswer(invocation -> {
 				GroupRequest request = (GroupRequest) invocation.getArguments()[0];
 				return request.getRq_num();
-			}
-			
-		});
+			});
 		
 		assertEquals(1, service.addRequest(expectedRequest));
 		verify(dao).addRequest(expectedRequest);

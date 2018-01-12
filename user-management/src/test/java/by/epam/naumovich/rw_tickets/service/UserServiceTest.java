@@ -2,8 +2,6 @@ package by.epam.naumovich.rw_tickets.service;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -30,13 +28,13 @@ import by.epam.naumovich.rw_tickets.service.impl.UserServiceImpl;
 public class UserServiceTest {
 
 	private static boolean setUpIsDone = false;
-	private static IUserDAO dao;
-	private static IGroupDAO groupDAO;
+	private IUserDAO dao;
+	private IGroupDAO groupDAO;
 	
-	private static IUserService service = new UserServiceImpl();
+	private IUserService service = new UserServiceImpl();
 	
-	private static User expectedUser;
-	private static List<User> userCollection;
+	private User expectedUser;
+	private List<User> userCollection;
 	
 	@Before
 	public void init() {
@@ -52,7 +50,7 @@ public class UserServiceTest {
 		setUpIsDone = true;
 	}
 	
-	public void initTestUser() {
+	private void initTestUser() {
 		expectedUser = new User();
 		expectedUser.setId(2);
 		expectedUser.setLogin("vasya");
@@ -62,9 +60,9 @@ public class UserServiceTest {
 		expectedUser.setPassport("11");
 		expectedUser.setPwd("pws");
 	}
-	
-	public void initUserCollection() {
-		userCollection = new ArrayList<User>();
+
+	private void initUserCollection() {
+		userCollection = new ArrayList<>();
 		
 		User sec = new User();
 		sec.setId(3);
@@ -76,7 +74,7 @@ public class UserServiceTest {
 		third.setLogin("loggy");
 		third.setFname("thirName");
 
-		userCollection = new ArrayList<User>();
+		userCollection = new ArrayList<>();
 
 		userCollection.add(expectedUser);
 		userCollection.add(sec);
@@ -85,13 +83,10 @@ public class UserServiceTest {
 	
 	@Test
 	public void testAddUser() throws ServiceException {		
-		when(dao.addUser(expectedUser)).thenAnswer(new Answer<Integer>() {
-			@Override
-			public Integer answer(InvocationOnMock invocation) throws Throwable {
+		when(dao.addUser(expectedUser)).thenAnswer(invocation -> {
 				User user = (User) invocation.getArguments()[0];
 				return user.getId();
-			}
-		});
+			});
 		
 		assertEquals(expectedUser.getId(), service.addUser(expectedUser));
 		verify(dao).addUser(expectedUser);
