@@ -19,6 +19,6 @@ public interface UserCriterion {
 	 * @param users the list of users to be checked
 	 * @return the list of users who are met with the criterion
 	 */
-	public List<User> meetCriterion(List<User> users);
+	List<User> meetCriterion(List<User> users);
 
 }

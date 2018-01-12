@@ -126,7 +126,7 @@ public interface IUserDAO {
 	/**
 	 * Gets all users from the data source sorted by column specified
 	 * 
-	 * @param field - the field by which the list will be sorted
+	 * @param columnName - the field by which the list will be sorted
 	 * @return the list containing all users sorted by field specified
 	 */
 	List<User> getAllUsersSorted(String columnName);

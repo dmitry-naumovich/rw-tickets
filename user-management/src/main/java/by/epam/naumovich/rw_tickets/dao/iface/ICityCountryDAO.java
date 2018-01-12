@@ -19,7 +19,7 @@ public interface ICityCountryDAO {
 	 * @param code country code
 	 * @return found Country entity
 	 */
-	public Country getCountryByCode(String code);
+	Country getCountryByCode(String code);
 	
 	/**
 	 * Gets country by its unique name from the data source
@@ -27,7 +27,7 @@ public interface ICityCountryDAO {
 	 * @param name country name
 	 * @return found Country entity
 	 */
-	public Country getCountryByName(String name);
+	Country getCountryByName(String name);
 	
 	/**
 	 * Gets city by its country and city codes from the data source
@@ -36,21 +36,21 @@ public interface ICityCountryDAO {
 	 * @param countryCode country code
 	 * @return found City entity
 	 */
-	public City getCityByCode(String cityCode, String countryCode);
+	City getCityByCode(String cityCode, String countryCode);
 	
 	/**
 	 * Gets all countries from the data source
 	 * 
 	 * @return the list containing all countries
 	 */
-	public List<Country> getAllCountries();
+	List<Country> getAllCountries();
 	
 	/**
 	 * Gets all cities from the data source
 	 * 
 	 * @return the list containing all cities
 	 */
-	public List<City> getAllCities();
+	List<City> getAllCities();
 	
 	/**
 	 * Gets all cities in the country specified from the data source
@@ -58,6 +58,6 @@ public interface ICityCountryDAO {
 	 * @param countryCode country code
 	 * @return the list containing all cities in the country
 	 */
-	public List<City> getAllCitiesInCountry(String countryCode);
+	List<City> getAllCitiesInCountry(String countryCode);
 	
 }

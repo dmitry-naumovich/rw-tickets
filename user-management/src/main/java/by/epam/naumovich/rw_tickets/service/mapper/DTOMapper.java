@@ -21,7 +21,7 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
  */
 public class DTOMapper {
 
-	private DTOMapper() { };
+	private DTOMapper() { }
 	
 	public static UserDTO constructUserDTO(User user, List<UserGroup> groups, City city, Country country) {
 		UserDTO dto = new UserDTO();

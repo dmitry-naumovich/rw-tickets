@@ -24,7 +24,7 @@ public interface IGroupDAO {
 	 * Updates the user group in the data source
 	 * 
 	 * @param id user group's id
-	 * @param updUserGroup updated user group entity
+	 * @param updGroup updated user group entity
 	 */
 	void updateGroup(int id, UserGroup updGroup);
 	

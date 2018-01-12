@@ -15,9 +15,9 @@ import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
  */
 public interface IGroupService {
 
-	public int addGroup(UserGroup group) throws ServiceException;
-	public void updateGroup(UserGroup group) throws ServiceException;
-	public void deleteGroup(int groupID) throws ServiceException;
+	int addGroup(UserGroup group) throws ServiceException;
+	void updateGroup(UserGroup group) throws ServiceException;
+	void deleteGroup(int groupID) throws ServiceException;
 	
 	UserGroup getGroupByID(int id) throws ServiceException;
 	String getGroupNameByID(int id) throws ServiceException;

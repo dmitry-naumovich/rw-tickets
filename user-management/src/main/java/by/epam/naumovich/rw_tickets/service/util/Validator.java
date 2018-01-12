@@ -12,7 +12,7 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
  */
 public final class Validator {
 
-	private Validator() { };
+	private Validator() { }
 	
 	/**
 	 * Validates integer values that all of them are positive.
@@ -132,10 +132,7 @@ public final class Validator {
 		if (user == null) {
 			return false;
 		}
-		if (!validateStrings(user.getEmail(), user.getLogin(), user.getFname(), user.getSname(), user.getPassport(), user.getPwd())) {
-			return false;
-		}
-		return true;
+		return validateStrings(user.getEmail(), user.getLogin(), user.getFname(), user.getSname(), user.getPassport(), user.getPwd());
 	}
 	
 	/**
@@ -148,9 +145,6 @@ public final class Validator {
 		if (!validateNewUser(user)) {
 			return false;
 		}
-		if (!validateIds(user.getId())) {
-			return false;
-		}
-		return true;
+		return validateIds(user.getId());
 	}
 }

@@ -15,9 +15,9 @@ import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
  */
 public interface IRequestService {
 
-	public int addRequest(GroupRequest request) throws ServiceException;
-	public void updateRequest(int reqNum, char newStatus) throws ServiceException;
-	public void deleteRequest(int reqNum) throws ServiceException;
+	int addRequest(GroupRequest request) throws ServiceException;
+	void updateRequest(int reqNum, char newStatus) throws ServiceException;
+	void deleteRequest(int reqNum) throws ServiceException;
 	
 	GroupRequest getRequestByNum(int num) throws ServiceException;
 	

@@ -16,10 +16,10 @@ import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
  */
 public interface ICityCountryService {
 
-	public Country getCountryByCode(String code) throws ServiceException;
-	public Country getCountryByName(String name) throws ServiceException;
-	public City getCityByCode(String cityCode, String countryCode) throws ServiceException;
-	public List<Country> getAllCountries();
-	public List<City> getAllCities();
-	public List<City> getAllCitiesInCountry(String countryCode) throws ServiceException;
+	Country getCountryByCode(String code) throws ServiceException;
+	Country getCountryByName(String name) throws ServiceException;
+	City getCityByCode(String cityCode, String countryCode) throws ServiceException;
+	List<Country> getAllCountries();
+	List<City> getAllCities();
+	List<City> getAllCitiesInCountry(String countryCode) throws ServiceException;
 }
