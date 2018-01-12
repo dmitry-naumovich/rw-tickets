@@ -35,12 +35,9 @@ public class GroupDAOTest extends UnitilsJUnit4 {
 	private static ApplicationContext context;
 	private static IGroupDAO usGroupDAO;
 	private static UserGroup testGroup;
-	
 
-	/**
-	 * The methods initializes Test static fields once.
-	 * 
-	 */
+
+
 	@Before    
     public void init() {
 		if (setUpIsDone) {

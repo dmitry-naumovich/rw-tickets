@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
-import by.epam.naumovich.rw_tickets.dao.impl.GroupDAOImpl;
 
 import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IGroupService;
 import by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl;
+import org.mockito.Mock;
 
 /**
  * Tests the IGroupService interface implementation which is injected by the Spring IOC technology.
@@ -30,19 +30,19 @@ import by.epam.naumovich.rw_tickets.service.impl.GroupServiceImpl;
 public class GroupServiceTest {
 
 	private static boolean setUpIsDone = false;
-	private static IGroupDAO dao;
-	private static IGroupService service = new GroupServiceImpl();
+	@Mock
+	private IGroupDAO dao;
+	private IGroupService service;
 	
-	private static UserGroup expectedGroup;
-	private static List<UserGroup> groups;
+	private UserGroup expectedGroup;
+	private List<UserGroup> groups;
 	
 	@Before
 	public void init() {
 		if (setUpIsDone) {
 			return;
 		}
-		dao = mock(GroupDAOImpl.class);
-		((GroupServiceImpl)service).setGroupDAO(dao);
+        service = new GroupServiceImpl(dao);
 		initTestGroup();
 		initGroupCollection();
 		setUpIsDone = true;

@@ -11,11 +11,11 @@ import static org.mockito.Mockito.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
-import by.epam.naumovich.rw_tickets.dao.impl.RequestDAOImpl;
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IRequestService;
 import by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl;
+import org.mockito.Mock;
 
 /**
  * Tests the IRequestService interface implementation which is injected by the Spring IOC technology.
@@ -25,24 +25,24 @@ import by.epam.naumovich.rw_tickets.service.impl.RequestServiceImpl;
  * @version 1.0
  */
 public class RequestServiceTest {
-	
+
 	private static boolean setUpIsDone = false;
-	private static IRequestDAO dao;
-	private static IRequestService service = new RequestServiceImpl();
+	@Mock
+	private IRequestDAO dao;
+	private IRequestService service;
 	
-	private static GroupRequest expectedRequest;
-	private static List<GroupRequest> expectedReqList;
+	private GroupRequest expectedRequest;
+	private List<GroupRequest> expectedReqList;
 	
 	@Before
 	public void init() {
-		if (setUpIsDone) {
-			return;
-		}
-		dao = mock(RequestDAOImpl.class);
-		((RequestServiceImpl)service).setRequestDAO(dao);
+        if (setUpIsDone) {
+            return;
+        }
+        service = new RequestServiceImpl(dao);
 		initTestRequest();
 		initRequestCollection();
-		setUpIsDone = true;
+        setUpIsDone = true;
 	}
 
 	private void initTestRequest() {

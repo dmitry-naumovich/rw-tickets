@@ -33,13 +33,9 @@ public class RequestDAOTest extends UnitilsJUnit4 {
 	
 	private static boolean setUpIsDone = false;
 	private static ApplicationContext context;
-	private static IRequestDAO requestDAO;;
-	private static GroupRequest testRequest;
+	private IRequestDAO requestDAO;
+	private GroupRequest testRequest;
 
-	/**
-	 * The methods initializes Test static fields once.
-	 * 
-	 */
 	@Before    
     public void init() {
 		if (setUpIsDone) {
