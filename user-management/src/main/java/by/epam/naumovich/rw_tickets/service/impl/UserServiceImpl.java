@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements IUserService {
 
-	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
+	private static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
 
 	private final IUserDAO userDAO;
 	private final IGroupDAO groupDAO;

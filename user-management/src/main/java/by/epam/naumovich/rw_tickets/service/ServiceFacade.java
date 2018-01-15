@@ -163,34 +163,24 @@ public class ServiceFacade {
 	}
 	
 	public List<GroupRequestDTO> getIncomingRequests(int userID) throws ServiceException {
-		List<GroupRequest> requests = requestService.getUserIncRequests(userID);
-		if (!requests.isEmpty()) {
-			List<GroupRequestDTO> incReqs = new ArrayList<>();
-			for (GroupRequest req : requests) {
-				String sender = userService.getLoginById(req.getFrom_user());
-				String receiver = userService.getLoginById(req.getTo_user());
-				String group = groupService.getGroupNameByID(req.getGrId());
-				incReqs.add(DTOMapper.constructGroupRequestDTO(req, sender, receiver, group));
-			}
-			return incReqs;
-		}
-		
-		return Collections.emptyList();
+		return getRequestDtoList(requestService.getUserIncRequests(userID));
 	}
 	
 	public List<GroupRequestDTO> getOutcomingRequests(int userID) throws ServiceException {
-		List<GroupRequest> requests = requestService.getUserOutRequests(userID);
+		return getRequestDtoList(requestService.getUserOutRequests(userID));
+	}
+
+	private List<GroupRequestDTO> getRequestDtoList(List<GroupRequest> requests) throws ServiceException {
 		if (!requests.isEmpty()) {
-			List<GroupRequestDTO> outReqs = new ArrayList<>();
+		    List<GroupRequestDTO> dtos = new ArrayList<>();
 			for (GroupRequest req : requests) {
 				String sender = userService.getLoginById(req.getFrom_user());
 				String receiver = userService.getLoginById(req.getTo_user());
 				String group = groupService.getGroupNameByID(req.getGrId());
-				outReqs.add(DTOMapper.constructGroupRequestDTO(req, sender, receiver, group));
+				dtos.add(DTOMapper.constructGroupRequestDTO(req, sender, receiver, group));
 			}
-			return outReqs;
+			return dtos;
 		}
-		
 		return Collections.emptyList();
 	}
 

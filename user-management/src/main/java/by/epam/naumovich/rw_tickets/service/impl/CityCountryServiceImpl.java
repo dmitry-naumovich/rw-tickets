@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CityCountryServiceImpl implements ICityCountryService {
 
-	public static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
+	private static final String INVALID_INPUT_PARAMS = "Invalid input parameters passed into method";
 	
 	private final ICityCountryDAO cityCountryDAO;
 
