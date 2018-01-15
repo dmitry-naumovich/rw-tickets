@@ -23,12 +23,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CityCountryDAOImpl implements ICityCountryDAO {
 
-	public static final String SELECT_COUNTRY_BY_CODE = "SELECT * FROM Countries WHERE code = ?";
-	public static final String SELECT_COUNTRY_BY_NAME = "SELECT * FROM Countries WHERE country = ?";
-	public static final String SELECT_CITY_BY_CODE = "SELECT * FROM Cities WHERE code = ? AND country = ?";
-	public static final String SELECT_ALL_COUNTRIES = "SELECT * FROM Countries";
-	public static final String SELECT_ALL_CITIES = "SELECT * FROM Cities";
-	public static final String SELECT_CITIES_BY_COUNTRY = "SELECT * FROM Cities WHERE country = ?";
+	public static final String SELECT_COUNTRY_BY_CODE = "SELECT * FROM country WHERE code = ?";
+	public static final String SELECT_COUNTRY_BY_NAME = "SELECT * FROM country WHERE country = ?";
+	public static final String SELECT_CITY_BY_CODE = "SELECT * FROM city WHERE code = ? AND country = ?";
+	public static final String SELECT_ALL_COUNTRIES = "SELECT * FROM country";
+	public static final String SELECT_ALL_CITIES = "SELECT * FROM city";
+	public static final String SELECT_CITIES_BY_COUNTRY = "SELECT * FROM city WHERE country = ?";
 
 	private JdbcTemplate jdbcTemplate;
 

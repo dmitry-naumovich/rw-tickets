@@ -23,19 +23,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class GroupDAOImpl implements IGroupDAO {
 
-	public static final String INSERT_NEW_GROUP = "INSERT INTO rw_groups (gr_name, owner_id) VALUES (?, ?)";
-	public static final String UPDATE_GROUP = "UPDATE rw_groups SET gr_name = ?, owner_id = ? WHERE gr_id = ?";
-	public static final String DELETE_GROUP = "DELETE FROM rw_groups WHERE gr_id = ?";
-	public static final String SELECT_GROUP_BY_ID = "SELECT * FROM rw_groups WHERE gr_id = ?";
-	public static final String SELECT_GROUP_NAME_BY_ID = "SELECT gr_name FROM rw_groups WHERE gr_id = ?";
+	public static final String INSERT_NEW_GROUP = "INSERT INTO rw_group (name, owner) VALUES (?, ?)";
+	public static final String UPDATE_GROUP = "UPDATE rw_group SET name = ?, owner = ? WHERE id = ?";
+	public static final String DELETE_GROUP = "DELETE FROM rw_group WHERE id = ?";
+	public static final String SELECT_GROUP_BY_ID = "SELECT * FROM rw_group WHERE id = ?";
+	public static final String SELECT_GROUP_NAME_BY_ID = "SELECT name FROM rw_group WHERE id = ?";
 	public static final String INSERT_NEW_INVOLVE = "INSERT INTO gr_involve (user_id, gr_id) VALUES (?, ?)";
 	public static final String DELETE_USER_FROM_GROUP = "DELETE FROM gr_involve WHERE user_id = ? AND gr_id = ?";
 	public static final String DELETE_ALL_GROUP_USERS = "DELETE FROM gr_involve WHERE gr_id = ?";
-	public static final String DELETE_GROUPS_BY_OWNER = "DELETE FROM rw_groups WHERE owner_id = ?";
+	public static final String DELETE_GROUPS_BY_OWNER = "DELETE FROM rw_group WHERE owner = ?";
 	public static final String DELETE_USER_FROM_ALL_GROUPS = "DELETE FROM gr_involve WHERE user_id = ?";
-	public static final String SELECT_USER_GROUPS_BY_ID = "SELECT rw_groups.* FROM rw_groups JOIN gr_involve ON rw_groups.gr_id = gr_involve.gr_id WHERE gr_involve.user_id = ?";
-	public static final String SELECT_GROUPS_BY_OWNER = "SELECT * FROM rw_groups WHERE owner_id = ?";
-	public static final String SELECT_GROUP_ID_BY_NAME_AND_OWNER = "SELECT gr_id FROM rw_groups WHERE gr_name = ? AND owner_id = ?";
+	public static final String SELECT_USER_GROUPS_BY_ID = "SELECT rw_group.* FROM rw_group JOIN gr_involve ON rw_group.id = gr_involve.gr_id WHERE gr_involve.user_id = ?";
+	public static final String SELECT_GROUPS_BY_OWNER = "SELECT * FROM rw_group WHERE owner = ?";
+	public static final String SELECT_GROUP_ID_BY_NAME_AND_OWNER = "SELECT id FROM rw_group WHERE name = ? AND owner = ?";
 
 	private JdbcTemplate jdbcTemplate;
 

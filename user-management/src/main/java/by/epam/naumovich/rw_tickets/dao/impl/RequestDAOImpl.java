@@ -22,13 +22,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RequestDAOImpl implements IRequestDAO {
 
-	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_requests (from_user, to_user, gr_id, status, rq_comment) VALUES (?, ?, ?, ?, ?)";
-	public static final String UPDATE_REQUEST = "UPDATE gr_requests SET status = ? WHERE rq_num = ?";
-	public static final String DELETE_REQUEST = "DELETE FROM gr_requests WHERE rq_num = ?";
-	public static final String SELECT_REQ_BY_NUM = "SELECT * FROM gr_requests WHERE rq_num = ?";
-	public static final String SELECT_REQ_NUM_BY_USER_AND_GROUP_IDS = "SELECT rq_num FROM gr_requests WHERE from_user = ? AND to_user = ? AND gr_id = ?";
-	public static final String SELECT_USER_INC_REQUESTS = "SELECT * FROM gr_requests WHERE to_user = ? AND status != 'c' ORDER BY cr_datetime DESC";
-	public static final String SELECT_USER_OUT_REQUESTS = "SELECT * FROM gr_requests WHERE from_user = ? ORDER BY cr_datetime DESC";
+	public static final String INSERT_NEW_REQUEST = "INSERT INTO gr_request (from_user, to_user, gr_id, status, rq_comment) VALUES (?, ?, ?, ?, ?)";
+	public static final String UPDATE_REQUEST = "UPDATE gr_request SET status = ? WHERE rq_num = ?";
+	public static final String DELETE_REQUEST = "DELETE FROM gr_request WHERE rq_num = ?";
+	public static final String SELECT_REQ_BY_NUM = "SELECT * FROM gr_request WHERE rq_num = ?";
+	public static final String SELECT_REQ_NUM_BY_USER_AND_GROUP_IDS = "SELECT rq_num FROM gr_request WHERE from_user = ? AND to_user = ? AND gr_id = ?";
+	public static final String SELECT_USER_INC_REQUESTS = "SELECT * FROM gr_request WHERE to_user = ? AND status != 'c' ORDER BY cr_datetime DESC";
+	public static final String SELECT_USER_OUT_REQUESTS = "SELECT * FROM gr_request WHERE from_user = ? ORDER BY cr_datetime DESC";
 	
 	private JdbcTemplate jdbcTemplate;
 
