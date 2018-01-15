@@ -8,18 +8,19 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping(value = "cities", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "geo", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(value = "API for working with application cities and countries")
 public interface CityCountryApi {
 
     @ApiOperation(value = "Get list of all available countries")
-    @GetMapping
+    @GetMapping("/country")
     List<Country> getAllCountries() throws ServiceException;
 
     @ApiOperation(value = "Get list of all cities in the specified country")
-    @GetMapping
-    List<City> getAllCitiesByCountry(String countryCode) throws ServiceException;
+    @GetMapping("/country/{code}/city")
+    List<City> getAllCitiesByCountry(@PathVariable("code") String countryCode) throws ServiceException;
 
 }
