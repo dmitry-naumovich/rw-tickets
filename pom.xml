@@ -6,12 +6,16 @@
     <artifactId>rw-tickets</artifactId>
     <version>0.0.1</version>
     <packaging>pom</packaging>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+    </parent>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <org.springframework.version>3.2.17.RELEASE</org.springframework.version>
-        <org.springframework.boot.version>1.5.9.RELEASE</org.springframework.boot.version>
         <org.projectlombok.version>1.16.20</org.projectlombok.version>
+        <com.oracle.version>12.1.0.2</com.oracle.version>
     </properties>
     <modules>
         <module>user-management</module>
@@ -23,17 +27,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${org.springframework.boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${org.springframework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>${org.springframework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -48,7 +49,7 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.2</version>
+            <version>${com.oracle.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -60,7 +61,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${org.springframework.boot.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
