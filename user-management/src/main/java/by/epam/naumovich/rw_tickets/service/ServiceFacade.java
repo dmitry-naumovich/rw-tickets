@@ -1,5 +1,6 @@
 package by.epam.naumovich.rw_tickets.service;
 
+import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,6 @@ import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.*;
 import by.epam.naumovich.rw_tickets.service.mapper.DTOMapper;
-import by.epam.naumovich.rw_tickets.service.util.USER_SORT_TYPE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -140,16 +140,18 @@ public class ServiceFacade {
 		return DTOMapper.constructGroupRequestDTO(request, sender, receiver, group);
 	}
 	
-	public List<User> getAllExistingUsers() throws ServiceException {
-		return userService.getAllUsers();
-	}
-	
 	public List<User> searchForUsers(String name, String login, String email, String countryCode, String cityCode) throws ServiceException {
 		return userService.searchForUsers(name, login, email, countryCode, cityCode);
 	}
 	
-	public List<User> getAllUsersSorted(USER_SORT_TYPE sortType) throws ServiceException {
-		return userService.getAllUsersSorted(sortType);
+	public List<User> getAllUsersSorted(String sortBy) throws ServiceException {
+        USER_SORT_TYPE sort;
+	    try {
+	        sort = USER_SORT_TYPE.valueOf(sortBy.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            sort = USER_SORT_TYPE.FNAME;
+        }
+		return userService.getAllUsersSorted(sort);
 	}
 	
 	public UserDTO leaveGroup(int memberID, int groupID) throws ServiceException {
@@ -191,4 +193,12 @@ public class ServiceFacade {
 	public boolean authenticateByEmail(String email, String pass) throws ServiceException {
 		return userService.authenticateByEmail(email, pass);
 	}
+
+	public List<Country> getAllCountries() throws ServiceException {
+	    return cityCountryService.getAllCountries();
+    }
+
+    public List<City> getAllCitiesByCountry(String countryCode) throws ServiceException {
+	    return cityCountryService.getAllCitiesInCountry(countryCode);
+    }
 }

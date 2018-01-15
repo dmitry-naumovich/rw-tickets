@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521:se
+    url: jdbc:oracle:thin:@localhost:1521/ORCLDB
     username: SYSTEM
     password: 12345
