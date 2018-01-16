@@ -1,0 +1,16 @@
+INSERT ALL
+  INTO COUNTRY VALUES ('af', 'Afghanistan')
+  INTO COUNTRY VALUES ('au', 'Austria')
+  INTO COUNTRY VALUES ('br', 'Brazil')
+  INTO COUNTRY VALUES ('by', 'Belarus')
+  INTO COUNTRY VALUES ('de', 'Germany')
+  INTO COUNTRY VALUES ('fr',	'France')
+  INTO COUNTRY VALUES ('ge', 'Georgia')
+  INTO COUNTRY VALUES ('gr',	'Greece')
+  INTO COUNTRY VALUES ('hr', 'Croatia')
+  INTO COUNTRY VALUES ('jp', 'Japan')
+  INTO COUNTRY VALUES ('ru', 'Russia')
+  INTO COUNTRY VALUES ('ua', 'Ukraine')
+  INTO COUNTRY VALUES ('uk', 'United Kingdom')
+  INTO COUNTRY VALUES ('us', 'United States')
+SELECT * FROM DUAL;
