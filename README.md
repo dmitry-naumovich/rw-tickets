@@ -1,22 +1,20 @@
 ## How to setup Oracle database using Docker
-The manual can be found [here](https://github.com/oracle/docker-images/tree/master/OracleDatabase)
-You need to download Oracle images, clone that project to yourself and follow the instructions.
+The manual can be found [here](https://github.com/oracle/docker-images/tree/master/OracleDatabase). You need to download 
+Oracle images, clone that project to yourself and follow the instructions.
 
 To avoid [issues](https://github.com/oracle/docker-images/issues/439) with access run:
 
-``
-sudo chmod -R a+w /home/docker/oracle_db
-``
+`sudo chmod -R a+w /home/docker/oracle_db`
 
-before creating a container with the next command:
+and then a container with the next command:
 
-``
-sudo docker run --name oracle-rw-tickets -p 1521:1521 -p 5500:5500 -e ORACLE_SID=ORCLDB -e ORACLE_PWD=12345 -v /home/docker/oracle_db:/opt/oracle/oradata oracle/database:12.2.0.1-se2 
-``
+`sudo docker run --name oracle-rw-tickets -p 1521:1521 -p 5500:5500 -e ORACLE_SID=ORCLDB -e ORACLE_PWD=12345 -v 
+/home/docker/oracle_db:/opt/oracle/oradata oracle/database:12.2.0.1-se2 
+`
 
-To access container-running db using shell and sqlplus tool:
-1. docker exec -it <CONT_ID> bash
-2. sqlplus SYS/12345 as sysdba
+You can access container-running db using shell and sqlplus tool:
+1. `docker exec -it <CONT_ID> bash`
+2. `sqlplus SYS/12345 as sysdba`
 
 Instructions for creating tablespaces and [user](https://www.techonthenet.com/oracle/schemas/create_schema.php):
 ```
@@ -25,10 +23,6 @@ CREATE TEMPORARY TABLESPACE tbs_temp_01 TEMPFILE 'tbs_temp_01.dbf' SIZE 5M AUTOE
 ALTER SESSION SET "_ORACLE_SCRIPT"=true;
 CREATE USER dzmitry IDENTIFIED BY 12345 DEFAULT TABLESPACE tbs_perm_01 TEMPORARY TABLESPACE tbs_temp_01 QUOTA 20M on tbs_perm_01;
 ```
-
-Now you can connect to you user:
-
-`sqlplus dzmitry/12345`
 
 You need to give necessary permissions to your user:
 ```
@@ -41,24 +35,21 @@ GRANT create sequence TO dzmitry;
 GRANT create synonym TO dzmitry;
 ```
 
+Now you can connect as your user:
+1. Inside sqlplus console run `CONNECT dzmitry`
+2. Inside docker container run `sqlplus dzmitry/12345`
 
-To get current user run:
+To get current user run `SELECT user FROM dual;`
 
-`SELECT user FROM dual;`
-
-To connect as another user run:
-
-`CONNECT dzmitry;`
-
-To get list of all user table run:
-
-`SELECT table_name FROM user_tables;`
+To list all user tables run `SELECT table_name FROM user_tables;`
 
 
 Fixing failed migrations:
-1. Connect to sqlplus, switch to owner and run:
+1. Connect to sqlplus, switch to owner, run:
 
 	`DROP TABLE "flyway_schema_history";`
+	
+	and manually undo all the migrations (e.g. drop tables)
 
 2. Use maven flyway [plugin](https://flywaydb.org/documentation/maven/)
 ```
@@ -73,5 +64,4 @@ Fixing failed migrations:
 	</configuration>
 </plugin>
 ```            
-and [run](https://flywaydb.org/documentation/maven/repair) 
-`mvn flyway:repair`
+and then [run](https://flywaydb.org/documentation/maven/repair) `mvn flyway:repair`.
