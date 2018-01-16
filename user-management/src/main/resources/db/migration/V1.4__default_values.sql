@@ -1,0 +1,4 @@
+ALTER TABLE rw_user MODIFY(is_admin DEFAULT 0);
+ALTER TABLE rw_group MODIFY(cr_datetime DEFAULT SYSDATE);
+ALTER TABLE gr_involve MODIFY(st_datetime DEFAULT SYSDATE);
+ALTER TABLE gr_request MODIFY(cr_datetime DEFAULT SYSDATE);

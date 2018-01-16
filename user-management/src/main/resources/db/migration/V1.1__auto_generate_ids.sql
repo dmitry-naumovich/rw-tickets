@@ -12,7 +12,7 @@ FOR EACH ROW
     INTO   :new.id
     FROM   dual;
   END;
-
+/
 CREATE OR REPLACE TRIGGER rw_group_auto_gen
 BEFORE INSERT ON rw_group
 FOR EACH ROW
@@ -21,7 +21,7 @@ FOR EACH ROW
     INTO   :new.id
     FROM   dual;
   END;
-
+/
 CREATE OR REPLACE TRIGGER gr_request_auto_gen
 BEFORE INSERT ON gr_request
 FOR EACH ROW
