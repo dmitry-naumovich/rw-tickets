@@ -19,13 +19,13 @@ CREATE TABLE rw_user (
   sname VARCHAR2(50),
   email VARCHAR2(60) NOT NULL,
   birth_date DATE,
-  country VARCHAR2(3),
   city VARCHAR2(60),
+  country VARCHAR2(3),
   address VARCHAR2(70),
   phone CHAR(12 CHAR),
   passport CHAR(12 CHAR),
   is_admin NUMBER(1) NOT NULL,
-  CONSTRAINT rw_user_city_country_fk FOREIGN KEY (country, city) REFERENCES city(country, name)
+  CONSTRAINT rw_user_city_country_fk FOREIGN KEY (city, country) REFERENCES city(code, country)
 );
 
 CREATE UNIQUE INDEX rw_user_email_idx ON rw_user(email);
@@ -58,7 +58,7 @@ CREATE TABLE gr_request (
   cr_datetime DATE NOT NULL,
   cl_datetime DATE,
   status CHAR(1) NOT NULL,
-  comment VARCHAR2(200),
+  rq_comment VARCHAR2(200),
   CONSTRAINT gr_request_from_user_fk FOREIGN KEY (from_user) REFERENCES rw_user(id),
   CONSTRAINT gr_request_to_user_fk FOREIGN KEY (to_user) REFERENCES rw_user(id),
   CONSTRAINT gr_request_rw_group_fk FOREIGN KEY (gr_id) REFERENCES rw_group(id)

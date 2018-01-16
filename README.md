@@ -17,4 +17,61 @@ sudo docker run --name oracle-rw-tickets -p 1521:1521 -p 5500:5500 -e ORACLE_SID
 To access container-running db using shell and sqlplus tool:
 1. docker exec -it <CONT_ID> bash
 2. sqlplus SYS/12345 as sysdba
-3. 
+
+Instructions for creating tablespaces and user:
+```
+CREATE TABLESPACE tbs_perm_01 DATAFILE 'tbs_perm_01.dat' SIZE 20M ONLINE;
+CREATE TEMPORARY TABLESPACE tbs_temp_01 TEMPFILE 'tbs_temp_01.dbf' SIZE 5M AUTOEXTEND ON;
+ALTER SESSION SET "_ORACLE_SCRIPT"=true;
+CREATE USER dzmitry IDENTIFIED BY 12345 DEFAULT TABLESPACE tbs_perm_01 TEMPORARY TABLESPACE tbs_temp_01 QUOTA 20M on tbs_perm_01;
+```
+
+Now you can connect to you user:
+
+`sqlplus dzmitry/12345`
+
+You need to give necessary permissions to your user:
+```
+GRANT create session TO dzmitry;
+GRANT create table TO dzmitry;
+GRANT create view TO dzmitry;
+GRANT create any trigger TO dzmitry;
+GRANT create any procedure TO dzmitry;
+GRANT create sequence TO dzmitry;
+GRANT create synonym TO dzmitry;
+```
+
+
+To get current user run:
+
+`SELECT user FROM dual;`
+
+To connect as another user run:
+
+`CONNECT dzmitry;`
+
+To get list of all user table run:
+
+`SELECT table_name FROM user_tables;`
+
+
+Fixing failed migrations:
+1. Connect to sqlplus, switch to owner and run:
+
+	`DROP TABLE "flyway_schema_history";`
+
+2. Use maven flyway [plugin](https://flywaydb.org/documentation/maven/)
+```
+<plugin>
+	<groupId>org.flywaydb</groupId>
+	<artifactId>flyway-maven-plugin</artifactId>
+	<version>${org.flywaydb.version}</version>
+	<configuration>
+		<url>jdbc:oracle:thin:@//localhost:1521/ORCLDB</url>
+		<user>dzmitry</user>
+		<password>12345</password>
+	</configuration>
+</plugin>
+```            
+and [run](https://flywaydb.org/documentation/maven/repair) 
+`mvn flyway:repair`
