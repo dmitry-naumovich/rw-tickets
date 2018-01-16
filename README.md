@@ -18,7 +18,7 @@ To access container-running db using shell and sqlplus tool:
 1. docker exec -it <CONT_ID> bash
 2. sqlplus SYS/12345 as sysdba
 
-Instructions for creating tablespaces and user:
+Instructions for creating tablespaces and [user](https://www.techonthenet.com/oracle/schemas/create_schema.php):
 ```
 CREATE TABLESPACE tbs_perm_01 DATAFILE 'tbs_perm_01.dat' SIZE 20M ONLINE;
 CREATE TEMPORARY TABLESPACE tbs_temp_01 TEMPFILE 'tbs_temp_01.dbf' SIZE 5M AUTOEXTEND ON;
