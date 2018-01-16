@@ -3,6 +3,7 @@ package by.epam.naumovich.rw_tickets.dao.impl;
 import java.sql.Types;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -23,12 +24,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CityCountryDAOImpl implements ICityCountryDAO {
 
-	public static final String SELECT_COUNTRY_BY_CODE = "SELECT * FROM country WHERE code = ?";
-	public static final String SELECT_COUNTRY_BY_NAME = "SELECT * FROM country WHERE country = ?";
-	public static final String SELECT_CITY_BY_CODE = "SELECT * FROM city WHERE code = ? AND country = ?";
-	public static final String SELECT_ALL_COUNTRIES = "SELECT * FROM country";
-	public static final String SELECT_ALL_CITIES = "SELECT * FROM city";
-	public static final String SELECT_CITIES_BY_COUNTRY = "SELECT * FROM city WHERE country = ?";
+	private static final String SELECT_COUNTRY_BY_CODE = "SELECT * FROM country WHERE code = ?";
+    private static final String SELECT_COUNTRY_BY_NAME = "SELECT * FROM country WHERE country = ?";
+    private static final String SELECT_CITY_BY_CODE = "SELECT * FROM city WHERE code = ? AND country = ?";
+    private static final String SELECT_ALL_COUNTRIES = "SELECT * FROM country";
+    private static final String SELECT_ALL_CITIES = "SELECT * FROM city";
+    private static final String SELECT_CITIES_BY_COUNTRY = "SELECT * FROM city WHERE country = ?";
 
 	private JdbcTemplate jdbcTemplate;
 

@@ -23,21 +23,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDAOImpl implements IUserDAO {
 
-	public static final String INSERT_NEW_USER = "INSERT INTO rw_user (login, pwd, fname, sname, email, country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	public static final String UPDATE_USER = "UPDATE rw_user SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE rw_user.id = ?";
-	public static final String DELETE_USER = "DELETE FROM rw_user WHERE id = ?";
-	public static final String SELECT_USER_BY_ID = "SELECT * FROM rw_user WHERE id = ?";
-	public static final String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_user WHERE login = ?";
-	public static final String SELECT_USER_BY_EMAIL = "SELECT * FROM rw_user WHERE email = ?";
-	public static final String SELECT_ALL_USERS = "SELECT * FROM rw_user";
-	public static final String SELECT_ALL_USERS_SORTED = "SELECT * FROM rw_user ORDER BY ? ASC";
-	public static final String SELECT_ID_BY_LOGIN = "SELECT id FROM rw_user WHERE login = ?";
-	public static final String SELECT_LOGIN_BY_ID = "SELECT login FROM rw_user WHERE id = ?";
-	public static final String SELECT_GROUP_USERS = "SELECT rw_user.* FROM rw_user JOIN gr_involve ON rw_user.id = gr_involve.user_id WHERE gr_id = ?";
-	public static final String SELECT_PASS_BY_LOGIN = "SELECT rw_user.pwd FROM rw_user WHERE rw_user.login = ?";
-	public static final String SELECT_PASS_BY_EMAIL = "SELECT rw_user.pwd FROM rw_user WHERE rw_user.email = ?";
-	public static final String SELECT_USERS_BY_COUNTRY = "SELECT * FROM rw_user WHERE country = ?";
-	public static final String SELECT_USERS_BY_CITY = "SELECT * FROM rw_user WHERE city = ? AND country = ?";
+	private static final String INSERT_NEW_USER = "INSERT INTO rw_user (login, pwd, fname, sname, email, country, city, address, phone, passport) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String UPDATE_USER = "UPDATE rw_user SET login = ?, pwd = ?, fname = ?, sname = ?, email = ?, country = ?, city = ?, address = ?, phone = ?, passport = ? WHERE rw_user.id = ?";
+	private static final String DELETE_USER = "DELETE FROM rw_user WHERE id = ?";
+	private static final String SELECT_USER_BY_ID = "SELECT * FROM rw_user WHERE id = ?";
+	private static final String SELECT_USER_BY_LOGIN = "SELECT * FROM rw_user WHERE login = ?";
+	private static final String SELECT_USER_BY_EMAIL = "SELECT * FROM rw_user WHERE email = ?";
+	private static final String SELECT_ALL_USERS = "SELECT * FROM rw_user";
+	private static final String SELECT_ALL_USERS_SORTED = "SELECT * FROM rw_user ORDER BY ? ASC";
+	private static final String SELECT_ID_BY_LOGIN = "SELECT id FROM rw_user WHERE login = ?";
+	private static final String SELECT_LOGIN_BY_ID = "SELECT login FROM rw_user WHERE id = ?";
+	private static final String SELECT_GROUP_USERS = "SELECT rw_user.* FROM rw_user JOIN gr_involve ON rw_user.id = gr_involve.user_id WHERE gr_id = ?";
+	private static final String SELECT_PASS_BY_LOGIN = "SELECT rw_user.pwd FROM rw_user WHERE rw_user.login = ?";
+	private static final String SELECT_PASS_BY_EMAIL = "SELECT rw_user.pwd FROM rw_user WHERE rw_user.email = ?";
+	private static final String SELECT_USERS_BY_COUNTRY = "SELECT * FROM rw_user WHERE country = ?";
+	private static final String SELECT_USERS_BY_CITY = "SELECT * FROM rw_user WHERE city = ? AND country = ?";
 	
 
 	private JdbcTemplate jdbcTemplate;
