@@ -26,11 +26,11 @@ public interface UserApi {
 
     @ApiOperation(value = "Update user")
     @PutMapping("/{id}")
-    UserDTO update(@PathVariable("id") int id, @RequestBody User user) throws ServiceException;
+    UserDTO update(@PathVariable int id, @RequestBody User user) throws ServiceException;
 
     @ApiOperation(value = "Get user by id")
     @GetMapping("/{id}")
-    UserDTO getById(@PathVariable("id") int id) throws ServiceException;
+    UserDTO getById(@PathVariable int id) throws ServiceException;
 
     @ApiOperation(value = "Get list of all users sortedBy")
     @GetMapping
@@ -43,5 +43,5 @@ public interface UserApi {
 
     @ApiOperation(value = "Delete user")
     @DeleteMapping("/{id}")
-    void delete(@PathVariable("id") int id) throws ServiceException;
+    void delete(@PathVariable int id) throws ServiceException;
 }

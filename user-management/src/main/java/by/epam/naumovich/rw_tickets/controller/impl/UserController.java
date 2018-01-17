@@ -8,6 +8,7 @@ import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,14 +29,14 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public UserDTO update(int id, User user) throws ServiceException {
+    public UserDTO update(@PathVariable int id, User user) throws ServiceException {
         log.debug("UserController::update invoked, args: id = {}, user = {}", id, user);
         user.setId(id);
         return serviceFacade.updateUser(user);
     }
 
     @Override
-    public UserDTO getById(int id) throws ServiceException {
+    public UserDTO getById(@PathVariable int id) throws ServiceException {
         log.debug("UserController:getById invoked, args: id = {}", id);
         return serviceFacade.getUserById(id);
     }

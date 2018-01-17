@@ -153,7 +153,7 @@ public class ServiceFacade {
         USER_SORT_TYPE sort;
 	    try {
 	        sort = USER_SORT_TYPE.valueOf(sortBy.toUpperCase());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             sort = USER_SORT_TYPE.FNAME;
         }
 		return userService.getAllUsersSorted(sort);
