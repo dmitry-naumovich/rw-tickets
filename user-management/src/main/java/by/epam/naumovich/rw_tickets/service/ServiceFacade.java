@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see DTOMapper
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = ServiceException.class)
 public class ServiceFacade {
 
 	private final IUserService userService;
@@ -116,22 +116,25 @@ public class ServiceFacade {
 	public void deleteRequest(int reqNum) throws ServiceException {
 		requestService.deleteRequest(reqNum);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public UserDTO getUserById(int userID) throws ServiceException {
 		User user = userService.getUserById(userID);
 		City userCity = cityCountryService.getCityByCode(user.getCity(), user.getCountry());
-		Country userCountry = cityCountryService.getCountryByCode( user.getCountry());
+		Country userCountry = cityCountryService.getCountryByCode(user.getCountry());
 		List<UserGroup> userGroups = groupService.getGroupsByUser(userID);
 		return DTOMapper.constructUserDTO(user, userGroups, userCity, userCountry);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public UserGroupDTO getGroupById(int groupID) throws ServiceException {
 		UserGroup group = groupService.getGroupByID(groupID);
 		List<User> members = userService.getAllGroupMembers(groupID);
 		String ownerLogin = userService.getLoginById(group.getOwner());
 		return DTOMapper.constructUserGroupDTO(group, members, ownerLogin);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public GroupRequestDTO getRequestByNum(int reqNum) throws ServiceException {
 		GroupRequest request = requestService.getRequestByNum(reqNum);
 		String sender = userService.getLoginById(request.getFrom_user());
@@ -139,11 +142,13 @@ public class ServiceFacade {
 		String group = groupService.getGroupNameByID(request.getGrId());
 		return DTOMapper.constructGroupRequestDTO(request, sender, receiver, group);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public List<User> searchForUsers(String name, String login, String email, String countryCode, String cityCode) throws ServiceException {
 		return userService.searchForUsers(name, login, email, countryCode, cityCode);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public List<User> getAllUsersSorted(String sortBy) throws ServiceException {
         USER_SORT_TYPE sort;
 	    try {
@@ -163,11 +168,13 @@ public class ServiceFacade {
 		groupService.removeGroupMember(memberID, groupID);
 		return getGroupById(groupID);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public List<GroupRequestDTO> getIncomingRequests(int userID) throws ServiceException {
 		return getRequestDtoList(requestService.getUserIncRequests(userID));
 	}
-	
+
+	@Transactional(readOnly = true)
 	public List<GroupRequestDTO> getOutcomingRequests(int userID) throws ServiceException {
 		return getRequestDtoList(requestService.getUserOutRequests(userID));
 	}
@@ -186,18 +193,22 @@ public class ServiceFacade {
 		return Collections.emptyList();
 	}
 
+	@Transactional(readOnly = true)
 	public boolean authenticateByLogin(String login, String pass) throws ServiceException {
 		return userService.authenticateByLogin(login, pass);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public boolean authenticateByEmail(String email, String pass) throws ServiceException {
 		return userService.authenticateByEmail(email, pass);
 	}
 
+	@Transactional(readOnly = true)
 	public List<Country> getAllCountries() throws ServiceException {
 	    return cityCountryService.getAllCountries();
     }
 
+	@Transactional(readOnly = true)
     public List<City> getAllCitiesByCountry(String countryCode) throws ServiceException {
 	    return cityCountryService.getAllCitiesInCountry(countryCode);
     }

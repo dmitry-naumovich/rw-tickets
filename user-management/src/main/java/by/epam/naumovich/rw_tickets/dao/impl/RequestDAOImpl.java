@@ -63,7 +63,7 @@ public class RequestDAOImpl implements IRequestDAO {
 	public GroupRequest getRequestByNum(int num) {
 		Object[] params = new Object[] {num};
 		List<GroupRequest> reqs = jdbcTemplate.query(SELECT_REQ_BY_NUM, params, new RequestRowMapper());
-		return reqs.get(0);
+		return reqs.isEmpty() ? null : reqs.get(0);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class RequestDAOImpl implements IRequestDAO {
 		Object[] params = new Object[] {fromUser, toUser, groupID};
 		int[] types = new int[] {Types.INTEGER, Types.INTEGER, Types.INTEGER};
 		List<Integer> ints = jdbcTemplate.query(SELECT_REQ_NUM_BY_USER_AND_GROUP_IDS, params, types, new IntegerRowMapper());
-		return ints.get(0);
+		return ints.isEmpty() ? -1 : ints.get(0);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package by.epam.naumovich.rw_tickets.service.impl;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.ICityCountryDAO;
@@ -36,7 +37,11 @@ public class CityCountryServiceImpl implements ICityCountryService {
 		if (!Validator.validateStrings(code)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return cityCountryDAO.getCountryByCode(code);
+		Country country = cityCountryDAO.getCountryByCode(code);
+		if (country == null) {
+		    throw new InvalidParameterException("No country found with the code " + code);
+        }
+		return country;
 	}
 
 	@Override
@@ -44,7 +49,11 @@ public class CityCountryServiceImpl implements ICityCountryService {
 		if (!Validator.validateStrings(name)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return cityCountryDAO.getCountryByName(name);
+        Country country = cityCountryDAO.getCountryByName(name);
+        if (country == null) {
+            throw new InvalidParameterException("No country found with the name " + name);
+        }
+		return country;
 	}
 
 	@Override
@@ -52,7 +61,11 @@ public class CityCountryServiceImpl implements ICityCountryService {
 		if (!Validator.validateStrings(cityCode, countryCode)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return cityCountryDAO.getCityByCode(cityCode, countryCode);
+		City city = cityCountryDAO.getCityByCode(cityCode, countryCode);
+		if (city == null) {
+		    throw new InvalidParameterException("No city found with the code " + cityCode + " in country with code " + countryCode);
+        }
+		return city;
 	}
 
 	@Override

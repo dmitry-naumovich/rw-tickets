@@ -1,5 +1,6 @@
 package by.epam.naumovich.rw_tickets.service.impl;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
@@ -62,7 +63,11 @@ public class GroupServiceImpl implements IGroupService {
 		if (!Validator.validateIds(id)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return groupDAO.getGroupById(id);
+		UserGroup group = groupDAO.getGroupById(id);
+		if (group == null) {
+            throw new InvalidParameterException("No group found with id " + id);
+        }
+		return group;
 		
 	}
 
@@ -71,7 +76,11 @@ public class GroupServiceImpl implements IGroupService {
 		if (!Validator.validateIds(id)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return groupDAO.getGroupNameById(id);
+		String groupName = groupDAO.getGroupNameById(id);
+		if (groupName == null) {
+            throw new InvalidParameterException("No group found with id " + id);
+        }
+		return groupName;
 	}
 
 	@Override
@@ -88,7 +97,6 @@ public class GroupServiceImpl implements IGroupService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		groupDAO.addGroupMember(userID, groupID);
-		
 	}
 
 	@Override
@@ -105,14 +113,10 @@ public class GroupServiceImpl implements IGroupService {
 		if (!Validator.validateIds(ownerID)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		List<UserGroup> groups = groupDAO.getGroupsByOwner(ownerID);
-		if (!groups.isEmpty()) {
-			for (UserGroup group : groups) {
-				groupDAO.removeAllGroupMembers(group.getId());
-				groupDAO.deleteGroup(group.getId());
-			}
-		}
-			
+		groupDAO.getGroupsByOwner(ownerID).forEach(group -> {
+            groupDAO.removeAllGroupMembers(group.getId());
+            groupDAO.deleteGroup(group.getId());
+        });
 	}
 
 }

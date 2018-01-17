@@ -1,5 +1,6 @@
 package by.epam.naumovich.rw_tickets.service.impl;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IRequestDAO;
@@ -59,7 +60,11 @@ public class RequestServiceImpl implements IRequestService {
 		if (!Validator.validateIds(num)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return requestDAO.getRequestByNum(num);
+		GroupRequest request = requestDAO.getRequestByNum(num);
+		if (request == null) {
+		    throw new InvalidParameterException("No request found with num " + num);
+        }
+		return request;
 	}
 
 	@Override

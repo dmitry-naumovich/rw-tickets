@@ -42,14 +42,14 @@ public class CityCountryDAOImpl implements ICityCountryDAO {
 	public Country getCountryByCode(String code) {
 		Object[] params = new Object[] {code};
 		List<Country> countries = jdbcTemplate.query(SELECT_COUNTRY_BY_CODE, params, new CountryRowMapper());
-		return countries.get(0);
+		return countries.isEmpty() ? null : countries.get(0);
 	}
 
 	@Override
 	public Country getCountryByName(String name) {
 		Object[] params = new Object[] {name};
 		List<Country> countries = jdbcTemplate.query(SELECT_COUNTRY_BY_NAME, params, new CountryRowMapper());
-		return countries.get(0);
+        return countries.isEmpty() ? null : countries.get(0);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class CityCountryDAOImpl implements ICityCountryDAO {
 		Object[] params = new Object[] {cityCode, countryCode};
 		int[] types = new int[] {Types.VARCHAR, Types.VARCHAR};
 		List<City> cities = jdbcTemplate.query(SELECT_CITY_BY_CODE, params, types, new CityRowMapper());
-		return cities.get(0);
+        return cities.isEmpty() ? null : cities.get(0);
 	}
 
 	@Override

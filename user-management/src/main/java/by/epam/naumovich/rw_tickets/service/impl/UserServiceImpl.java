@@ -1,12 +1,12 @@
 package by.epam.naumovich.rw_tickets.service.impl;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.dao.iface.IUserDAO;
 import by.epam.naumovich.rw_tickets.dao.iface.IGroupDAO;
 import by.epam.naumovich.rw_tickets.entity.User;
-import by.epam.naumovich.rw_tickets.entity.UserGroup;
 import by.epam.naumovich.rw_tickets.service.exception.ServiceException;
 import by.epam.naumovich.rw_tickets.service.iface.IUserService;
 import by.epam.naumovich.rw_tickets.service.search.iface.UserCriterion;
@@ -65,15 +65,12 @@ public class UserServiceImpl implements IUserService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		groupDAO.removeUserFromAllGroups(id);
-		List<UserGroup> groups = groupDAO.getGroupsByOwner(id);
-		if (!groups.isEmpty()) {
-			for (UserGroup group : groups) {
-				groupDAO.removeAllGroupMembers(group.getId());
-				groupDAO.deleteGroup(group.getId());
-			}	
-		}
+
+		groupDAO.getGroupsByOwner(id).forEach(group -> {
+			groupDAO.removeAllGroupMembers(group.getId());
+			groupDAO.deleteGroup(group.getId());
+		});
 		userDAO.deleteUser(id);
-		
 	}
 
 	@Override
@@ -81,8 +78,11 @@ public class UserServiceImpl implements IUserService {
 		if (!Validator.validateIds(id)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return userDAO.getUserById(id);
-		
+		User user = userDAO.getUserById(id);
+		if (user == null) {
+		    throw new InvalidParameterException("No user found with id " + id);
+        }
+		return user;
 	}
 
 	@Override
@@ -90,10 +90,12 @@ public class UserServiceImpl implements IUserService {
 		if (!Validator.validateStrings(login)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return userDAO.getUserByLogin(login);
-		
+		User user = userDAO.getUserByLogin(login);
+		if (user == null) {
+		    throw new InvalidParameterException("No user found with login " + login);
+        }
+		return user;
 	}
-	
 
 	@Override
 	public List<User> getAllUsers() throws ServiceException {
@@ -114,7 +116,11 @@ public class UserServiceImpl implements IUserService {
 		if (!Validator.validateIds(id)) {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
-		return userDAO.getLoginById(id);
+		String login = userDAO.getLoginById(id);
+		if (login == null) {
+		    throw new InvalidParameterException("No user found by id " + id);
+        }
+        return login;
 		
 	}
 
@@ -124,10 +130,10 @@ public class UserServiceImpl implements IUserService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		User user = userDAO.getUserByLogin(login);
-		if (!pass.equals(user.getPwd())) {
-			return false;
-		}
-		return true;
+		if (user == null) {
+            throw new InvalidParameterException("No user found with login " + login);
+        }
+		return pass.equals(user.getPwd());
 	}
 
 	@Override
@@ -136,12 +142,10 @@ public class UserServiceImpl implements IUserService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		User user = userDAO.getUserByEmail(email);
-		
-		if (!pass.equals(user.getPwd())) {
-			return false;
-		}
-		return true;
-		
+        if (user == null) {
+            throw new InvalidParameterException("No user found with email " + email);
+        }
+        return pass.equals(user.getPwd());
 	}
 	
 	@Override

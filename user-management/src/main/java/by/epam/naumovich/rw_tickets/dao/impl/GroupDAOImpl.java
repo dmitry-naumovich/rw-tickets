@@ -72,14 +72,14 @@ public class GroupDAOImpl implements IGroupDAO {
 	public UserGroup getGroupById(int id) {
 		Object[] params = new Object[] {id};
 		List<UserGroup> groups = jdbcTemplate.query(SELECT_GROUP_BY_ID, params, new UserGroupRowMapper());
-		return groups.get(0);
+		return groups.isEmpty() ? null : groups.get(0);
 	}
 
 	@Override
 	public String getGroupNameById(int id) {
 		Object[] params = new Object[] {id};
 		List<String> strings = jdbcTemplate.query(SELECT_GROUP_NAME_BY_ID, params, new StringRowMapper());
-		return strings.get(0);
+		return strings.isEmpty() ? null : strings.get(0);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class GroupDAOImpl implements IGroupDAO {
 		Object[] params = new Object[] {name, ownerID};
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER};
 		List<Integer> ints = jdbcTemplate.query(SELECT_GROUP_ID_BY_NAME_AND_OWNER, params, types, new IntegerRowMapper());
-		return ints.get(0);
+		return ints.isEmpty() ? -1 : ints.get(0);
 	}
 
 	@Override

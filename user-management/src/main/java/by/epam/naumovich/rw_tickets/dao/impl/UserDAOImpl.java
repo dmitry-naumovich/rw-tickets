@@ -81,21 +81,21 @@ public class UserDAOImpl implements IUserDAO {
 	public User getUserById(int id) {
 		Object[] params = new Object[] {id};
 		List<User> users = jdbcTemplate.query(SELECT_USER_BY_ID, params, new UserRowMapper());
-		return users.get(0);
+		return users.isEmpty() ? null : users.get(0);
 	}
 
 	@Override
 	public User getUserByLogin(String login) {
 		Object[] params = new Object[] {login};
 		List<User> users = jdbcTemplate.query(SELECT_USER_BY_LOGIN, params, new UserRowMapper());
-		return users.get(0);
+        return users.isEmpty() ? null : users.get(0);
 	}
 	
 	@Override
 	public User getUserByEmail(String email) {
 		Object[] params = new Object[] {email};
 		List<User> users = jdbcTemplate.query(SELECT_USER_BY_EMAIL, params, new UserRowMapper());
-		return users.get(0);
+        return users.isEmpty() ? null : users.get(0);
 	}
 
 	@Override
@@ -119,28 +119,28 @@ public class UserDAOImpl implements IUserDAO {
 	public int getIdByLogin(String login) {
 		Object[] params = new Object[]{login};
 		List<Integer> ints = jdbcTemplate.query(SELECT_ID_BY_LOGIN, params, new IntegerRowMapper());
-		return ints.get(0);
+		return ints.isEmpty() ? -1 : ints.get(0);
 	}
 
 	@Override
 	public String getLoginById(int id) {
 		Object[] params = new Object[]{id};
 		List<String> strings = jdbcTemplate.query(SELECT_LOGIN_BY_ID, params, new StringRowMapper());
-		return strings.get(0);
+		return strings.isEmpty() ? null : strings.get(0);
 	}
 	
 	@Override
 	public String getPasswordByLogin(String login) {
 		Object[] params = new Object[]{login};
 		List<String> strings = jdbcTemplate.query(SELECT_PASS_BY_LOGIN, params, new StringRowMapper());
-		return strings.get(0);
+        return strings.isEmpty() ? null : strings.get(0);
 	}
 
 	@Override
 	public String getPasswordByEmail(String email) {
 		Object[] params = new Object[]{email};
 		List<String> strings = jdbcTemplate.query(SELECT_PASS_BY_EMAIL, params, new StringRowMapper());
-		return strings.get(0);
+        return strings.isEmpty() ? null : strings.get(0);
 	}
 
 	@Override

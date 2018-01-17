@@ -25,8 +25,8 @@ public class UserRowMapper implements RowMapper<User> {
 		user.setSname(arg0.getString(5));
 		user.setEmail(arg0.getString(6));
 		user.setBirthDate(arg0.getDate(7));
-		user.setCountry(arg0.getString(8));
-		user.setCity(arg0.getString(9));
+		user.setCity(arg0.getString(8));
+		user.setCountry(arg0.getString(9));
 		user.setAddress(arg0.getString(10));
 		user.setPhone(arg0.getString(11));
 		user.setPassport(arg0.getString(12));
