@@ -50,9 +50,7 @@ public class GroupDAOImpl implements IGroupDAO {
 		int[] types = new int[] {Types.VARCHAR, Types.INTEGER};
 		jdbcTemplate.update(INSERT_NEW_GROUP, params, types);
 		
-		int newGroupID = getGroupIdByNameAndOwner(group.getName(), group.getOwner());
-		addGroupMember(group.getOwner(), newGroupID);
-		return newGroupID;
+		return getGroupIdByNameAndOwner(group.getName(), group.getOwner());
 	}
 
 	@Override

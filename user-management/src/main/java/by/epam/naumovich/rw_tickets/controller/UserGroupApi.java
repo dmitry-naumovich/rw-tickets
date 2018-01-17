@@ -36,6 +36,6 @@ public interface UserGroupApi {
     void delete(@PathVariable int id) throws ServiceException;
 
     @ApiOperation("Delete user from group")
-    @PutMapping("/{id}")
-    UserGroupDTO deleteGroupMember(@PathVariable("id") int groupId, @RequestParam("userId") int userId) throws ServiceException;
+    @PutMapping
+    UserGroupDTO deleteGroupMember(@RequestParam("groupId") int groupId, @RequestParam("userId") int userId) throws ServiceException;
 }
