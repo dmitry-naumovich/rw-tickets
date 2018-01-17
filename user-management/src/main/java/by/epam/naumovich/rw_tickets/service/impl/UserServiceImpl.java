@@ -47,7 +47,6 @@ public class UserServiceImpl implements IUserService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		return userDAO.addUser(user);
-		
 	}
 
 	@Override
@@ -56,7 +55,6 @@ public class UserServiceImpl implements IUserService {
 			throw new ServiceException(INVALID_INPUT_PARAMS);
 		}
 		userDAO.updateUser(updUser.getId(), updUser);
-		
 	}
 
 	@Override

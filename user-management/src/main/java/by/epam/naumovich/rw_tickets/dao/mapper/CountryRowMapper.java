@@ -17,10 +17,10 @@ public class CountryRowMapper implements RowMapper<Country> {
 
 	@Override
 	public Country mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Country country = new Country();
-		country.setCode(rs.getString(1));
-		country.setName(rs.getString(2));
-		return country;
+		return Country.builder()
+				.code(rs.getString(1))
+				.name(rs.getString(2))
+				.build();
 	}
 
 }

@@ -18,19 +18,19 @@ import by.epam.naumovich.rw_tickets.entity.GroupRequest;
 public class RequestRowMapper implements RowMapper<GroupRequest> {
 
 	@Override
-	public GroupRequest mapRow(ResultSet arg0, int arg1) throws SQLException {
-		GroupRequest req = new GroupRequest();
-		req.setRq_num(arg0.getInt(1));
-		req.setFrom_user(arg0.getInt(2));
-		req.setTo_user(arg0.getInt(3));
-		req.setGrId(arg0.getInt(4));
-		req.setCreateDate(Date.valueOf(arg0.getString(5).substring(0, 10)));
-		req.setCreateTime(Time.valueOf(arg0.getString(5).substring(11, 19)));
-		req.setCloseDate(Date.valueOf(arg0.getString(6).substring(0, 10)));
-		req.setCloseTime(Time.valueOf(arg0.getString(6).substring(11, 19)));
-		req.setStatus(arg0.getString(7).charAt(0));
-		req.setComment(arg0.getString(8));
-		return req;
+	public GroupRequest mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return GroupRequest.builder()
+				.rq_num(rs.getInt(1))
+				.from_user(rs.getInt(2))
+				.to_user(rs.getInt(3))
+				.grId(rs.getInt(4))
+				.createDate(Date.valueOf(rs.getString(5).substring(0, 10)))
+				.createTime(Time.valueOf(rs.getString(5).substring(11, 19)))
+				.closeDate(Date.valueOf(rs.getString(6).substring(0, 10)))
+				.closeTime(Time.valueOf(rs.getString(6).substring(11, 19)))
+				.status(rs.getString(7).charAt(0))
+				.comment(rs.getString(8))
+				.build();
 	}
 
 }

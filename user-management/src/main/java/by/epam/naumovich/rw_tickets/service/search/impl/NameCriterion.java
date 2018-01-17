@@ -1,10 +1,10 @@
 package by.epam.naumovich.rw_tickets.service.search.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.service.search.iface.UserCriterion;
+import java.util.stream.Collectors;
 
 /**
  * UserCriterion implementation which searches for users by the name/surname specified.
@@ -14,7 +14,7 @@ import by.epam.naumovich.rw_tickets.service.search.iface.UserCriterion;
  */
 public class NameCriterion implements UserCriterion {
 
-	public static final String SPACE = " ";
+	private static final String SPACE = " ";
 	
 	/**
 	 * The name/surname value defined for search by the user.
@@ -42,17 +42,8 @@ public class NameCriterion implements UserCriterion {
 	
 	@Override
 	public List<User> meetCriterion(List<User> users) {
-		List<User> found = new ArrayList<>();
-		
-		for (User u : users) {
-			String realFName = u.getFname().toLowerCase();
-			String realSName = u.getSname().toLowerCase();
-			
-			if (isNameSuitable(realFName, realSName)) {
-				found.add(u);
-			}
-		}
-		return found;
+		return users.stream().filter(u -> isNameSuitable(u.getFname().toLowerCase(), u.getSname().toLowerCase()))
+				.collect(Collectors.toList());
 	}
 	
 	/**

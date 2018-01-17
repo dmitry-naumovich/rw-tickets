@@ -16,22 +16,22 @@ import by.epam.naumovich.rw_tickets.entity.User;
 public class UserRowMapper implements RowMapper<User> {
 
 	@Override
-	public User mapRow(ResultSet arg0, int arg1) throws SQLException {
-		User user = new User();
-		user.setId(arg0.getInt(1));
-		user.setLogin(arg0.getString(2));
-		user.setPwd(arg0.getString(3));
-		user.setFname(arg0.getString(4));
-		user.setSname(arg0.getString(5));
-		user.setEmail(arg0.getString(6));
-		user.setBirthDate(arg0.getDate(7));
-		user.setCity(arg0.getString(8));
-		user.setCountry(arg0.getString(9));
-		user.setAddress(arg0.getString(10));
-		user.setPhone(arg0.getString(11));
-		user.setPassport(arg0.getString(12));
-		user.setAdmin(arg0.getBoolean(13));
-		return user;
+	public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return User.builder()
+				.id(rs.getInt(1))
+				.login(rs.getString(2))
+				.pwd(rs.getString(3))
+				.fname(rs.getString(4))
+				.sname(rs.getString(5))
+				.email(rs.getString(6))
+				.birthDate(rs.getDate(7))
+				.city(rs.getString(8))
+				.country(rs.getString(9))
+				.address(rs.getString(10))
+				.phone(rs.getString(11))
+				.passport(rs.getString(12))
+				.isAdmin(rs.getBoolean(13))
+				.build();
 	}
 
 }

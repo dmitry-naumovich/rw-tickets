@@ -1,10 +1,10 @@
 package by.epam.naumovich.rw_tickets.service.search.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.epam.naumovich.rw_tickets.entity.User;
 import by.epam.naumovich.rw_tickets.service.search.iface.UserCriterion;
+import java.util.stream.Collectors;
 
 /**
  * UserCriterion implementation which searches for users by the email specified.
@@ -25,16 +25,7 @@ public class EmailCriterion implements UserCriterion {
 	
 	@Override
 	public List<User> meetCriterion(List<User> users) {
-		List<User> found = new ArrayList<>();
-		
-		for (User u : users) {
-			String realEmail = u.getEmail().toLowerCase();
-			
-			if (isEmailSuitable(realEmail)) {
-				found.add(u);
-			}
-		}
-		return found;
+		return users.stream().filter(u -> isEmailSuitable(u.getEmail().toLowerCase())).collect(Collectors.toList());
 	}
 	
 	/**
@@ -44,15 +35,7 @@ public class EmailCriterion implements UserCriterion {
 	 * @return true if the email is suitable and false otherwise
 	 */
 	private boolean isEmailSuitable(String realEmail) {
-		if (email.equals(realEmail)) {
-			return true;
-		}
-		
-		if (email.contains(realEmail) || realEmail.contains(email)) {
-			return true;
-		}
-		
-		return false;
+		return email.equals(realEmail) || email.contains(realEmail) || realEmail.contains(email);
 	}
 
 }

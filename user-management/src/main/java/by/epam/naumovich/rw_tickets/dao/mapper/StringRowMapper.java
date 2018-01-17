@@ -14,8 +14,8 @@ import org.springframework.jdbc.core.RowMapper;
 public class StringRowMapper implements RowMapper<String> {
 
 	@Override
-	public String mapRow(ResultSet arg0, int arg1) throws SQLException {
-		return arg0.getString(1);
+	public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return rs.getString(1);
 	}
 
 }

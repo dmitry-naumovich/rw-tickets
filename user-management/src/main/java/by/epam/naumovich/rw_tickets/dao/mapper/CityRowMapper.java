@@ -17,11 +17,11 @@ public class CityRowMapper implements RowMapper<City> {
 
 	@Override
 	public City mapRow(ResultSet rs, int rowNum) throws SQLException {
-		City city = new City();
-		city.setCode(rs.getString(1));
-		city.setCountry(rs.getString(2));
-		city.setName(rs.getString(3));
-		return city;
+		return City.builder()
+				.code(rs.getString(1))
+				.country(rs.getString(2))
+				.name(rs.getString(3))
+				.build();
 	}
 
 }

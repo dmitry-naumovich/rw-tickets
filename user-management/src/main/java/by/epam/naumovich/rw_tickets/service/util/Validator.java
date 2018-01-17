@@ -51,13 +51,7 @@ public final class Validator {
 	 * @return true if the object comply with the bounds and false otherwise
 	 */
 	public static boolean validateNewUserGroup(UserGroup group) {
-		if (group == null) {
-			return false;
-		}
-		if (!validateIds(group.getOwner()) || !validateStrings(group.getName())) {
-			return false;
-		}
-		return true;
+		return group != null && validateIds(group.getOwner()) && validateStrings(group.getName());
 	}
 	
 	/**
@@ -70,10 +64,7 @@ public final class Validator {
 		if (!validateNewUserGroup(group)) {
 			return false;
 		}
-		if (!validateIds(group.getId()) ||  group.getCreateDate() == null || group.getCreateTime() == null) {
-			return false;
-		}
-		return true;
+		return validateIds(group.getId()) && group.getCreateDate() != null && group.getCreateTime() != null;
 	}
 	
 	/**
@@ -83,14 +74,7 @@ public final class Validator {
 	 * @return true if the object comply with the bounds and false otherwise
 	 */
 	public static boolean validateNewRequest(GroupRequest req) {
-		if (req == null) {
-			return false;
-		}
-		
-		if (!validateIds(req.getFrom_user(), req.getTo_user(), req.getGrId())) {
-			return false;
-		}
-		return true;
+		return req != null && validateIds(req.getFrom_user(), req.getTo_user(), req.getGrId());
 	}
 	
 	/**
@@ -103,10 +87,7 @@ public final class Validator {
 		if (!validateNewRequest(req)) {
 			return false;
 		}
-		if (req.getCreateDate() == null || req.getCreateTime() == null || !validateRequestStatus(req.getStatus())) {
-			return false;
-		}
-		return true;
+		return req.getCreateDate() != null && req.getCreateTime() != null && validateRequestStatus(req.getStatus());
 	}
 	
 	/**
@@ -116,10 +97,7 @@ public final class Validator {
 	 * @return true if status comply with the bounds and false otherwise
 	 */
 	public static boolean validateRequestStatus(char status) {
-		if (status != 'c' && status != 'o' && status != 'a') {
-			return false;
-		}
-		return true;
+		return status == 'c' || status == 'o' || status == 'a';
 	}
 	
 	/**

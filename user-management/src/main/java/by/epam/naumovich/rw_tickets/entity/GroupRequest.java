@@ -2,6 +2,7 @@ package by.epam.naumovich.rw_tickets.entity;
 
 import java.sql.Date;
 import java.sql.Time;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor // Empty constructor may be used by JAXB, for instance
+@Builder
 public class GroupRequest {
 
 	private int rq_num;

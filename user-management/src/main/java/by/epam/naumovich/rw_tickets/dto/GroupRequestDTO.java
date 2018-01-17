@@ -1,6 +1,7 @@
 package by.epam.naumovich.rw_tickets.dto;
 
 import by.epam.naumovich.rw_tickets.entity.GroupRequest;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
+@Builder
 public class GroupRequestDTO {
 
 	private GroupRequest request;

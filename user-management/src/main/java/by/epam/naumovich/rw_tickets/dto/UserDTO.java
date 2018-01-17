@@ -3,6 +3,7 @@ package by.epam.naumovich.rw_tickets.dto;
 import java.util.Map;
 
 import by.epam.naumovich.rw_tickets.entity.User;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -13,6 +14,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
+@Builder
 public class UserDTO {
 
 	private User user;
