@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping(value = "geo", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(value = "API for working with application cities and countries")
+@RequestMapping(value = "geo", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface CityCountryApi {
 
     @ApiOperation(value = "Get list of all available countries")

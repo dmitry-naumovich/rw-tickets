@@ -158,12 +158,7 @@ public class ServiceFacade {
         }
 		return userService.getAllUsersSorted(sort);
 	}
-	
-	public UserDTO leaveGroup(int memberID, int groupID) throws ServiceException {
-		groupService.removeGroupMember(memberID, groupID);
-		return getUserById(memberID);
-	}
-	
+
 	public UserGroupDTO removeGroupMember(int memberID, int groupID) throws ServiceException {
 		groupService.removeGroupMember(memberID, groupID);
 		return getGroupById(groupID);
@@ -194,16 +189,6 @@ public class ServiceFacade {
 	}
 
 	@Transactional(readOnly = true)
-	public boolean authenticateByLogin(String login, String pass) throws ServiceException {
-		return userService.authenticateByLogin(login, pass);
-	}
-
-	@Transactional(readOnly = true)
-	public boolean authenticateByEmail(String email, String pass) throws ServiceException {
-		return userService.authenticateByEmail(email, pass);
-	}
-
-	@Transactional(readOnly = true)
 	public List<Country> getAllCountries() throws ServiceException {
 	    return cityCountryService.getAllCountries();
     }
@@ -211,5 +196,15 @@ public class ServiceFacade {
 	@Transactional(readOnly = true)
     public List<City> getAllCitiesByCountry(String countryCode) throws ServiceException {
 	    return cityCountryService.getAllCitiesInCountry(countryCode);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean authenticateByLogin(String login, String pass) throws ServiceException {
+        return userService.authenticateByLogin(login, pass);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean authenticateByEmail(String email, String pass) throws ServiceException {
+        return userService.authenticateByEmail(email, pass);
     }
 }

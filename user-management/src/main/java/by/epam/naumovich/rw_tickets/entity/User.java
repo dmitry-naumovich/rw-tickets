@@ -1,6 +1,7 @@
 package by.epam.naumovich.rw_tickets.entity;
 
 import java.sql.Date;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,8 @@ import lombok.NoArgsConstructor;
  * @version 1.0
  */
 @Data
-@NoArgsConstructor // Empty constructor may be used by JAXB, for instance
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User {
 	
