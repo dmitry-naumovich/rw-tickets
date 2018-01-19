@@ -14,20 +14,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler {
 
-    private final static String TEXT_FOR_EX = "Error! Please, try again!";
-
     @ExceptionHandler(value = {InvalidParameterException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     protected ErrorResponse handleException(HttpServletRequest request, InvalidParameterException ex) {
-        return new ErrorResponse(HttpStatus.BAD_REQUEST, TEXT_FOR_EX);
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(value = {ServiceException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     protected ErrorResponse handleException(HttpServletRequest request, ServiceException ex) {
-        return new ErrorResponse(HttpStatus.BAD_REQUEST, TEXT_FOR_EX);
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(value = {Exception.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    protected ErrorResponse handleException(HttpServletRequest request, Exception ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @Data

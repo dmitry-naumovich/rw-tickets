@@ -1,9 +1,10 @@
 package by.epam.naumovich.rw_tickets.service.aop;
 
-import java.lang.reflect.Method;
-
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.aop.ThrowsAdvice;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 /**
 * Spring AOP ThrowsAdvice implementation which logs the info about the exception and method which has thrown it right after it was thrown.
@@ -11,11 +12,15 @@ import org.springframework.aop.ThrowsAdvice;
 * @author Dzmitry_Naumovich
 * @version 1.0
 */
+@Aspect
+@Component
 @Slf4j
-public class LoggingThrowsAdvice implements ThrowsAdvice {
+public class LoggingThrowsAdvice {
 
-	public void afterThrowing(Method method, Object[] args, Object target, Exception e) {
-		log.error("{} occurred in {} service. The message is: \"{}\".",
-		        e.getClass().getSimpleName(), target.getClass().getSimpleName(), e.getMessage());
+    @AfterThrowing(pointcut = "within(by.epam.naumovich..*)", throwing = "e")
+	public void afterThrowing(JoinPoint jp, Exception e) {
+		log.debug("{} occurred in {}::{} method. The message is: \"{}\".",
+		        e.getClass().getSimpleName(), jp.getSignature().getDeclaringType().getSimpleName(),
+                jp.getSignature().getName(), e.getMessage());
 	}
 }

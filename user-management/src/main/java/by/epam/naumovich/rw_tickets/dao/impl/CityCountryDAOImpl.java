@@ -3,7 +3,6 @@ package by.epam.naumovich.rw_tickets.dao.impl;
 import java.sql.Types;
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 

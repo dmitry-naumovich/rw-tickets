@@ -1,9 +1,10 @@
 package by.epam.naumovich.rw_tickets.service.aop;
 
-import java.lang.reflect.Method;
-
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.aop.AfterReturningAdvice;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 /**
  * Spring AOP AfterReturningAdvice implementation which logs the info about the method straight after it has returned.
@@ -11,17 +12,19 @@ import org.springframework.aop.AfterReturningAdvice;
  * @author Dzmitry_Naumovich
  * @version 1.0
  */
+@Aspect
+@Component
 @Slf4j
-public class LoggingAfterAdvice implements AfterReturningAdvice {
+public class LoggingAfterAdvice {
 
-	@Override
-	public void afterReturning(Object arg0, Method arg1, Object[] arg2, Object arg3) throws Throwable {
-		if (arg0 != null) {
-			log.info("method {} was successfully run and returned {} object", arg1.getName(), arg0.getClass().getSimpleName());
-		} else {
-			log.info("method {} was successfully run", arg1.getName());
-		}
-		
-	}
+    @AfterReturning(pointcut = "within(by.epam.naumovich..*)", returning = "retVal")
+    public void after(JoinPoint jp, Object retVal) throws Throwable {
+        if (retVal != null) {
+            log.debug("{}::{} successfully finished and returned {} object",
+                    jp.getSignature().getDeclaringType().getSimpleName(), jp.getSignature().getName(), retVal);
+        } else {
+            log.debug("{}::{} successfully finished",  jp.getSignature().getDeclaringType().getSimpleName(), jp.getSignature().getName());
+        }
+    }
 
 }
