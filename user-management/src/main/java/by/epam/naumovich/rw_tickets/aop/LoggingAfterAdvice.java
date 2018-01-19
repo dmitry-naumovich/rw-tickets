@@ -1,4 +1,4 @@
-package by.epam.naumovich.rw_tickets.service.aop;
+package by.epam.naumovich.rw_tickets.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;

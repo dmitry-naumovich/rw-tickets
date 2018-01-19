@@ -1,4 +1,4 @@
-package by.epam.naumovich.rw_tickets.service.aop;
+package by.epam.naumovich.rw_tickets.aop;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
